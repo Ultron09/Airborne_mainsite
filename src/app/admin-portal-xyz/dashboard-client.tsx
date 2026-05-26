@@ -103,8 +103,8 @@ export default function DashboardClient({ posts }: { posts: Post[] }) {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/new"
-            className="inline-flex items-center gap-1.5 rounded-full bg-primary hover:bg-primary/95 px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/10 transition-all hover:scale-[1.02]"
+            href="/admin-portal-xyz/new"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary hover:bg-primary/95 text-primary-foreground px-4 py-2 text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105"
           >
             <Plus className="h-4 w-4" /> New Article
           </Link>
@@ -245,9 +245,9 @@ export default function DashboardClient({ posts }: { posts: Post[] }) {
                           <Eye className="h-4 w-4" />
                         </Link>
                         <Link
-                          href={`/admin/edit/${post.id}`}
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-muted-foreground hover:text-primary transition-colors"
-                          title="Edit Post"
+                          href={`/admin-portal-xyz/edit/${post.id}`}
+                          className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-muted-foreground hover:text-white transition-all"
+                          title="Edit Insight"
                         >
                           <Edit className="h-4 w-4" />
                         </Link>

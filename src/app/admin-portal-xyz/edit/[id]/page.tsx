@@ -14,7 +14,7 @@ export default async function EditPostPage(props: Props) {
   const authorized = await isAuthenticated();
 
   if (!authorized) {
-    redirect("/admin");
+    redirect("/admin-portal-xyz");
   }
 
   // Fetch the target blog post by ID

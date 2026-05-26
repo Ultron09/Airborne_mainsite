@@ -70,7 +70,7 @@ export default function RootLayout({
                 <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
-                <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/admin-portal-xyz" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Admin Portal
                 </Link>
               </nav>
@@ -125,7 +125,7 @@ export default function RootLayout({
               <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">Blog</Link></li>
-                <li><Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors">Admin Area</Link></li>
+                <li><Link href="/admin-portal-xyz" className="text-muted-foreground hover:text-foreground transition-colors">Admin Area</Link></li>
               </ul>
             </div>
 

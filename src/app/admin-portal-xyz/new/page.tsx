@@ -8,7 +8,7 @@ export default async function NewPostPage() {
   const authorized = await isAuthenticated();
 
   if (!authorized) {
-    redirect("/admin");
+    redirect("/admin-portal-xyz");
   }
 
   return (

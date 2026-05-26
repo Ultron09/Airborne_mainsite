@@ -175,7 +175,7 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
       } else {
         await createBlogPost(payload);
       }
-      router.push("/admin");
+      router.push("/admin-portal-xyz");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "Something went wrong saving the article");
@@ -189,7 +189,7 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-6">
         <div className="flex items-center gap-3">
           <Link
-            href="/admin"
+            href="/admin-portal-xyz"
             className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-muted-foreground hover:text-white transition-all"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -364,7 +364,7 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
                 <Save className="h-4 w-4" /> {loading ? "Saving..." : "Save Article"}
               </button>
               <Link
-                href="/admin"
+                href="/admin-portal-xyz"
                 className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs font-semibold text-white transition-all text-center"
               >
                 Cancel
