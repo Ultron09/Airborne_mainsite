@@ -1,0 +1,273 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { togglePublishPost, deleteBlogPost, logoutAdmin } from "./actions";
+import {
+  Plus,
+  Trash2,
+  Edit,
+  Eye,
+  LogOut,
+  MapPin,
+  Calendar,
+  Layers,
+  Sparkles,
+  FileText,
+  Search,
+  CheckCircle2,
+  XCircle
+} from "lucide-react";
+
+interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  published: boolean;
+  targetLocation: string | null;
+  targetRegion: string | null;
+  createdAt: Date;
+}
+
+export default function DashboardClient({ posts }: { posts: Post[] }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const router = useRouter();
+
+  // Stats calculation
+  const totalPosts = posts.length;
+  const publishedCount = posts.filter((p) => p.published).length;
+  const draftCount = totalPosts - publishedCount;
+  const uniqueLocations = Array.from(
+    new Set(posts.map((p) => p.targetLocation).filter(Boolean))
+  ).length;
+
+  // Filter posts
+  const filteredPosts = posts.filter((post) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(searchLower) ||
+      (post.targetLocation?.toLowerCase() || "").includes(searchLower) ||
+      post.slug.toLowerCase().includes(searchLower)
+    );
+  });
+
+  async function handleTogglePublish(id: string) {
+    setLoadingId(id);
+    try {
+      await togglePublishPost(id);
+      router.refresh();
+    } catch (err: any) {
+      alert(err.message || "Failed to toggle status");
+    } finally {
+      setLoadingId(null);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm("Are you sure you want to delete this blog post? This cannot be undone.")) return;
+    setLoadingId(id);
+    try {
+      await deleteBlogPost(id);
+      router.refresh();
+    } catch (err: any) {
+      alert(err.message || "Failed to delete post");
+    } finally {
+      setLoadingId(null);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await logoutAdmin();
+      router.refresh();
+    } catch (err) {
+      alert("Failed to log out");
+    }
+  }
+
+  return (
+    <div className="space-y-8 py-8 px-4 max-w-7xl mx-auto">
+      {/* Dashboard Top Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-6">
+        <div>
+          <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
+            <Sparkles className="h-7 w-7 text-primary" />
+            Airborne HRS Admin
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Write, optimize, and publish SEO & GEO-targeted insights.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/new"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary hover:bg-primary/95 px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/10 transition-all hover:scale-[1.02]"
+          >
+            <Plus className="h-4 w-4" /> New Article
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 px-4 py-2.5 text-xs font-semibold text-white transition-all"
+          >
+            <LogOut className="h-4 w-4" /> Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl glass-panel border border-white/5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-muted-foreground text-xs">
+            <span>Total Insights</span>
+            <FileText className="h-4 w-4 text-primary" />
+          </div>
+          <span className="text-3xl font-bold text-white mt-4">{totalPosts}</span>
+        </div>
+
+        <div className="p-5 rounded-2xl glass-panel border border-white/5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-muted-foreground text-xs">
+            <span>Published</span>
+            <CheckCircle2 className="h-4 w-4 text-primary" />
+          </div>
+          <span className="text-3xl font-bold text-white mt-4">{publishedCount}</span>
+        </div>
+
+        <div className="p-5 rounded-2xl glass-panel border border-white/5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-muted-foreground text-xs">
+            <span>Drafts</span>
+            <XCircle className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <span className="text-3xl font-bold text-white mt-4">{draftCount}</span>
+        </div>
+
+        <div className="p-5 rounded-2xl glass-panel border border-white/5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-muted-foreground text-xs">
+            <span>GEO Node Coverage</span>
+            <MapPin className="h-4 w-4 text-accent" />
+          </div>
+          <span className="text-3xl font-bold text-white mt-4">{uniqueLocations}</span>
+        </div>
+      </div>
+
+      {/* Filters and List */}
+      <div className="space-y-4">
+        {/* Search */}
+        <div className="relative flex items-center max-w-md">
+          <Search className="absolute left-4 h-4 w-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search dashboard by title or targeted location..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+          />
+        </div>
+
+        {/* Table/List View */}
+        {filteredPosts.length === 0 ? (
+          <div className="p-12 text-center rounded-2xl border border-white/10 bg-white/5 space-y-2">
+            <Layers className="h-8 w-8 text-muted-foreground mx-auto" />
+            <h3 className="text-base font-semibold text-white">No insights found</h3>
+            <p className="text-xs text-muted-foreground">
+              {searchTerm ? "Try searching for a different keyword." : "Click 'New Article' to publish your first post."}
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-hidden border border-white/10 rounded-2xl bg-card">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/5 text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                    <th className="p-4">Article</th>
+                    <th className="p-4">Target GEO</th>
+                    <th className="p-4">Status</th>
+                    <th className="p-4">Date Created</th>
+                    <th className="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {filteredPosts.map((post) => (
+                    <tr key={post.id} className="hover:bg-white/5 transition-colors">
+                      <td className="p-4 space-y-1 max-w-sm sm:max-w-md">
+                        <div className="font-bold text-white truncate">{post.title}</div>
+                        <div className="text-xs text-muted-foreground font-mono truncate">
+                          /{post.slug}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        {post.targetLocation ? (
+                          <div className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+                            <MapPin className="h-3.5 w-3.5" />
+                            <span>{post.targetLocation}</span>
+                            {post.targetRegion && (
+                              <span className="text-[10px] text-muted-foreground font-mono bg-white/5 px-1.5 py-0.5 rounded">
+                                {post.targetRegion}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-xs text-muted-foreground italic">None (Global)</span>
+                        )}
+                      </td>
+                      <td className="p-4">
+                        <button
+                          onClick={() => handleTogglePublish(post.id)}
+                          disabled={loadingId === post.id}
+                          className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border font-semibold ${
+                            post.published
+                              ? "bg-primary/10 border-primary/20 text-primary"
+                              : "bg-white/5 border-white/10 text-muted-foreground"
+                          } hover:brightness-110 transition-all`}
+                        >
+                          {post.published ? "Published" : "Draft"}
+                        </button>
+                      </td>
+                      <td className="p-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(post.createdAt).toLocaleDateString("en-US", {
+                              dateStyle: "medium",
+                            })}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-4 text-right space-x-2">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          target="_blank"
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-muted-foreground hover:text-white transition-colors"
+                          title="View Live Post"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Link>
+                        <Link
+                          href={`/admin/edit/${post.id}`}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-muted-foreground hover:text-primary transition-colors"
+                          title="Edit Post"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(post.id)}
+                          disabled={loadingId === post.id}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-destructive/10 hover:border-destructive/20 text-muted-foreground hover:text-destructive transition-colors disabled:opacity-50"
+                          title="Delete Post"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

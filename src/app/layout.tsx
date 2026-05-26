@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -143,6 +144,17 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <Script id="metricool-tracker" strategy="afterInteractive">
+          {`
+            function loadScript(a){
+              var b=document.getElementsByTagName("head")[0],c=document.createElement("script");
+              c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)
+            }
+            loadScript(function(){
+              beTracker.t({hash:"da5e1d7f32d81f2648f985368dfaaee9"})
+            });
+          `}
+        </Script>
       </body>
     </html>
   );
