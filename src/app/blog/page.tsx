@@ -150,7 +150,7 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
             {posts.map((post) => (
               <article
                 key={post.id}
-                className="flex flex-col justify-between p-6 rounded-2xl gradient-border bg-card group hover:shadow-lg hover:shadow-primary/5 transition-all"
+                className="flex flex-col justify-between p-6 rounded-2xl glass-panel glass-panel-interactive group"
               >
                 <div className="space-y-4">
                   {/* Meta badging */}

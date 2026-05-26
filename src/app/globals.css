@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712; /* Deep slate gray/black */
+  --background: #021F1B; /* Primary Background */
   --foreground: #f3f4f6; /* Off white */
   
-  --card: #0b0f19;
+  --card: #00110E; /* Dark Shadow Tone */
   --card-foreground: #f3f4f6;
   
-  --popover: #030712;
+  --popover: #021F1B;
   --popover-foreground: #f3f4f6;
   
-  --primary: #10b981; /* Emerald AI green */
-  --primary-foreground: #030712;
+  --primary: #00D6A1; /* Logo Neon Glow */
+  --primary-foreground: #021F1B;
   
-  --secondary: #1f2937;
-  --secondary-foreground: #f3f4f6;
+  --secondary: #063C35; /* Secondary Gradient Tone */
+  --secondary-foreground: #7FFFE1; /* Text Highlight */
   
-  --muted: #111827;
+  --muted: #00110E;
   --muted-foreground: #9ca3af;
   
-  --accent: #3b82f6; /* Tech blue */
-  --accent-foreground: #ffffff;
+  --accent: #34F5C5; /* Accent Cyan */
+  --accent-foreground: #021F1B;
   
   --destructive: #ef4444;
   --destructive-foreground: #f3f4f6;
   
-  --border: #1f2937;
-  --input: #1f2937;
-  --ring: #10b981;
+  --border: rgba(0, 184, 138, 0.25); /* Logo Stroke/Outline with opacity */
+  --input: #063C35;
+  --ring: #00D6A1;
 }
 
 @theme inline {
@@ -59,9 +59,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom premium styles */
+/* Custom premium styles matching Antigravity & SwiftUI Liquid Glass */
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 70%, #60a5fa 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #7FFFE1 70%, #34F5C5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -70,18 +70,34 @@ body {
   position: relative;
   border: 1px solid transparent;
   background: linear-gradient(var(--card), var(--card)) padding-box,
-              linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3)) border-box;
+              linear-gradient(135deg, rgba(0, 214, 161, 0.3), rgba(52, 245, 197, 0.3)) border-box;
 }
 
 .glass-panel {
-  background: rgba(11, 15, 25, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(6, 60, 53, 0.35); /* Secondary Gradient Tone with alpha */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 184, 138, 0.25); /* Logo Stroke/Outline with alpha */
+  box-shadow: 0 8px 32px 0 rgba(0, 17, 14, 0.4); /* Dark Shadow Tone */
+}
+
+/* Liquid Glass Interactive modifier (matching SwiftUI interactive() modifier) */
+.glass-panel-interactive {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-color, background, box-shadow;
+}
+
+.glass-panel-interactive:hover {
+  transform: translateY(-4px) scale(1.01);
+  background: rgba(6, 60, 53, 0.5); /* Higher prominence */
+  border-color: rgba(52, 245, 197, 0.5); /* Accent Cyan border glow */
+  box-shadow: 
+    0 20px 40px rgba(0, 17, 14, 0.6), 
+    0 0 25px rgba(0, 214, 161, 0.2); /* Logo Neon Glow border shadow */
 }
 
 .glow-glow {
-  box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 50px -10px rgba(0, 214, 161, 0.3);
 }
 
 /* Custom premium prose for Markdown rendering */

@@ -329,7 +329,7 @@ export default async function BlogPostDetail(props: Props) {
             )}
 
             {/* Platform Call to Action */}
-            <div className="gradient-border p-6 rounded-2xl bg-card space-y-4">
+            <div className="glass-panel glass-panel-interactive p-6 rounded-2xl space-y-4">
               <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                 <Sparkles className="h-5 w-5" />
               </div>
