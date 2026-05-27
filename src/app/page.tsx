@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement } from "@/components/MotionWrappers";
+import InteractiveGlobe from "@/components/InteractiveGlobe";
 
 export const revalidate = 0; // Ensure data is loaded fresh on every request
 
@@ -459,28 +460,30 @@ export default async function Home() {
             </FadeIn>
 
             {/* GEO Visualizer */}
-            <FadeIn delay={0.2} className="lg:col-span-6 relative flex justify-center">
-              <Hover3DCard className="w-full max-w-lg p-10 rounded-[2.5rem] glass-panel border border-white/20 shadow-2xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(20rem_20rem_at_center,rgba(59,130,246,0.15),transparent)]" />
-                <h3 className="text-xl font-extrabold text-white mb-8 flex items-center gap-3 relative z-10">
+            <FadeIn delay={0.2} className="lg:col-span-6 relative flex justify-center w-full">
+              <Hover3DCard className="w-full max-w-lg p-6 rounded-[2.5rem] glass-panel border border-white/20 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(20rem_20rem_at_center,rgba(0,214,161,0.05),transparent)] pointer-events-none" />
+                <h3 className="text-xl font-heading font-extrabold text-white mb-4 flex items-center gap-3 relative z-10 px-4">
                   <Database className="h-6 w-6 text-accent animate-pulse" /> Live Regional Nodes
                 </h3>
-                <div className="space-y-6 relative z-10 font-mono text-sm">
-                  <div className="flex justify-between items-center py-3 border-b border-white/10">
-                    <span className="text-muted-foreground/80">US-IL (Chicago Node)</span>
-                    <span className="text-primary font-bold">Active [41.8781, -87.6298]</span>
-                  </div>
-                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                
+                {/* Embedded 3D Globe */}
+                <div className="relative z-10 -mx-4">
+                  <InteractiveGlobe />
+                </div>
+                
+                <div className="space-y-4 relative z-10 font-mono text-xs px-4 pb-2">
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-muted-foreground/80">US-NY (New York Node)</span>
-                    <span className="text-primary font-bold">Active [40.7128, -74.0060]</span>
+                    <span className="text-primary font-bold">Active [40.71, -74.00]</span>
                   </div>
-                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-muted-foreground/80">UK-LND (London Node)</span>
-                    <span className="text-primary font-bold">Active [51.5074, -0.1278]</span>
+                    <span className="text-primary font-bold">Active [51.50, -0.12]</span>
                   </div>
-                  <div className="flex justify-between items-center py-3">
+                  <div className="flex justify-between items-center py-2">
                     <span className="text-muted-foreground/80">IN-KA (Bangalore Node)</span>
-                    <span className="text-primary font-bold">Active [12.9716, 77.5946]</span>
+                    <span className="text-primary font-bold">Active [12.97, 77.59]</span>
                   </div>
                 </div>
               </Hover3DCard>

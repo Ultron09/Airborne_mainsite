@@ -48,15 +48,32 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-orbitron: var(--font-orbitron);
+  --font-exo2: var(--font-exo2);
+  --font-dmsans: var(--font-dmsans);
+  --font-rajdhani: var(--font-rajdhani);
+  --font-firacode: var(--font-firacode);
+  --font-sans: var(--font-dmsans);
+  --font-mono: var(--font-firacode);
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-sans), sans-serif;
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-orbitron), sans-serif;
+}
+
+.font-subheading {
+  font-family: var(--font-exo2), sans-serif;
+}
+
+.font-tech {
+  font-family: var(--font-rajdhani), sans-serif;
 }
 
 /* Custom premium styles matching Antigravity & SwiftUI Liquid Glass */

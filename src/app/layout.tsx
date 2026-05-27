@@ -1,17 +1,33 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Orbitron, Exo_2, DM_Sans, Rajdhani, Fira_Code } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Script from "next/script";
 import Background3D from "@/components/Background3D";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const exo2 = Exo_2({
+  variable: "--font-exo2",
+  subsets: ["latin"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dmsans",
+  subsets: ["latin"],
+});
+
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-firacode",
   subsets: ["latin"],
 });
 
@@ -78,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${orbitron.variable} ${exo2.variable} ${dmSans.variable} ${rajdhani.variable} ${firaCode.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
         <Background3D />
@@ -99,7 +115,7 @@ export default function RootLayout({
                 <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110">
                   A
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors drop-shadow-md">
+                <span className="text-xl font-heading font-bold tracking-tight text-white group-hover:text-primary transition-colors drop-shadow-md">
                   Airborne<span className="text-primary font-medium">HRS</span>
                 </span>
               </Link>
@@ -140,7 +156,7 @@ export default function RootLayout({
         <main className="flex-grow flex flex-col">{children}</main>
 
         {/* Footer */}
-        <footer className="relative overflow-hidden border-t border-white/10 pt-16 pb-8 bg-background/50 backdrop-blur-xl">
+        <footer className="relative overflow-hidden border-t-2 border-primary/20 pt-16 pb-8 bg-background/80 backdrop-blur-3xl shadow-[0_-10px_40px_rgba(0,214,161,0.1)]">
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
             <div className="space-y-6">
@@ -148,7 +164,7 @@ export default function RootLayout({
                 <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.3)]">
                   A
                 </div>
-                <span className="font-bold tracking-tight text-white text-xl">Airborne<span className="text-primary">HRS</span></span>
+                <span className="font-heading font-bold tracking-tight text-white text-xl">Airborne<span className="text-primary">HRS</span></span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
                 Revolutionizing workforce intelligence through advanced AI architectures and 3D cognitive interfaces.
