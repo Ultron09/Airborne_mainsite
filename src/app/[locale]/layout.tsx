@@ -10,27 +10,32 @@ import {getMessages, getTranslations} from 'next-intl/server';
 const orbitron = Orbitron({
   variable: "--font-orbitron",
   subsets: ["latin"],
+  preload: false,
 });
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
   subsets: ["latin"],
+  preload: false,
 });
 
 const dmSans = DM_Sans({
   variable: "--font-dmsans",
   subsets: ["latin"],
+  preload: false,
 });
 
 const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
+  preload: false,
 });
 
 const firaCode = Fira_Code({
   variable: "--font-firacode",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
