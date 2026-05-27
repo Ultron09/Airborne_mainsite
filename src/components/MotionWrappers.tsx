@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import React, { useRef } from "react";
+import Link from "next/link";
 
 export const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
   <motion.div
@@ -38,7 +39,7 @@ export const FloatingElement = ({ children, className = "", delay = 0 }: { child
   </motion.div>
 );
 
-export const MagneticButton = ({ children, className = "", as: Component = "button", href }: { children: React.ReactNode, className?: string, as?: any, href?: string }) => {
+export const MagneticButton = ({ children, className = "", href }: { children: React.ReactNode, className?: string, href?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -76,10 +77,13 @@ export const MagneticButton = ({ children, className = "", as: Component = "butt
   );
 
   if (href) {
-    return <Component href={href}>{Inner}</Component>;
+    if (href.startsWith("http")) {
+      return <a href={href}>{Inner}</a>;
+    }
+    return <Link href={href}>{Inner}</Link>;
   }
   
-  return <Component>{Inner}</Component>;
+  return <button>{Inner}</button>;
 };
 
 export const ScrollReveal = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {

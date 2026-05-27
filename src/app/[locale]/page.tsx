@@ -69,14 +69,14 @@ export default async function Home() {
               </FadeIn>
               
               <FadeIn delay={0.7} className="flex flex-wrap gap-6 pt-6">
-                <MagneticButton as={Link} href="https://jobs.airbornehrs.in">
+                <MagneticButton href="https://jobs.airbornehrs.in">
                   <div className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-[0_0_30px_rgba(0,214,161,0.4)] hover:bg-white hover:text-primary transition-all">
                     {t('cta1')}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </div>
                 </MagneticButton>
                 
-                <MagneticButton as={Link} href="/blog">
+                <MagneticButton href="/blog">
                   <div className="inline-flex items-center justify-center rounded-full glass-panel px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all">
                     {t('cta2')}
                   </div>
@@ -281,7 +281,7 @@ export default async function Home() {
               <h2 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-white drop-shadow-md">Insights & Data</h2>
               <p className="text-muted-foreground text-xl">Discover how AI recruitment is transforming workflows.</p>
             </div>
-            <MagneticButton as={Link} href="/blog">
+            <MagneticButton href="/blog">
               <div className="inline-flex items-center justify-center rounded-full glass-panel px-6 py-3 text-sm font-bold text-white hover:bg-white/10 transition-all">
                 Browse Publications <ArrowRight className="ml-2 h-4 w-4" />
               </div>
