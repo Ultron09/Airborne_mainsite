@@ -22,6 +22,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.airbornehrs.in"),
   title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
   description: "Leverage state-of-the-art AI technology to transform your hiring, talent acquisition, and workforce management. Optimize search, automate screenings, and align people with potential.",
   keywords: ["HR AI", "Workforce Intelligence", "AI recruitment", "Advanced talent acquisition", "HR Tech", "Airborne HRS", "GEO optimized recruiting", "Artificial Consciousness", "AGI recruiting", "Suryaansh Prithvijit Singh"],

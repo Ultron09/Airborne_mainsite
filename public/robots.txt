@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.airbornehrs.in
+
+# Sitemaps
+Sitemap: https://www.airbornehrs.in/sitemap.xml
+Sitemap: https://www.airbornehrs.in/server-sitemap.xml
