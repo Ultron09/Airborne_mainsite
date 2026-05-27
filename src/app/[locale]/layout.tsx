@@ -64,9 +64,7 @@ export const metadata: Metadata = {
   },
 };
 
-export function generateStaticParams() {
-  return [{locale: 'en'}, {locale: 'es'}, {locale: 'hi'}];
-}
+// generateStaticParams removed because pages are fully dynamic (SSR)
 
 export default async function RootLayout({
   children,
