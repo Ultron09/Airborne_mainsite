@@ -39,12 +39,13 @@ export const FloatingElement = ({ children, className = "", delay = 0 }: { child
   </motion.div>
 );
 
+const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+
 export const MagneticButton = ({ children, className = "", href }: { children: React.ReactNode, className?: string, href?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
@@ -86,11 +87,13 @@ export const MagneticButton = ({ children, className = "", href }: { children: R
   return <button>{Inner}</button>;
 };
 
+const defaultScrollOffset: any = ["start end", "center center"];
+
 export const ScrollReveal = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "center center"]
+    offset: defaultScrollOffset
   });
   
   const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
