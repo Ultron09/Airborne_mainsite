@@ -14,8 +14,10 @@ import {
   Network
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
-import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
-
+import { FadeIn, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
+import SpotlightCard from "@/components/SpotlightCard";
+import VelocityMarquee from "@/components/VelocityMarquee";
+import ParallaxImage from "@/components/ParallaxImage";
 import { getTranslations } from 'next-intl/server';
 import NeuromorphicCoreWrapper from "@/components/NeuromorphicCoreWrapper";
 
@@ -47,26 +49,26 @@ export default async function Home() {
             
             {/* Hero Text */}
             <div className="lg:col-span-7 space-y-8 text-left z-10">
-              <FadeIn delay={0.1}>
+              <FadeIn delay={2.1}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-xs font-bold text-primary shadow-[0_0_20px_rgba(0,214,161,0.2)]">
                   <Sparkles className="h-4 w-4" /> {t('badge')}
                 </div>
               </FadeIn>
               
-              <FadeIn delay={0.3}>
+              <FadeIn delay={2.3}>
                 <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-extrabold tracking-tighter leading-[1.1] text-white drop-shadow-2xl">
                   {t('titlePart1')}<br/>
                   <span className="gradient-text">{t('titlePart2')}</span>
                 </h1>
               </FadeIn>
               
-              <FadeIn delay={0.5}>
+              <FadeIn delay={2.5}>
                 <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-light">
                   {t('description')}
                 </p>
               </FadeIn>
               
-              <FadeIn delay={0.7} className="flex flex-wrap gap-6 pt-6">
+              <FadeIn delay={2.7} className="flex flex-wrap gap-6 pt-6">
                 <MagneticButton href="https://jobs.airbornehrs.in/jobs">
                   <div className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-[0_0_30px_rgba(0,214,161,0.4)] hover:bg-white hover:text-primary transition-all">
                     {t('cta1')}
@@ -83,7 +85,7 @@ export default async function Home() {
             </div>
 
             {/* Hero Visual Mockup */}
-            <FadeIn delay={0.8} className="lg:col-span-5 relative flex justify-center perspective-[1200px]">
+            <FadeIn delay={2.8} className="lg:col-span-5 relative flex justify-center perspective-[1200px]">
               <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
               <IsometricTilt className="w-full max-w-lg relative aspect-square z-10 group">
                 {/* Backplate / Shadow */}
@@ -91,11 +93,10 @@ export default async function Home() {
                 
                 {/* Main Floating Mockup */}
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden glass-panel border border-white/10 p-2 shadow-2xl bg-black/40 backdrop-blur-2xl" style={{ transformStyle: 'preserve-3d' }}>
-                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-black" style={{ transform: 'translateZ(10px)' }}>
-                    <Image
+                  <div className="absolute inset-[2px] rounded-2xl overflow-hidden glass-panel z-10 group-hover:shadow-[0_0_50px_rgba(0,214,161,0.3)] transition-shadow duration-500">
+                    <ParallaxImage
                       src="/JobPortal_3D.png"
                       alt="Airborne HRS Platform Preview"
-                      fill
                       sizes="(max-w-768px) 100vw, 600px"
                       priority
                       className="object-cover object-center scale-105 opacity-90"
@@ -131,6 +132,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Marquee Ticker */}
+      <VelocityMarquee text="AGI WORKFORCE INTELLIGENCE • AUTOMATED ACQUISITION • NEURAL MATCHING • " />
+
       {/* Asymmetric Bento Grid (Core Solutions) */}
       <section id="features" className="py-32 relative">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -147,8 +151,8 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
             
             {/* Employers (Large, spans 2 columns, 2 rows if configured, but let's do 2 cols 1 row) */}
-            <Hover3DCard className="md:col-span-2 md:row-span-2 glass-panel rounded-[2rem] p-10 flex flex-col justify-between group overflow-hidden relative">
-              <div className="absolute -right-20 -top-20 w-80 h-80 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-colors duration-700" />
+            <SpotlightCard className="md:col-span-2 md:row-span-2 glass-panel p-10 flex flex-col justify-between group overflow-visible">
+              <div className="absolute -right-20 -top-20 w-80 h-80 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-colors duration-700 pointer-events-none" />
               <div className="relative z-10">
                 <div className="h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary mb-8 backdrop-blur-md">
                   <Building2 className="h-8 w-8" />
@@ -163,11 +167,11 @@ export default async function Home() {
                   Access Portal <ArrowRight className="ml-2 h-5 w-5 transform group-hover/btn:translate-x-2 transition-transform" />
                 </a>
               </div>
-            </Hover3DCard>
+            </SpotlightCard>
 
             {/* Candidates (Tall vertical) */}
-            <Hover3DCard className="glass-panel rounded-[2rem] p-8 flex flex-col justify-between group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <SpotlightCard spotlightColor="rgba(52, 245, 197, 0.15)" className="glass-panel p-8 flex flex-col justify-between group overflow-visible">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               <div className="relative z-10">
                 <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-accent mb-6 backdrop-blur-md">
                   <Briefcase className="h-6 w-6" />
@@ -182,11 +186,11 @@ export default async function Home() {
                   Enter Hub <ArrowRight className="ml-2 h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
-            </Hover3DCard>
+            </SpotlightCard>
 
             {/* Universities (Standard) */}
-            <Hover3DCard className="glass-panel rounded-[2rem] p-8 flex flex-col justify-between group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <SpotlightCard className="glass-panel p-8 flex flex-col justify-between group overflow-visible">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               <div className="relative z-10">
                 <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-primary mb-6 backdrop-blur-md">
                   <GraduationCap className="h-6 w-6" />
@@ -201,7 +205,7 @@ export default async function Home() {
                   Admin Login <ArrowRight className="ml-2 h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
-            </Hover3DCard>
+            </SpotlightCard>
 
           </div>
         </div>
@@ -236,16 +240,17 @@ export default async function Home() {
             {/* Parallax Founder Image */}
             <ScrollReveal className="relative flex justify-center lg:justify-end">
               <div className="relative w-full max-w-lg aspect-[3/4] rounded-[3rem] overflow-hidden glass-panel p-2 shadow-2xl shadow-primary/20">
-                <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-black">
-                  <Image
+                {/* Founder Image (Masked) */}
+                <div className="absolute inset-x-4 inset-y-4 rounded-full overflow-hidden border border-white/5 bg-gradient-to-b from-black/0 to-primary/20 z-10">
+                  <ParallaxImage
                     src="/founder_3D.png"
                     alt="Suryaansh Prithvijit Singh"
-                    fill
                     sizes="(max-w-768px) 100vw, 600px"
-                    className="object-cover object-top opacity-90 transition-transform duration-[2s] hover:scale-110"
+                    className="object-cover object-top opacity-90"
+                    offset={30}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
               </div>
             </ScrollReveal>
 
@@ -280,7 +285,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {latestPosts.map((post, i) => (
                 <FadeIn key={post.id} delay={0.1 * i}>
-                  <Hover3DCard className="flex flex-col justify-between p-8 rounded-[2rem] glass-panel border border-white/10 h-full group">
+                  <SpotlightCard className="flex flex-col justify-between p-8 glass-panel h-full group">
                     <div className="space-y-6">
                       {post.targetLocation && (
                         <div className="inline-flex items-center gap-1.5 text-xs text-primary font-bold bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
@@ -303,7 +308,7 @@ export default async function Home() {
                         Read <ArrowRight className="ml-1.5 h-4 w-4" />
                       </Link>
                     </div>
-                  </Hover3DCard>
+                  </SpotlightCard>
                 </FadeIn>
               ))}
             </div>
@@ -322,10 +327,10 @@ export default async function Home() {
             </p>
           </ScrollReveal>
           <ScrollReveal>
-            <Hover3DCard className="max-w-md mx-auto p-10 rounded-[3rem] glass-panel border border-primary/30 shadow-[0_0_50px_rgba(0,214,161,0.1)] text-left">
+            <SpotlightCard className="max-w-md mx-auto p-10 glass-panel shadow-[0_0_50px_rgba(0,214,161,0.1)] text-left">
               <h4 className="text-white font-heading font-bold text-2xl mb-8 text-center">Initialize Demo</h4>
               <DemoForm />
-            </Hover3DCard>
+            </SpotlightCard>
           </ScrollReveal>
         </div>
       </section>

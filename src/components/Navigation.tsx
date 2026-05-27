@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { MagneticButton } from "@/components/MotionWrappers";
 
 export default function Navigation({ locale }: { locale: string }) {
   const tNav = useTranslations('Navigation');
@@ -40,32 +41,36 @@ export default function Navigation({ locale }: { locale: string }) {
 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href={`/${locale}/#features`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-            {tNav('features')}
-          </Link>
-          <Link href={`/${locale}/#technology`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-            {tNav('technology')}
-          </Link>
-          <Link href={`/${locale}/blog`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-            {tNav('blog')}
-          </Link>
+          <MagneticButton href={`/${locale}/#features`}>
+            <span className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all inline-block px-2 py-1">
+              {tNav('features')}
+            </span>
+          </MagneticButton>
+          <MagneticButton href={`/${locale}/#technology`}>
+            <span className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all inline-block px-2 py-1">
+              {tNav('technology')}
+            </span>
+          </MagneticButton>
+          <MagneticButton href={`/${locale}/blog`}>
+            <span className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all inline-block px-2 py-1">
+              {tNav('blog')}
+            </span>
+          </MagneticButton>
         </nav>
       </div>
 
       {/* CTA Buttons */}
       <div className="flex items-center gap-4">
-        <a
-          href="https://jobs.airbornehrs.in/jobs"
-          className="hidden lg:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3"
-        >
-          {tNav('jobPortal')}
-        </a>
-        <Link
-          href={`/${locale}/#contact`}
-          className="hidden sm:inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105"
-        >
-          {tNav('requestDemo')}
-        </Link>
+        <MagneticButton href="https://jobs.airbornehrs.in/jobs">
+          <span className="hidden lg:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3">
+            {tNav('jobPortal')}
+          </span>
+        </MagneticButton>
+        <MagneticButton href={`/${locale}/#contact`}>
+          <span className="hidden sm:inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105">
+            {tNav('requestDemo')}
+          </span>
+        </MagneticButton>
         {/* Language Switcher */}
         <div className="flex items-center gap-2 sm:ml-4 sm:border-l border-white/20 sm:pl-4">
           <Link href="/en" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">EN</Link>

@@ -39,7 +39,7 @@ export const FloatingElement = ({ children, className = "", delay = 0 }: { child
   </motion.div>
 );
 
-const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+const springConfig = { damping: 15, stiffness: 300, mass: 0.1 };
 
 export const MagneticButton = ({ children, className = "", href }: { children: React.ReactNode, className?: string, href?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,9 +55,9 @@ export const MagneticButton = ({ children, className = "", href }: { children: R
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    // Magnetic pull distance (max 20px)
-    x.set((e.clientX - centerX) * 0.2);
-    y.set((e.clientY - centerY) * 0.2);
+    // Magnetic pull distance
+    x.set((e.clientX - centerX) * 0.4);
+    y.set((e.clientY - centerY) * 0.4);
   };
 
   const handleMouseLeave = () => {

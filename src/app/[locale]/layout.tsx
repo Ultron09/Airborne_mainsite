@@ -8,6 +8,7 @@ import Background3D from "@/components/Background3D";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
 import Navigation from "@/components/Navigation";
+import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 
@@ -89,6 +90,7 @@ export default async function RootLayout({
       className={`${orbitron.variable} ${dmSans.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative bg-noise">
+        <Preloader />
         <NextIntlClientProvider messages={messages}>
         <SmoothScroll>
           <CustomCursor />
