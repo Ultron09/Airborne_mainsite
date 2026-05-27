@@ -8,6 +8,8 @@ import Background3D from "@/components/Background3D";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
 import Navigation from "@/components/Navigation";
+import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -88,20 +90,22 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative bg-noise">
         <NextIntlClientProvider messages={messages}>
-        <Background3D />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
-        />
-        
-        <Navigation locale={resolvedParams.locale} />
+        <SmoothScroll>
+          <CustomCursor />
+          <Background3D />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+          />
+          
+          <Navigation locale={resolvedParams.locale} />
 
-        {/* Page Content */}
-        <main className="flex-grow flex flex-col pt-24">{children}</main>
+          {/* Page Content */}
+          <main className="flex-grow flex flex-col pt-24">{children}</main>
 
         {/* Footer */}
         <footer className="relative overflow-hidden border-t border-primary/20 pt-16 pb-8 bg-[#011411]/90 backdrop-blur-3xl shadow-[0_-10px_40px_rgba(0,214,161,0.05)]">
@@ -151,6 +155,7 @@ export default async function RootLayout({
           </div>
         </footer>
         <MetricoolScript />
+        </SmoothScroll>
         </NextIntlClientProvider>
       </body>
     </html>
