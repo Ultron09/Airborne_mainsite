@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import prisma from "@/lib/prisma";
 import { BlogPost } from "@prisma/client";
 import {
@@ -18,10 +17,7 @@ import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
 
 import { getTranslations } from 'next-intl/server';
-
-const NeuromorphicCore = dynamic(() => import("@/components/NeuromorphicCore"), {
-  ssr: false,
-});
+import NeuromorphicCoreWrapper from "@/components/NeuromorphicCoreWrapper";
 
 export const revalidate = 0;
 
@@ -42,7 +38,7 @@ export default async function Home() {
     <div className="relative isolate overflow-hidden bg-transparent">
       
       {/* Dynamic 3D Neuromorphic Core Background */}
-      <NeuromorphicCore />
+      <NeuromorphicCoreWrapper />
 
       {/* Hero Section - Cinematic Entrance */}
       <section className="relative px-6 lg:px-8 pt-32 pb-24 md:pt-40 md:pb-32 min-h-[90vh] flex items-center">
