@@ -71,6 +71,11 @@ export default function Navigation({ locale }: { locale: string }) {
           <Link href="/en" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">EN</Link>
           <Link href="/es" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">ES</Link>
           <Link href="/hi" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">HI</Link>
+          <Link href="/fr" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">FR</Link>
+          <Link href="/ar" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">AR</Link>
+          <Link href="/nl" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">NL</Link>
+          <Link href="/ja" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">JA</Link>
+          <Link href="/zh" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">ZH</Link>
         </div>
       </div>
     </motion.header>

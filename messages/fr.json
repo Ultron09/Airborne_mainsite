@@ -1,0 +1,25 @@
+{
+  "Navigation": {
+    "features": "Fonctionnalités",
+    "technology": "Technologie IA",
+    "blog": "Blog",
+    "jobPortal": "Portail d'emploi",
+    "requestDemo": "Demander une démo"
+  },
+  "Hero": {
+    "badge": "Solutions d'IA pour la Main-d'œuvre de Nouvelle Génération",
+    "titlePart1": "Architecturer l'avenir de",
+    "titlePart2": "l'Intelligence de la Main-d'œuvre",
+    "description": "Connectez les talents, les employeurs et les universités avec une structure RH avancée. Exploitez notre portail d'emploi et notre SIRH pour automatiser la sélection, rationaliser les pipelines de placement et maximiser la découvrabilité.",
+    "cta1": "Entrer dans le Portail d'Emploi",
+    "cta2": "Explorer les Perspectives"
+  },
+  "Analytics": {
+    "badge": "Télémétrie en temps réel",
+    "title": "Tableau de bord Analytique Dynamique 3D",
+    "description": "Visualisez votre vélocité d'embauche, les taux de correspondance des candidats et la distribution géographique des talents en temps réel. Notre tableau de bord interactif flottant dans l'espace 3D offre des perspectives inégalées sur votre main-d'œuvre.",
+    "metric1": "Vélocité d'embauche",
+    "metric2": "Taux de correspondance",
+    "metric3": "Nœuds Mondiaux"
+  }
+}

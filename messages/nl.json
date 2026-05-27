@@ -1,0 +1,25 @@
+{
+  "Navigation": {
+    "features": "Functies",
+    "technology": "AI-technologie",
+    "blog": "Blog",
+    "jobPortal": "Naar Vacaturebank",
+    "requestDemo": "Demo aanvragen"
+  },
+  "Hero": {
+    "badge": "Next-Gen AI Workforce Oplossingen",
+    "titlePart1": "Architectuur van de toekomst van",
+    "titlePart2": "Workforce Intelligence",
+    "description": "Verbind talent, werkgevers en universiteiten met een geavanceerde HR-structuur. Benut onze Vacaturebank en HRMS om de selectie te automatiseren, plaatsingspijplijnen te stroomlijnen en ontdekbaarheid te maximaliseren.",
+    "cta1": "Open Vacaturebank",
+    "cta2": "Verken Inzichten"
+  },
+  "Analytics": {
+    "badge": "Real-time Telemetrie",
+    "title": "Dynamisch 3D Analytics Dashboard",
+    "description": "Visualiseer uw wervingssnelheid, matchpercentages van kandidaten en geografische talentverdeling in real-time. Ons interactieve dashboard, zwevend in een 3D-ruimte, biedt ongeëvenaarde inzichten in uw personeelsbestand.",
+    "metric1": "Wervingssnelheid",
+    "metric2": "Matchpercentages",
+    "metric3": "Wereldwijde Nodes"
+  }
+}

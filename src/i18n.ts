@@ -1,12 +1,17 @@
 import {notFound} from 'next/navigation';
 import {getRequestConfig} from 'next-intl/server';
  
-const locales = ['en', 'es', 'hi'];
+const locales = ['en', 'es', 'hi', 'fr', 'ar', 'nl', 'ja', 'zh'];
 
 const messageImports = {
   en: () => import('../messages/en.json'),
   es: () => import('../messages/es.json'),
-  hi: () => import('../messages/hi.json')
+  hi: () => import('../messages/hi.json'),
+  fr: () => import('../messages/fr.json'),
+  ar: () => import('../messages/ar.json'),
+  nl: () => import('../messages/nl.json'),
+  ja: () => import('../messages/ja.json'),
+  zh: () => import('../messages/zh.json')
 };
  
 export default getRequestConfig(async ({requestLocale}) => {

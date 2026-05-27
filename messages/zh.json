@@ -1,0 +1,25 @@
+{
+  "Navigation": {
+    "features": "功能",
+    "technology": "AI 技术",
+    "blog": "博客",
+    "jobPortal": "前往招聘门户",
+    "requestDemo": "申请演示"
+  },
+  "Hero": {
+    "badge": "新一代 AI 劳动力解决方案",
+    "titlePart1": "构筑未来的",
+    "titlePart2": "劳动力智能",
+    "description": "通过先进的人力资源架构连接人才、雇主和大学。利用我们的招聘门户和 HRMS 自动筛选、简化安置流程并最大化曝光率。",
+    "cta1": "进入招聘门户",
+    "cta2": "探索洞察"
+  },
+  "Analytics": {
+    "badge": "实时遥测",
+    "title": "动态 3D 分析仪表板",
+    "description": "实时可视化您的招聘速度、候选人匹配率和人才的地理分布。我们悬浮在 3D 空间中的交互式仪表板可为您提供无与伦比的劳动力洞察。",
+    "metric1": "招聘速度",
+    "metric2": "匹配率",
+    "metric3": "全球节点"
+  }
+}
