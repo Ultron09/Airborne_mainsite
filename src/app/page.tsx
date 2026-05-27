@@ -4,20 +4,16 @@ import prisma from "@/lib/prisma";
 import { BlogPost } from "@prisma/client";
 import {
   ArrowRight,
-  Bot,
-  Search,
   MapPin,
   Sparkles,
   Building2,
   GraduationCap,
   Briefcase,
   Layers,
-  Database,
   Cpu
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement } from "@/components/MotionWrappers";
-import InteractiveGlobe from "@/components/InteractiveGlobe";
 
 export const revalidate = 0; // Ensure data is loaded fresh on every request
 
@@ -80,8 +76,8 @@ export default async function Home() {
                 <span className="gradient-text">Workforce Intelligence</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                Connect talent, employers, and universities with an advanced, 
-                GEO-optimized cognitive platform. Harness AI agents to automate screening, 
+                Connect talent, employers, and universities with an advanced 
+                HR Fabric. Harness our Job Portal and HRMS to automate screening, 
                 streamline placement pipelines, and maximize discoverability.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
@@ -273,80 +269,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 30 AI Agents Orchestration Section */}
-      <section className="py-24 md:py-32 relative border-t border-border/10 bg-[radial-gradient(ellipse_at_bottom,rgba(52,245,197,0.08),transparent_70%)]">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
-            {/* Details Column */}
-            <FadeIn className="lg:col-span-7 space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 border border-accent/30 text-xs font-bold text-accent backdrop-blur-md">
-                <Bot className="h-4 w-4" /> Autonomous Workforce Integration
-              </div>
-              <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight drop-shadow-xl">
-                Supercharged by <span className="gradient-text">30 Specialized Agents</span>
-              </h2>
-              <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-                Rather than relying on one general-purpose chatbot, Airborne HRS deploys a coordinated fleet of 
-                <strong> 30 autonomous AI agents</strong>. Each agent is meticulously trained on specific operational domains, 
-                communicating in real-time under our proprietary central orchestrator to manage end-to-end recruitment pipelines.
-              </p>
-              
-              {/* Agent Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6">
-                <Hover3DCard className="p-6 rounded-2xl glass-panel border border-white/10 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-3 w-3 rounded-full bg-primary shadow-[0_0_8px_#00D6A1] animate-pulse" />
-                    <h4 className="text-base font-bold text-white">Direct Sourcing Agent</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Scans professional networks to map high-potential passive candidates.</p>
-                </Hover3DCard>
-                
-                <Hover3DCard className="p-6 rounded-2xl glass-panel border border-white/10 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-3 w-3 rounded-full bg-accent shadow-[0_0_8px_#34F5C5] animate-pulse" />
-                    <h4 className="text-base font-bold text-white">Cognitive Interviewer</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Simulates natural-language screenings, analyzing logical coherence.</p>
-                </Hover3DCard>
 
-                <Hover3DCard className="p-6 rounded-2xl glass-panel border border-white/10 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-3 w-3 rounded-full bg-accent shadow-[0_0_8px_#34F5C5] animate-pulse" />
-                    <h4 className="text-base font-bold text-white">GEO Node Compliance</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Matches candidates against local wage brackets and regional labor laws.</p>
-                </Hover3DCard>
-
-                <Hover3DCard className="p-6 rounded-2xl glass-panel border border-white/10 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-3 w-3 rounded-full bg-primary shadow-[0_0_8px_#00D6A1] animate-pulse" />
-                    <h4 className="text-base font-bold text-white">Psychographic Profiler</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Audits candidate values and team compatibility for retention.</p>
-                </Hover3DCard>
-              </div>
-            </FadeIn>
-
-            {/* Visual Column */}
-            <FadeIn delay={0.3} className="lg:col-span-5 flex justify-center">
-              <FloatingElement delay={1} className="relative w-full max-w-md aspect-square rounded-[2rem] overflow-hidden glass-panel border border-accent/30 neon-glow-accent p-2">
-                <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
-                  <Image
-                    src="/30_agents_3D.png"
-                    alt="Autonomous AI Agents Network"
-                    fill
-                    sizes="(max-w-768px) 100vw, 500px"
-                    className="object-cover opacity-90 mix-blend-screen transition-transform duration-700 hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-                </div>
-              </FloatingElement>
-            </FadeIn>
-
-          </div>
-        </div>
-      </section>
 
       {/* Vision & Leadership (Founder Suryaansh Prithvijit Singh) */}
       <section className="py-24 md:py-32 relative border-t border-border/10 bg-[radial-gradient(ellipse_at_top,rgba(0,214,161,0.05),transparent_70%)]">
@@ -381,13 +304,13 @@ export default async function Home() {
                 <GraduationCap className="h-4 w-4" /> Vision & Leadership
               </div>
               <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight drop-shadow-xl">
-                Engineering <span className="gradient-text">Artificial Consciousness</span> & AGI
+                Research Labs: <span className="gradient-text">Continual Learning</span> & AGI
               </h2>
               <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
                 Founded by <strong>Suryaansh Prithvijit Singh</strong>, an AI/ML specialist at Universal AI University, 
-                Airborne HRS is built on the philosophy of AGI (Artificial General Intelligence) and cognitive resilience. 
-                Under his leadership, we are shifting the industry from static database matchmakers to fully adaptive, 
-                goal-directed robotic systems that operate with human-like comprehension.
+                Airborne HRS is built on the philosophy of AGI (Artificial General Intelligence) and continual learning. 
+                Under his leadership, our research labs are shifting the industry from static database matchmakers to fully adaptive, 
+                cognitive systems that operate with human-like comprehension.
               </p>
               
               <div className="space-y-6 pt-4">
@@ -423,75 +346,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* GEO and SEO Search Engine Optimization */}
-      <section className="py-24 bg-muted/40 border-y border-border/20 backdrop-blur-md relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
-            <FadeIn className="lg:col-span-6 space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-xs font-bold text-accent backdrop-blur-md">
-                <MapPin className="h-4 w-4" /> GEO & SEO Native Discovery
-              </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">
-                Engineered for Localized & Global Discoverability
-              </h2>
-              <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-                Traditional hiring sites get lost in generic queries. Airborne HRS integrates localized GEO indexes 
-                directly into its core pages. This means search engines like Google and generative search agents 
-                locate your listings and blog content for specific regions instantly.
-              </p>
-              
-              <div className="space-y-6 pt-4">
-                <Hover3DCard className="flex gap-5 p-6 rounded-3xl glass-panel border border-white/10">
-                  <Search className="h-8 w-8 text-primary flex-shrink-0" />
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-2">Generative Engine Optimization (GEO)</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">JSON-LD schema mapping embeds structured, citation-friendly answers ready for AI-generated search results.</p>
-                  </div>
-                </Hover3DCard>
-                <Hover3DCard className="flex gap-5 p-6 rounded-3xl glass-panel border border-white/10">
-                  <Layers className="h-8 w-8 text-accent flex-shrink-0" />
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-2">Structured Local Schemas</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">Each location page contains coordinate-based geographic meta headers telling indexers exactly where the talent search is active.</p>
-                  </div>
-                </Hover3DCard>
-              </div>
-            </FadeIn>
 
-            {/* GEO Visualizer */}
-            <FadeIn delay={0.2} className="lg:col-span-6 relative flex justify-center w-full">
-              <Hover3DCard className="w-full max-w-lg p-6 rounded-[2.5rem] glass-panel border border-white/20 shadow-2xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(20rem_20rem_at_center,rgba(0,214,161,0.05),transparent)] pointer-events-none" />
-                <h3 className="text-xl font-heading font-extrabold text-white mb-4 flex items-center gap-3 relative z-10 px-4">
-                  <Database className="h-6 w-6 text-accent animate-pulse" /> Live Regional Nodes
-                </h3>
-                
-                {/* Embedded 3D Globe */}
-                <div className="relative z-10 -mx-4">
-                  <InteractiveGlobe />
-                </div>
-                
-                <div className="space-y-4 relative z-10 font-mono text-xs px-4 pb-2">
-                  <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-muted-foreground/80">US-NY (New York Node)</span>
-                    <span className="text-primary font-bold">Active [40.71, -74.00]</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-muted-foreground/80">UK-LND (London Node)</span>
-                    <span className="text-primary font-bold">Active [51.50, -0.12]</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-muted-foreground/80">IN-KA (Bangalore Node)</span>
-                    <span className="text-primary font-bold">Active [12.97, 77.59]</span>
-                  </div>
-                </div>
-              </Hover3DCard>
-            </FadeIn>
-
-          </div>
-        </div>
-      </section>
 
       {/* Latest Blogs Section */}
       <section className="py-24">

@@ -188,9 +188,9 @@ export default function RootLayout({
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-sm font-bold text-white tracking-widest uppercase">GEO / Edge Nodes</h4>
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Research Labs</h4>
               <p className="text-xs text-muted-foreground leading-relaxed glass-panel p-4 rounded-xl border border-white/5">
-                Airborne HRS content is natively structured using AI-readable schemas, enabling direct discovery by next-gen generative engines worldwide.
+                Working on continual learning and advanced artificial consciousness to revolutionize HR Fabric and HRMS systems.
               </p>
             </div>
           </div>
