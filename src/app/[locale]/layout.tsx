@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Orbitron, Exo_2, DM_Sans, Rajdhani, Fira_Code } from "next/font/google";
+import { Orbitron, DM_Sans } from "next/font/google";
 import "../globals.css";
 import Link from "next/link";
 import Script from "next/script";
 import Background3D from "@/components/Background3D";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
+import Navigation from "@/components/Navigation";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -13,27 +14,8 @@ const orbitron = Orbitron({
   preload: false,
 });
 
-const exo2 = Exo_2({
-  variable: "--font-exo2",
-  subsets: ["latin"],
-  preload: false,
-});
-
 const dmSans = DM_Sans({
   variable: "--font-dmsans",
-  subsets: ["latin"],
-  preload: false,
-});
-
-const rajdhani = Rajdhani({
-  variable: "--font-rajdhani",
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-  preload: false,
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-firacode",
   subsets: ["latin"],
   preload: false,
 });
@@ -56,15 +38,7 @@ export const metadata: Metadata = {
     title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
     description: "Transform your hiring and HR operations with AI.",
   },
-  other: {
-    "geo.position": "18.916;73.328",
-    "geo.region": "IN-MH",
-    "geo.placename": "Karjat, Maharashtra, India",
-    "ICBM": "18.916, 73.328",
-  },
 };
-
-// generateStaticParams removed because pages are fully dynamic (SSR)
 
 export default async function RootLayout({
   children,
@@ -75,7 +49,7 @@ export default async function RootLayout({
 }>) {
   const resolvedParams = await params;
   const messages = await getMessages();
-  const tNav = await getTranslations('Navigation');
+  
   const jsonLdOrg = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -108,9 +82,9 @@ export default async function RootLayout({
   return (
     <html
       lang={resolvedParams.locale}
-      className={`${orbitron.variable} ${exo2.variable} ${dmSans.variable} ${rajdhani.variable} ${firaCode.variable} h-full antialiased dark`}
+      className={`${orbitron.variable} ${dmSans.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative bg-noise">
         <NextIntlClientProvider messages={messages}>
         <Background3D />
         <script
@@ -121,64 +95,15 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
-        {/* Navigation Bar */}
-        <header className="sticky top-4 z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
-          <div className="glass-panel rounded-full border border-white/20 backdrop-blur-xl shadow-2xl shadow-primary/10 h-16 flex items-center justify-between px-6">
-            {/* Logo */}
-            <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center gap-2 group">
-                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110">
-                  A
-                </div>
-                <span className="text-xl font-heading font-bold tracking-tight text-white group-hover:text-primary transition-colors drop-shadow-md">
-                  Airborne<span className="text-primary font-medium">HRS</span>
-                </span>
-              </Link>
-
-              {/* Desktop Nav Links */}
-              <nav className="hidden md:flex items-center gap-8">
-                <Link href={`/${resolvedParams.locale}/#features`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  {tNav('features')}
-                </Link>
-                <Link href={`/${resolvedParams.locale}/#technology`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  {tNav('technology')}
-                </Link>
-                <Link href={`/${resolvedParams.locale}/blog`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  {tNav('blog')}
-                </Link>
-              </nav>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex items-center gap-4">
-              <a
-                href="https://jobs.airbornehrs.in"
-                className="hidden sm:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3"
-              >
-                {tNav('jobPortal')}
-              </a>
-              <Link
-                href={`/${resolvedParams.locale}/#contact`}
-                className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105"
-              >
-                {tNav('requestDemo')}
-              </Link>
-              {/* Language Switcher */}
-              <div className="flex items-center gap-2 ml-4 border-l border-white/20 pl-4">
-                <Link href="/en" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">EN</Link>
-                <Link href="/es" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">ES</Link>
-                <Link href="/hi" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">HI</Link>
-              </div>
-            </div>
-          </div>
-        </header>
+        
+        <Navigation locale={resolvedParams.locale} />
 
         {/* Page Content */}
-        <main className="flex-grow flex flex-col">{children}</main>
+        <main className="flex-grow flex flex-col pt-24">{children}</main>
 
         {/* Footer */}
-        <footer className="relative overflow-hidden border-t-2 border-primary/20 pt-16 pb-8 bg-background/80 backdrop-blur-3xl shadow-[0_-10px_40px_rgba(0,214,161,0.1)]">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+        <footer className="relative overflow-hidden border-t border-primary/20 pt-16 pb-8 bg-[#011411]/90 backdrop-blur-3xl shadow-[0_-10px_40px_rgba(0,214,161,0.05)]">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
@@ -193,7 +118,7 @@ export default async function RootLayout({
             </div>
             
             <div className="space-y-6">
-              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Platform</h4>
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase font-heading">Platform</h4>
               <ul className="space-y-3 text-sm">
                 <li><Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Features</Link></li>
                 <li><Link href="/#technology" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> AI Tech</Link></li>
@@ -202,14 +127,14 @@ export default async function RootLayout({
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Company</h4>
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase font-heading">Company</h4>
               <ul className="space-y-3 text-sm">
                 <li><Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Blog</Link></li>
               </ul>
             </div>
 
             <div className="space-y-6">
-              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Research Labs</h4>
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase font-heading">Research Labs</h4>
               <p className="text-xs text-muted-foreground leading-relaxed glass-panel p-4 rounded-xl border border-white/5">
                 Working on continual learning and advanced artificial consciousness to revolutionize HR Fabric and HRMS systems.
               </p>
