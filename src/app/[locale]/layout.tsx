@@ -124,7 +124,7 @@ export default async function RootLayout({
               <ul className="space-y-3 text-sm">
                 <li><Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Features</Link></li>
                 <li><Link href="/#technology" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> AI Tech</Link></li>
-                <li><a href="https://jobs.airbornehrs.in" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Job Portal</a></li>
+                <li><a href="https://jobs.airbornehrs.in/jobs" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Job Portal</a></li>
               </ul>
             </div>
 

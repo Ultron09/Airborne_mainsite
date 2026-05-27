@@ -339,7 +339,7 @@ export default async function BlogPostDetail(props: Props) {
               </p>
               <div className="pt-2">
                 <a
-                  href="https://jobs.airbornehrs.in"
+                  href="https://jobs.airbornehrs.in/jobs"
                   className="w-full inline-flex items-center justify-center rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground hover:bg-primary/95 transition-all shadow-md shadow-primary/20"
                 >
                   Enter Job Portal

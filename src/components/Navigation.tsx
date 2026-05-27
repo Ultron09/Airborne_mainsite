@@ -55,7 +55,7 @@ export default function Navigation({ locale }: { locale: string }) {
       {/* CTA Buttons */}
       <div className="flex items-center gap-4">
         <a
-          href="https://jobs.airbornehrs.in"
+          href="https://jobs.airbornehrs.in/jobs"
           className="hidden lg:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3"
         >
           {tNav('jobPortal')}

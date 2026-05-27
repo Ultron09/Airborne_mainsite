@@ -67,7 +67,7 @@ export default async function Home() {
               </FadeIn>
               
               <FadeIn delay={0.7} className="flex flex-wrap gap-6 pt-6">
-                <MagneticButton href="https://jobs.airbornehrs.in">
+                <MagneticButton href="https://jobs.airbornehrs.in/jobs">
                   <div className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-[0_0_30px_rgba(0,214,161,0.4)] hover:bg-white hover:text-primary transition-all">
                     {t('cta1')}
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -159,7 +159,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="mt-12 relative z-10">
-                <a href="https://jobs.airbornehrs.in/employer" className="inline-flex items-center text-primary font-bold hover:text-white transition-colors group/btn">
+                <a href="https://jobs.airbornehrs.in/for-employers" className="inline-flex items-center text-primary font-bold hover:text-white transition-colors group/btn">
                   Access Portal <ArrowRight className="ml-2 h-5 w-5 transform group-hover/btn:translate-x-2 transition-transform" />
                 </a>
               </div>
@@ -178,7 +178,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="mt-8 relative z-10">
-                <a href="https://jobs.airbornehrs.in/candidate" className="inline-flex items-center text-accent font-bold hover:text-white transition-colors group/btn">
+                <a href="https://jobs.airbornehrs.in/for-candidates" className="inline-flex items-center text-accent font-bold hover:text-white transition-colors group/btn">
                   Enter Hub <ArrowRight className="ml-2 h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -197,7 +197,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="mt-8 relative z-10">
-                <a href="https://jobs.airbornehrs.in/university" className="inline-flex items-center text-primary font-bold hover:text-white transition-colors group/btn">
+                <a href="https://jobs.airbornehrs.in/for-universities" className="inline-flex items-center text-primary font-bold hover:text-white transition-colors group/btn">
                   Admin Login <ArrowRight className="ml-2 h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
