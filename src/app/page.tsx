@@ -31,8 +31,34 @@ export default async function Home() {
     console.error("Failed to load blog posts:", error);
   }
 
+  const jsonLdLocalBiz = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Airborne HRS",
+    "image": "https://airbornehrs.in/favicon.ico",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Universal AI University Campus, Kushiwali, PO Gaurkamath, Vadap",
+      "addressLocality": "Karjat, Mumbai",
+      "addressRegion": "Maharashtra",
+      "postalCode": "410201",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.916,
+      "longitude": 73.328
+    },
+    "url": "https://airbornehrs.in",
+    "priceRange": "$$"
+  };
+
   return (
     <div className="relative isolate overflow-hidden bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBiz) }}
+      />
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,rgba(16,185,129,0.08),rgba(3,7,18,0))]" />
       <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-primary/10 to-accent/5 blur-3xl opacity-50 animate-glow-pulse" />
@@ -227,6 +253,157 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* 30 AI Agents Orchestration Section */}
+      <section className="py-20 md:py-32 relative border-t border-border/10 bg-[radial-gradient(ellipse_at_bottom,rgba(52,245,197,0.05),transparent_70%)]">
+        <div className="absolute left-0 bottom-1/4 -z-10 h-96 w-96 bg-accent/5 rounded-full blur-3xl opacity-40 animate-glow-pulse" />
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Details Column */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/35 text-xs font-semibold text-accent">
+                <Sparkles className="h-3.5 w-3.5" /> Autonomous Workforce Integration
+              </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                Supercharged by <span className="gradient-text">30 Specialized AI Agents</span>
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Rather than relying on one general-purpose chatbot, Airborne HRS deploys a coordinated fleet of 
+                <strong> 30 autonomous AI agents</strong>. Each agent is meticulously trained on specific operational domains, 
+                communicating in real-time under our proprietary central orchestrator to manage end-to-end recruitment pipelines.
+              </p>
+              
+              {/* Agent Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                <div className="p-4 rounded-xl glass-panel border border-white/5 space-y-2 hover:border-primary/30 transition-all">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                    <h4 className="text-sm font-semibold text-white">Direct Sourcing Agent</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Scans LinkedIn, GitHub, and professional networks to map high-potential passive candidates.</p>
+                </div>
+                
+                <div className="p-4 rounded-xl glass-panel border border-white/5 space-y-2 hover:border-primary/30 transition-all">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                    <h4 className="text-sm font-semibold text-white">Cognitive Interviewer</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Simulates natural-language screenings, analyzing logical coherence and key skill achievements.</p>
+                </div>
+
+                <div className="p-4 rounded-xl glass-panel border border-white/5 space-y-2 hover:border-primary/30 transition-all">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                    <h4 className="text-sm font-semibold text-white">GEO Node Compliance</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Matches candidates against local wage brackets, regional labor laws, and coordinate benchmarks.</p>
+                </div>
+
+                <div className="p-4 rounded-xl glass-panel border border-white/5 space-y-2 hover:border-primary/30 transition-all">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                    <h4 className="text-sm font-semibold text-white">Psychographic Profiler</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Audits candidate values, communication styles, and team compatibility for retention optimization.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Visual Column */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden glass-panel border border-white/10 p-2 animate-float">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                  <Image
+                    src="/30_agents.png"
+                    alt="Autonomous AI Agents Network"
+                    fill
+                    sizes="(max-w-768px) 100vw, 450px"
+                    className="object-cover opacity-90 transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Vision & Leadership (Founder Suryaansh Prithvijit Singh) */}
+      <section className="py-20 md:py-32 relative border-t border-border/10 bg-[radial-gradient(ellipse_at_top,rgba(0,214,161,0.03),transparent_70%)]">
+        <div className="absolute right-0 bottom-1/3 -z-10 h-[500px] w-[500px] bg-primary/5 rounded-full blur-3xl opacity-30 animate-glow-pulse" />
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Visual Column (Founder Photo) */}
+            <div className="lg:col-span-5 flex justify-center order-last lg:order-first">
+              <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden glass-panel border border-white/10 p-2 neon-glow-primary">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                  <Image
+                    src="/founder.png"
+                    alt="Suryaansh Prithvijit Singh - Founder & CEO"
+                    fill
+                    sizes="(max-w-768px) 100vw, 450px"
+                    className="object-cover object-top filter brightness-95 hover:brightness-105 transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-75" />
+                  
+                  {/* Floating Badge */}
+                  <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-background/80 border border-white/10 backdrop-blur-md">
+                    <h4 className="text-white font-bold text-base">Suryaansh Prithvijit Singh</h4>
+                    <p className="text-primary text-xs font-medium">Founder & CEO, Airborne HRS</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Vision & Leadership Column */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary">
+                <GraduationCap className="h-3.5 w-3.5" /> Vision & Leadership
+              </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                Engineering <span className="gradient-text">Artificial Consciousness</span> & AGI
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Founded by <strong>Suryaansh Prithvijit Singh</strong>, an AI/ML specialist at Universal AI University, 
+                Airborne HRS is built on the philosophy of AGI (Artificial General Intelligence) and cognitive resilience. 
+                Under his leadership, we are shifting the industry from static database matchmakers to fully adaptive, 
+                goal-directed robotic systems that operate with human-like comprehension.
+              </p>
+              
+              <div className="space-y-4">
+                <div className="flex gap-4 items-start p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 transition-all">
+                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-white">Cognitive Foundations</h4>
+                    <p className="text-xs text-muted-foreground">Focusing research on Artificial Consciousness to enable virtual employees to adapt dynamically to company workflows.</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start p-4 rounded-xl bg-white/5 border border-white/5 hover:border-primary/20 transition-all">
+                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                    <Building2 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-white">Global Track Record</h4>
+                    <p className="text-xs text-muted-foreground">Winner of the AI COVID Warrior Global Contest. Represented India at the Great Man of the Universe 2025 pageant in the Philippines, winning the titles of Ambassador for Charity and Best in Swimwear.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quote Block */}
+              <blockquote className="border-l-4 border-primary pl-4 py-2 bg-primary/5 rounded-r-xl italic text-muted-foreground text-sm">
+                &ldquo;We are not building automation spreadsheets. We are building the next generation of artificial consciousness to run collaborative, goal-driven business nodes.&rdquo;
+              </blockquote>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* GEO and SEO Search Engine Optimization */}
       <section className="py-20 bg-muted/10 border-t border-border/20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -314,18 +491,10 @@ export default async function Home() {
           {latestPosts.length === 0 ? (
             <div className="p-12 rounded-2xl bg-white/5 border border-white/10 text-center space-y-4">
               <Layers className="h-10 w-10 text-muted-foreground mx-auto" />
-              <h3 className="text-lg font-semibold text-white">No blog posts published yet</h3>
+              <h3 className="text-lg font-semibold text-white">Upcoming Insights & Deep Dives</h3>
               <p className="text-muted-foreground text-sm max-w-md mx-auto">
-                Admin can log in to the admin panel to publish articles targeting specific search keywords and locations.
+                We are preparing a series of technical articles and case studies on AI-driven workforce modeling and advanced recruiting workflows. Check back soon.
               </p>
-              <div className="pt-2">
-                <Link
-                  href="/admin-portal-xyz"
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/95 transition-all"
-                >
-                  Go to Admin Panel
-                </Link>
-              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

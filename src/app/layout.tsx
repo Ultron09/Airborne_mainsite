@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
   description: "Leverage state-of-the-art AI technology to transform your hiring, talent acquisition, and workforce management. Optimize search, automate screenings, and align people with potential.",
-  keywords: ["HR AI", "Workforce Intelligence", "AI recruitment", "Advanced talent acquisition", "HR Tech", "Airborne HRS", "GEO optimized recruiting"],
+  keywords: ["HR AI", "Workforce Intelligence", "AI recruitment", "Advanced talent acquisition", "HR Tech", "Airborne HRS", "GEO optimized recruiting", "Artificial Consciousness", "AGI recruiting", "Suryaansh Prithvijit Singh"],
   authors: [{ name: "Airborne HRS Team" }],
   openGraph: {
     title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
@@ -32,6 +32,12 @@ export const metadata: Metadata = {
     title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
     description: "Transform your hiring and HR operations with AI.",
   },
+  other: {
+    "geo.position": "18.916;73.328",
+    "geo.region": "IN-MH",
+    "geo.placename": "Karjat, Maharashtra, India",
+    "ICBM": "18.916, 73.328",
+  },
 };
 
 export default function RootLayout({
@@ -39,12 +45,49 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLdOrg = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Airborne HRS",
+    "url": "https://airbornehrs.in",
+    "logo": "https://airbornehrs.in/favicon.ico",
+    "description": "Revolutionizing workforce intelligence and recruiting automation through advanced artificial consciousness and AGI architectures.",
+    "founder": {
+      "@type": "Person",
+      "name": "Suryaansh Prithvijit Singh",
+      "jobTitle": "Founder & CEO",
+      "alumniOf": "Universal AI University"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Karjat, Mumbai",
+      "addressRegion": "Maharashtra",
+      "postalCode": "410201",
+      "addressCountry": "IN"
+    }
+  };
+
+  const jsonLdWebsite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Airborne HRS",
+    "url": "https://airbornehrs.in"
+  };
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+        />
         {/* Navigation Bar */}
         <header className="sticky top-0 z-50 w-full glass-panel border-b border-border/40 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -69,9 +112,6 @@ export default function RootLayout({
                 </Link>
                 <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Blog
-                </Link>
-                <Link href="/admin-portal-xyz" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Admin Portal
                 </Link>
               </nav>
             </div>
@@ -125,7 +165,6 @@ export default function RootLayout({
               <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">Blog</Link></li>
-                <li><Link href="/admin-portal-xyz" className="text-muted-foreground hover:text-foreground transition-colors">Admin Area</Link></li>
               </ul>
             </div>
 

@@ -222,3 +222,40 @@ body {
   animation: softPulse 8s infinite ease-in-out;
 }
 
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s infinite ease-in-out;
+}
+
+/* Slow rotation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 25s infinite linear;
+}
+
+/* Neon Glow Shadow */
+.neon-glow-primary {
+  box-shadow: 0 0 40px rgba(0, 214, 161, 0.25);
+}
+
+.neon-glow-accent {
+  box-shadow: 0 0 40px rgba(52, 245, 197, 0.2);
+}
+
