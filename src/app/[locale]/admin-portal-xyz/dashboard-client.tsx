@@ -31,7 +31,14 @@ interface Post {
   createdAt: Date;
 }
 
-export default function DashboardClient({ posts }: { posts: Post[] }) {
+interface DemoReq {
+  id: string;
+  email: string;
+  createdAt: Date;
+}
+
+export default function DashboardClient({ posts, demoRequests }: { posts: Post[], demoRequests: DemoReq[] }) {
+  const [activeTab, setActiveTab] = useState<"insights" | "leads">("insights");
   const [searchTerm, setSearchTerm] = useState("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const router = useRouter();
@@ -152,22 +159,49 @@ export default function DashboardClient({ posts }: { posts: Post[] }) {
         </div>
       </div>
 
-      {/* Filters and List */}
+      {/* Filters and Tabs */}
       <div className="space-y-4">
-        {/* Search */}
-        <div className="relative flex items-center max-w-md">
-          <Search className="absolute left-4 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search dashboard by title or targeted location..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-          />
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+          {/* Tabs */}
+          <div className="flex bg-white/5 rounded-xl p-1 border border-white/10">
+            <button
+              onClick={() => setActiveTab("insights")}
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
+                activeTab === "insights"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-white"
+              }`}
+            >
+              Insights
+            </button>
+            <button
+              onClick={() => setActiveTab("leads")}
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
+                activeTab === "leads"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-white"
+              }`}
+            >
+              Demo Leads ({demoRequests.length})
+            </button>
+          </div>
+          
+          {/* Search */}
+          <div className="relative flex items-center w-full max-w-md">
+            <Search className="absolute left-4 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder={activeTab === "insights" ? "Search dashboard by title..." : "Search leads by email..."}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+            />
+          </div>
         </div>
 
-        {/* Table/List View */}
-        {filteredPosts.length === 0 ? (
+        {/* List View */}
+        {activeTab === "insights" ? (
+          filteredPosts.length === 0 ? (
           <div className="p-12 text-center rounded-2xl border border-white/10 bg-white/5 space-y-2">
             <Layers className="h-8 w-8 text-muted-foreground mx-auto" />
             <h3 className="text-base font-semibold text-white">No insights found</h3>
@@ -262,6 +296,49 @@ export default function DashboardClient({ posts }: { posts: Post[] }) {
                       </td>
                     </tr>
                   ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          /* LEADS TAB */
+          <div className="overflow-hidden border border-white/10 rounded-2xl bg-card">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/5 text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                    <th className="p-4">Email</th>
+                    <th className="p-4">Date Received</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {demoRequests
+                    .filter((r) => r.email.toLowerCase().includes(searchTerm.toLowerCase()))
+                    .map((req) => (
+                    <tr key={req.id} className="hover:bg-white/5 transition-colors">
+                      <td className="p-4 font-bold text-white">
+                        <a href={`mailto:${req.email}`} className="hover:text-primary transition-colors">{req.email}</a>
+                      </td>
+                      <td className="p-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(req.createdAt).toLocaleString("en-US", {
+                              dateStyle: "medium",
+                              timeStyle: "short",
+                            })}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {demoRequests.length === 0 && (
+                    <tr>
+                      <td colSpan={2} className="p-12 text-center text-muted-foreground">
+                        No demo requests received yet.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

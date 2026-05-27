@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
-import Dashboard3D from "@/components/Dashboard3D";
+
 import { getTranslations } from 'next-intl/server';
 
 export const revalidate = 0;
@@ -220,36 +220,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 3D Analytics & Technology - Scroll Parallax */}
-      <section id="technology" className="py-32 relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <ScrollReveal>
-            <div className="glass-panel rounded-[3rem] border border-white/10 p-10 md:p-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center shadow-2xl relative overflow-hidden">
-              
-              {/* Background Glow inside panel */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-[100px] pointer-events-none" />
-
-              <div className="space-y-10 relative z-10">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-primary/30 text-xs font-bold text-primary backdrop-blur-md">
-                  <Network className="h-4 w-4" /> Real-time Telemetry
-                </div>
-                <h2 className="text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-tight">
-                  Visualize <br/><span className="gradient-text">The Fabric.</span>
-                </h2>
-                <p className="text-muted-foreground text-xl leading-relaxed">
-                  Our interactive 3D telemetry dashboard provides unparalleled insights into workforce velocity, matching metrics, and geographic talent distribution. Watch your data come alive.
-                </p>
-              </div>
-              
-              <div className="relative h-[400px] md:h-[500px] w-full z-10">
-                 {/* The Dashboard3D component handles its own canvas and animations */}
-                 <Dashboard3D />
-              </div>
-
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* Editorial Founder Section */}
       <section className="py-32 relative border-t border-white/5">

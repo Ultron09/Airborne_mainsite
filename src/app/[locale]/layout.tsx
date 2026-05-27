@@ -3,6 +3,7 @@ import { Orbitron, DM_Sans } from "next/font/google";
 import "../globals.css";
 import Link from "next/link";
 import Script from "next/script";
+import MetricoolScript from "@/components/MetricoolScript";
 import Background3D from "@/components/Background3D";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
@@ -148,17 +149,7 @@ export default async function RootLayout({
             </div>
           </div>
         </footer>
-        <Script id="metricool-tracker" strategy="afterInteractive">
-          {`
-            function loadScript(a){
-              var b=document.getElementsByTagName("head")[0],c=document.createElement("script");
-              c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)
-            }
-            loadScript(function(){
-              beTracker.t({hash:"da5e1d7f32d81f2648f985368dfaaee9"})
-            });
-          `}
-        </Script>
+        <MetricoolScript />
         </NextIntlClientProvider>
       </body>
     </html>
