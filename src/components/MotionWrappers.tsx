@@ -106,3 +106,48 @@ export const ScrollReveal = ({ children, className = "" }: { children: React.Rea
     </motion.div>
   );
 };
+
+const tiltSpringConfig = { damping: 20, stiffness: 200, mass: 0.5 };
+
+export const IsometricTilt = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  // Transform mouse position to rotation degrees
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), tiltSpringConfig);
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), tiltSpringConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Normalize coordinates between -0.5 and 0.5
+    x.set((e.clientX - centerX) / rect.width);
+    y.set((e.clientY - centerY) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+        perspective: 1000
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};

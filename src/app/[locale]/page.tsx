@@ -14,7 +14,7 @@ import {
   Network
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
-import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal } from "@/components/MotionWrappers";
+import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
 import Dashboard3D from "@/components/Dashboard3D";
 import { getTranslations } from 'next-intl/server';
 
@@ -36,10 +36,21 @@ export default async function Home() {
   return (
     <div className="relative isolate overflow-hidden bg-transparent">
       
-      {/* Dynamic Background Mesh */}
+      {/* Dynamic Background Mesh & Grid Floor */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,214,161,0.08)_0%,transparent_70%)] animate-pulse" style={{ animationDuration: '10s' }} />
-        <div className="absolute bottom-[20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(52,245,197,0.05)_0%,transparent_70%)] animate-pulse" style={{ animationDuration: '15s', animationDelay: '2s' }} />
+        <div className="absolute top-[10%] right-[10%] w-[50vw] h-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,214,161,0.05)_0%,transparent_60%)] blur-[80px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-[40%] left-[10%] w-[40vw] h-[40vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(52,245,197,0.03)_0%,transparent_60%)] blur-[80px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
+        
+        {/* Antigravity 3D Grid Floor */}
+        <div className="absolute bottom-0 left-0 right-0 h-[60vh] opacity-[0.03]" style={{
+          perspective: '1000px',
+        }}>
+          <div className="w-full h-[200%] absolute bottom-[-50%] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:50px_50px]" style={{
+            transform: 'rotateX(75deg)',
+            maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%)',
+            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%)'
+          }} />
+        </div>
       </div>
 
       {/* Hero Section - Cinematic Entrance */}
@@ -85,22 +96,28 @@ export default async function Home() {
             </div>
 
             {/* Hero Visual Mockup */}
-            <FadeIn delay={0.8} className="lg:col-span-5 relative flex justify-center">
-              <div className="absolute inset-0 bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
-              <FloatingElement className="w-full max-w-lg relative aspect-square rounded-[3rem] overflow-hidden glass-panel border border-white/20 p-2 shadow-2xl z-10">
-                <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden">
-                  <Image
-                    src="/JobPortal_3D.png"
-                    alt="Airborne HRS Platform Preview"
-                    fill
-                    sizes="(max-w-768px) 100vw, 600px"
-                    priority
-                    className="object-cover object-center scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+            <FadeIn delay={0.8} className="lg:col-span-5 relative flex justify-center perspective-[1200px]">
+              <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
+              <IsometricTilt className="w-full max-w-lg relative aspect-square z-10 group">
+                {/* Backplate / Shadow */}
+                <div className="absolute inset-0 bg-black/80 rounded-[3rem] blur-2xl transform translate-y-10 scale-95 opacity-80 group-hover:translate-y-12 group-hover:scale-100 transition-all duration-700" />
+                
+                {/* Main Floating Mockup */}
+                <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden glass-panel border border-white/10 p-2 shadow-2xl bg-black/40 backdrop-blur-2xl" style={{ transformStyle: 'preserve-3d' }}>
+                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-black" style={{ transform: 'translateZ(10px)' }}>
+                    <Image
+                      src="/JobPortal_3D.png"
+                      alt="Airborne HRS Platform Preview"
+                      fill
+                      sizes="(max-w-768px) 100vw, 600px"
+                      priority
+                      className="object-cover object-center scale-105 opacity-90"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
+                  </div>
                   
-                  {/* Floating Status UI */}
-                  <div className="absolute bottom-8 left-8 right-8 glass-panel p-5 rounded-2xl border border-white/20 backdrop-blur-xl flex items-center justify-between">
+                  {/* Floating Status UI - Pop out in 3D */}
+                  <div className="absolute bottom-8 left-8 right-8 glass-panel p-5 rounded-2xl border border-white/20 backdrop-blur-xl flex items-center justify-between shadow-[0_20px_40px_rgba(0,0,0,0.5)]" style={{ transform: 'translateZ(40px)' }}>
                     <div className="flex items-center gap-3">
                       <div className="relative flex h-3 w-3">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -110,12 +127,18 @@ export default async function Home() {
                         System Active
                       </p>
                     </div>
-                    <div className="text-xs text-primary font-mono bg-primary/10 px-2 py-1 rounded-md">
-                      v2.0 Optimizing
+                    <div className="text-xs text-primary font-mono bg-primary/10 px-2 py-1 rounded-md border border-primary/20">
+                      v2.0 Optimized
                     </div>
                   </div>
+                  
+                  {/* Additional Floating UI Element */}
+                  <div className="absolute top-8 right-8 glass-panel px-4 py-2 rounded-xl border border-white/10 backdrop-blur-lg flex items-center gap-2 shadow-xl" style={{ transform: 'translateZ(25px)' }}>
+                    <Cpu className="h-4 w-4 text-accent" />
+                    <span className="text-xs font-bold text-white">Neural Net</span>
+                  </div>
                 </div>
-              </FloatingElement>
+              </IsometricTilt>
             </FadeIn>
           </div>
         </div>
