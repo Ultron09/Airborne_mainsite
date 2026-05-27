@@ -19,6 +19,10 @@ import { getTranslations } from 'next-intl/server';
 
 export const revalidate = 0; // Ensure data is loaded fresh on every request
 
+export function generateStaticParams() {
+  return [{locale: 'en'}, {locale: 'es'}, {locale: 'hi'}];
+}
+
 export default async function Home() {
   const t = await getTranslations('Hero');
   let latestPosts: BlogPost[] = [];
