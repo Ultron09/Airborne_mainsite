@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Orbitron, Exo_2, DM_Sans, Rajdhani, Fira_Code } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Link from "next/link";
 import Script from "next/script";
 import Background3D from "@/components/Background3D";
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages, getTranslations} from 'next-intl/server';
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -57,11 +59,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const resolvedParams = await params;
+  const messages = await getMessages();
+  const tNav = await getTranslations('Navigation');
   const jsonLdOrg = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -93,10 +100,11 @@ export default function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang={resolvedParams.locale}
       className={`${orbitron.variable} ${exo2.variable} ${dmSans.variable} ${rajdhani.variable} ${firaCode.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
+        <NextIntlClientProvider messages={messages}>
         <Background3D />
         <script
           type="application/ld+json"
@@ -122,14 +130,14 @@ export default function RootLayout({
 
               {/* Desktop Nav Links */}
               <nav className="hidden md:flex items-center gap-8">
-                <Link href="/#features" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  Features
+                <Link href={`/${resolvedParams.locale}/#features`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
+                  {tNav('features')}
                 </Link>
-                <Link href="/#technology" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  AI Tech
+                <Link href={`/${resolvedParams.locale}/#technology`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
+                  {tNav('technology')}
                 </Link>
-                <Link href="/blog" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
-                  Blog
+                <Link href={`/${resolvedParams.locale}/blog`} className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
+                  {tNav('blog')}
                 </Link>
               </nav>
             </div>
@@ -140,14 +148,20 @@ export default function RootLayout({
                 href="https://jobs.airbornehrs.in"
                 className="hidden sm:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3"
               >
-                Go to Job Portal
+                {tNav('jobPortal')}
               </a>
               <Link
-                href="/#contact"
+                href={`/${resolvedParams.locale}/#contact`}
                 className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105"
               >
-                Request Demo
+                {tNav('requestDemo')}
               </Link>
+              {/* Language Switcher */}
+              <div className="flex items-center gap-2 ml-4 border-l border-white/20 pl-4">
+                <Link href="/en" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">EN</Link>
+                <Link href="/es" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">ES</Link>
+                <Link href="/hi" className="text-xs font-bold text-white/70 hover:text-primary transition-colors uppercase">HI</Link>
+              </div>
             </div>
           </div>
         </header>
@@ -213,6 +227,7 @@ export default function RootLayout({
             });
           `}
         </Script>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

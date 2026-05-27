@@ -14,10 +14,13 @@ import {
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement } from "@/components/MotionWrappers";
+import Dashboard3D from "@/components/Dashboard3D";
+import { getTranslations } from 'next-intl/server';
 
 export const revalidate = 0; // Ensure data is loaded fresh on every request
 
 export default async function Home() {
+  const t = await getTranslations('Hero');
   let latestPosts: BlogPost[] = [];
   try {
     latestPosts = await prisma.blogPost.findMany({
@@ -69,30 +72,28 @@ export default async function Home() {
             {/* Hero Text */}
             <FadeIn className="lg:col-span-7 space-y-8 text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-primary backdrop-blur-md">
-                <Sparkles className="h-4 w-4" /> Next-Gen AI Workforce Solutions
+                <Sparkles className="h-4 w-4" /> {t('badge')}
               </div>
               <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-tight text-white drop-shadow-xl">
-                Architecting the Future of{" "}
-                <span className="gradient-text">Workforce Intelligence</span>
+                {t('titlePart1')}{" "}
+                <span className="gradient-text">{t('titlePart2')}</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                Connect talent, employers, and universities with an advanced 
-                HR Fabric. Harness our Job Portal and HRMS to automate screening, 
-                streamline placement pipelines, and maximize discoverability.
+                {t('description')}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href="https://jobs.airbornehrs.in"
                   className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all hover:scale-[1.03] group"
                 >
-                  Enter Job Portal
+                  {t('cta1')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </a>
                 <Link
                   href="/blog"
                   className="inline-flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 px-8 py-4 text-base font-bold text-white transition-all backdrop-blur-sm"
                 >
-                  Explore Insights
+                  {t('cta2')}
                 </Link>
               </div>
             </FadeIn>
@@ -205,66 +206,25 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Meet F.R.I.D.A.Y. */}
+      {/* Dynamic 3D Analytics Dashboard */}
       <section id="technology" className="py-24 md:py-32 relative">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 -z-10 h-96 w-96 bg-primary/10 rounded-full blur-[100px]" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -z-10 h-96 w-96 bg-primary/10 rounded-full blur-[100px]" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <FadeIn className="glass-panel rounded-[2.5rem] border border-white/10 p-8 md:p-16 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center shadow-2xl shadow-primary/5">
-            
-            <div className="lg:col-span-5 flex justify-center">
-              <FloatingElement delay={0.5} className="relative w-72 h-72 md:w-96 md:h-96 rounded-[2rem] overflow-hidden glass-panel border border-primary/30 neon-glow-primary p-2">
-                <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
-                  <Image
-                    src="/Friday_3D.png"
-                    alt="F.R.I.D.A.Y. AI Agent Core"
-                    fill
-                    sizes="(max-w-768px) 100vw, 400px"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                </div>
-              </FloatingElement>
-            </div>
-
             <div className="lg:col-span-7 space-y-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary backdrop-blur-md">
-                <Cpu className="h-4 w-4" /> Flagship Cognitive Agent
+                <Cpu className="h-4 w-4" /> Real-time Telemetry
               </div>
               <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg">
-                Meet F.R.I.D.A.Y.
+                Dynamic 3D Analytics Dashboard
               </h2>
               <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-                F.R.I.D.A.Y. is our state-of-the-art virtual workforce agent. Designed to operate 
-                as an automated recruiter, scheduler, and candidate matcher, F.R.I.D.A.Y. performs 
-                cognitive task analysis, reviews resumes against multidimensional skill maps, and schedules 
-                placement pipelines without human overhead.
+                Visualize your hiring velocity, candidate match rates, and geographic talent distribution in real-time. Our interactive dashboard floating in 3D space provides unparalleled insights into your workforce.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                <Hover3DCard className="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-colors">
-                  <div className="mt-1 h-8 w-8 rounded-full bg-primary/20 text-primary flex items-center justify-center flex-shrink-0">✓</div>
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-1">Semantic Resumè Screening</h4>
-                    <p className="text-sm text-muted-foreground">Parses complex layouts to extract implicit achievements.</p>
-                  </div>
-                </Hover3DCard>
-                <Hover3DCard className="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-colors">
-                  <div className="mt-1 h-8 w-8 rounded-full bg-primary/20 text-primary flex items-center justify-center flex-shrink-0">✓</div>
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-1">Cognitive Interviewing</h4>
-                    <p className="text-sm text-muted-foreground">Conducts basic screenings via text or conversational API.</p>
-                  </div>
-                </Hover3DCard>
-              </div>
-              <div className="pt-6">
-                <a
-                  href="https://jobs.airbornehrs.in/ai-employees"
-                  className="inline-flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 px-8 py-4 text-base font-bold text-white transition-all backdrop-blur-sm"
-                >
-                  Explore AI Employee Suite
-                </a>
-              </div>
             </div>
-
+            <div className="lg:col-span-5 flex justify-center">
+               <Dashboard3D />
+            </div>
           </FadeIn>
         </div>
       </section>

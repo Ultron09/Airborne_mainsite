@@ -1,0 +1,25 @@
+{
+  "Navigation": {
+    "features": "Características",
+    "technology": "Tecnología IA",
+    "blog": "Blog",
+    "jobPortal": "Ir al Portal de Empleo",
+    "requestDemo": "Solicitar Demo"
+  },
+  "Hero": {
+    "badge": "Soluciones de Fuerza Laboral de IA de Próxima Generación",
+    "titlePart1": "Arquitectando el Futuro de la",
+    "titlePart2": "Inteligencia de la Fuerza Laboral",
+    "description": "Conecte talento, empleadores y universidades con un Tejido de RRHH avanzado. Aproveche nuestro Portal de Empleo y HRMS para automatizar la selección, agilizar las canalizaciones de colocación y maximizar la visibilidad.",
+    "cta1": "Ingresar al Portal de Empleo",
+    "cta2": "Explorar Perspectivas"
+  },
+  "Analytics": {
+    "badge": "Telemetría en Tiempo Real",
+    "title": "Panel de Análisis Dinámico en 3D",
+    "description": "Visualice su velocidad de contratación, las tasas de coincidencia de candidatos y la distribución geográfica del talento en tiempo real. Nuestro panel interactivo flotando en el espacio 3D proporciona perspectivas sin precedentes de su fuerza laboral.",
+    "metric1": "Velocidad de Contratación",
+    "metric2": "Tasas de Coincidencia",
+    "metric3": "Nodos Globales"
+  }
+}

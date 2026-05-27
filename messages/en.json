@@ -1,0 +1,25 @@
+{
+  "Navigation": {
+    "features": "Features",
+    "technology": "AI Tech",
+    "blog": "Blog",
+    "jobPortal": "Go to Job Portal",
+    "requestDemo": "Request Demo"
+  },
+  "Hero": {
+    "badge": "Next-Gen AI Workforce Solutions",
+    "titlePart1": "Architecting the Future of",
+    "titlePart2": "Workforce Intelligence",
+    "description": "Connect talent, employers, and universities with an advanced HR Fabric. Harness our Job Portal and HRMS to automate screening, streamline placement pipelines, and maximize discoverability.",
+    "cta1": "Enter Job Portal",
+    "cta2": "Explore Insights"
+  },
+  "Analytics": {
+    "badge": "Real-time Telemetry",
+    "title": "Dynamic 3D Analytics Dashboard",
+    "description": "Visualize your hiring velocity, candidate match rates, and geographic talent distribution in real-time. Our interactive dashboard floating in 3D space provides unparalleled insights into your workforce.",
+    "metric1": "Hiring Velocity",
+    "metric2": "Match Rates",
+    "metric3": "Global Nodes"
+  }
+}
