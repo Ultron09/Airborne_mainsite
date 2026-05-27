@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import prisma from "@/lib/prisma";
 import { BlogPost } from "@prisma/client";
 import {
@@ -17,6 +18,10 @@ import DemoForm from "@/components/DemoForm";
 import { FadeIn, Hover3DCard, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
 
 import { getTranslations } from 'next-intl/server';
+
+const NeuromorphicCore = dynamic(() => import("@/components/NeuromorphicCore"), {
+  ssr: false,
+});
 
 export const revalidate = 0;
 
@@ -36,22 +41,8 @@ export default async function Home() {
   return (
     <div className="relative isolate overflow-hidden bg-transparent">
       
-      {/* Dynamic Background Mesh & Grid Floor */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[10%] right-[10%] w-[50vw] h-[50vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,214,161,0.05)_0%,transparent_60%)] blur-[80px] animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute top-[40%] left-[10%] w-[40vw] h-[40vw] rounded-full bg-[radial-gradient(circle_at_center,rgba(52,245,197,0.03)_0%,transparent_60%)] blur-[80px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
-        
-        {/* Antigravity 3D Grid Floor */}
-        <div className="absolute bottom-0 left-0 right-0 h-[60vh] opacity-[0.03]" style={{
-          perspective: '1000px',
-        }}>
-          <div className="w-full h-[200%] absolute bottom-[-50%] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:50px_50px]" style={{
-            transform: 'rotateX(75deg)',
-            maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%)',
-            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%)'
-          }} />
-        </div>
-      </div>
+      {/* Dynamic 3D Neuromorphic Core Background */}
+      <NeuromorphicCore />
 
       {/* Hero Section - Cinematic Entrance */}
       <section className="relative px-6 lg:px-8 pt-32 pb-24 md:pt-40 md:pb-32 min-h-[90vh] flex items-center">
