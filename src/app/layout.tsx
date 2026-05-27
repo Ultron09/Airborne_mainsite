@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Script from "next/script";
+import Background3D from "@/components/Background3D";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -79,7 +80,8 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
+        <Background3D />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
@@ -89,28 +91,28 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
         {/* Navigation Bar */}
-        <header className="sticky top-0 z-50 w-full glass-panel border-b border-border/40 backdrop-blur-md">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <header className="sticky top-4 z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+          <div className="glass-panel rounded-full border border-white/20 backdrop-blur-xl shadow-2xl shadow-primary/10 h-16 flex items-center justify-between px-6">
             {/* Logo */}
             <div className="flex items-center gap-8">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-md shadow-primary/20 transition-transform group-hover:scale-105">
+                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110">
                   A
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors">
+                <span className="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors drop-shadow-md">
                   Airborne<span className="text-primary font-medium">HRS</span>
                 </span>
               </Link>
 
               {/* Desktop Nav Links */}
-              <nav className="hidden md:flex items-center gap-6">
-                <Link href="/#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <nav className="hidden md:flex items-center gap-8">
+                <Link href="/#features" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
                   Features
                 </Link>
-                <Link href="/#technology" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/#technology" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
                   AI Tech
                 </Link>
-                <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/blog" className="text-sm font-medium text-white/70 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">
                   Blog
                 </Link>
               </nav>
@@ -120,13 +122,13 @@ export default function RootLayout({
             <div className="flex items-center gap-4">
               <a
                 href="https://jobs.airbornehrs.in"
-                className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground transition-colors py-2 px-3 rounded-md hover:bg-white/5"
+                className="hidden sm:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3"
               >
                 Go to Job Portal
               </a>
               <Link
                 href="/#contact"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/95 transition-all hover:scale-105"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105"
               >
                 Request Demo
               </Link>
@@ -138,48 +140,49 @@ export default function RootLayout({
         <main className="flex-grow flex flex-col">{children}</main>
 
         {/* Footer */}
-        <footer className="bg-background border-t border-border/40 py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="h-6 w-6 rounded bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white text-xs">
+        <footer className="relative overflow-hidden border-t border-white/10 pt-16 pb-8 bg-background/50 backdrop-blur-xl">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.3)]">
                   A
                 </div>
-                <span className="font-bold tracking-tight text-white">AirborneHRS</span>
+                <span className="font-bold tracking-tight text-white text-xl">Airborne<span className="text-primary">HRS</span></span>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Revolutionizing workforce intelligence through advanced AI architectures.
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+                Revolutionizing workforce intelligence through advanced AI architectures and 3D cognitive interfaces.
               </p>
             </div>
             
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Platform</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</Link></li>
-                <li><Link href="/#technology" className="text-muted-foreground hover:text-foreground transition-colors">AI Tech</Link></li>
-                <li><a href="https://jobs.airbornehrs.in" className="text-muted-foreground hover:text-foreground transition-colors">Job Portal</a></li>
+            <div className="space-y-6">
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Platform</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Features</Link></li>
+                <li><Link href="/#technology" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> AI Tech</Link></li>
+                <li><a href="https://jobs.airbornehrs.in" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Job Portal</a></li>
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">Blog</Link></li>
+            <div className="space-y-6">
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase">Company</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="h-1 w-1 bg-primary rounded-full" /> Blog</Link></li>
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">GEO / Search Optimization</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Airborne HRS content is natively structured using AI-readable schemas, enabling direct discovery by next-gen generative engines.
+            <div className="space-y-6">
+              <h4 className="text-sm font-bold text-white tracking-widest uppercase">GEO / Edge Nodes</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed glass-panel p-4 rounded-xl border border-white/5">
+                Airborne HRS content is natively structured using AI-readable schemas, enabling direct discovery by next-gen generative engines worldwide.
               </p>
             </div>
           </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-border/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Airborne HRS. All rights reserved.</p>
-            <div className="flex gap-4 text-xs text-muted-foreground">
-              <a href="#" className="hover:text-foreground">Privacy Policy</a>
-              <a href="#" className="hover:text-foreground">Terms of Service</a>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+            <p className="text-xs text-muted-foreground font-medium">&copy; {new Date().getFullYear()} Airborne HRS. All rights reserved.</p>
+            <div className="flex gap-6 text-xs text-muted-foreground font-medium">
+              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
             </div>
           </div>
         </footer>
