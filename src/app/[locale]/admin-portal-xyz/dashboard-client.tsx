@@ -110,6 +110,12 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
         </div>
         <div className="flex items-center gap-3">
           <Link
+            href="/admin-portal-xyz/bulk-upload"
+            className="inline-flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white px-4 py-2 text-sm font-bold transition-all hover:scale-105"
+          >
+            <Calendar className="h-4 w-4" /> Bulk Schedule
+          </Link>
+          <Link
             href="/admin-portal-xyz/new"
             className="inline-flex items-center gap-2 rounded-xl bg-primary hover:bg-primary/95 text-primary-foreground px-4 py-2 text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105"
           >
