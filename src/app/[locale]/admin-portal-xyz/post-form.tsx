@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createBlogPost, updateBlogPost } from "./actions";
+import { createBlogPost, updateBlogPost, generateBlogWithGemini } from "./actions";
 import {
   ArrowLeft,
   Save,
@@ -39,6 +39,46 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Gemini State
+  const [showGeminiPanel, setShowGeminiPanel] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [geminiTitle, setGeminiTitle] = useState("");
+  const [geminiContentPillar, setGeminiContentPillar] = useState("");
+  const [geminiGeoTarget, setGeminiGeoTarget] = useState("");
+  const [geminiPrimaryKeyword, setGeminiPrimaryKeyword] = useState("");
+  const [geminiSecondaryKeywords, setGeminiSecondaryKeywords] = useState("");
+  const [geminiWordCount, setGeminiWordCount] = useState("1500");
+
+  async function handleGeminiGenerate() {
+    setError("");
+    setIsGenerating(true);
+    try {
+      const data = await generateBlogWithGemini({
+        title: geminiTitle,
+        contentPillar: geminiContentPillar,
+        geoTarget: geminiGeoTarget,
+        primaryKeyword: geminiPrimaryKeyword,
+        secondaryKeywords: geminiSecondaryKeywords,
+        wordCount: geminiWordCount,
+      });
+
+      if (data) {
+        if (data.title || geminiTitle) setTitle(data.title || geminiTitle);
+        if (data.content) setContent(data.content);
+        if (data.summary) setSummary(data.summary);
+        if (data.seoTitle) setSeoTitle(data.seoTitle);
+        if (data.seoDescription) setSeoDescription(data.seoDescription);
+        if (data.keywords) setKeywords(data.keywords);
+        if (geminiGeoTarget) setTargetLocation(geminiGeoTarget);
+        setShowGeminiPanel(false);
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to generate blog with Gemini");
+    } finally {
+      setIsGenerating(false);
+    }
+  }
 
   // Form State
   const [title, setTitle] = useState(initialData?.title || "");
@@ -204,6 +244,79 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Gemini AI Auto-Generation Panel */}
+      <div className="bg-white/5 border border-primary/20 rounded-2xl overflow-hidden mb-6">
+        <button
+          type="button"
+          onClick={() => setShowGeminiPanel(!showGeminiPanel)}
+          className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-all text-left"
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white">Auto-Generate with Gemini AI</h3>
+              <p className="text-xs text-muted-foreground">Fill out the details from your calendar to write the article and SEO instantly.</p>
+            </div>
+          </div>
+          <div className="text-xs font-semibold text-primary px-3 py-1.5 rounded-lg bg-primary/10">
+            {showGeminiPanel ? "Close Panel" : "Open AI Generator"}
+          </div>
+        </button>
+
+        {showGeminiPanel && (
+          <div className="p-6 border-t border-white/5 space-y-4 bg-black/20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Title</label>
+                <input type="text" value={geminiTitle} onChange={e => setGeminiTitle(e.target.value)} placeholder="e.g. How AI Recruitment..." className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Content Pillar</label>
+                <input type="text" value={geminiContentPillar} onChange={e => setGeminiContentPillar(e.target.value)} placeholder="e.g. AI Recruitment" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Geo Target</label>
+                <input type="text" value={geminiGeoTarget} onChange={e => setGeminiGeoTarget(e.target.value)} placeholder="e.g. Bengaluru" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Primary Keyword</label>
+                <input type="text" value={geminiPrimaryKeyword} onChange={e => setGeminiPrimaryKeyword(e.target.value)} placeholder="e.g. AI recruitment Bengaluru" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Secondary Keywords</label>
+                <input type="text" value={geminiSecondaryKeywords} onChange={e => setGeminiSecondaryKeywords(e.target.value)} placeholder="e.g. startup hiring Bengaluru, hire tech talent" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Word Count</label>
+                <input type="number" value={geminiWordCount} onChange={e => setGeminiWordCount(e.target.value)} placeholder="1500" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary transition-all" />
+              </div>
+            </div>
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={handleGeminiGenerate}
+                disabled={isGenerating || !geminiTitle}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary/95 text-primary-foreground px-6 py-2.5 text-xs font-bold shadow-lg shadow-primary/10 transition-all disabled:opacity-50"
+              >
+                {isGenerating ? (
+                  <>
+                    <Sparkles className="h-4 w-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" />
+                    Generate Content & SEO
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">

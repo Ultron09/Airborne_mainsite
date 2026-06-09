@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createHash } from "crypto";
 import prisma from "@/lib/prisma";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Cryptographic token helper
 function getExpectedToken(): string {
@@ -210,3 +211,57 @@ export async function togglePublishPost(id: string) {
 
   return updated;
 }
+
+// Generate Blog with Gemini
+export async function generateBlogWithGemini(data: {
+  title: string;
+  contentPillar: string;
+  geoTarget: string;
+  primaryKeyword: string;
+  secondaryKeywords: string;
+  wordCount: string;
+}) {
+  const isAuth = await isAuthenticated();
+  if (!isAuth) throw new Error("Unauthorized");
+
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured in the environment.");
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Fast and capable
+
+  const prompt = `You are an expert SEO content writer and HR tech specialist.
+Please generate a blog post based on the following parameters:
+- Title: ${data.title}
+- Content Pillar: ${data.contentPillar}
+- Geo Target: ${data.geoTarget}
+- Primary Keyword: ${data.primaryKeyword}
+- Secondary Keywords: ${data.secondaryKeywords}
+- Target Word Count: ${data.wordCount} words
+
+Return the response STRICTLY as a JSON object with the following structure:
+{
+  "content": "The full markdown formatted content here (do not include the title as an H1). Use proper markdown headings (##, ###), bullet points, and formatting.",
+  "summary": "A concise 2-3 sentence summary snippet for search engines.",
+  "seoTitle": "Optimized SEO Meta Title (under 60 characters)",
+  "seoDescription": "Optimized SEO Meta Description (under 160 characters)",
+  "keywords": "Comma-separated list of keywords based on the primary and secondary keywords"
+}
+Ensure the JSON is valid and escaped properly. Do not wrap the JSON in markdown blocks like \`\`\`json, just return the raw JSON object.`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+    
+    // Clean up potential markdown formatting in the response
+    const cleanJson = responseText.replace(/^```(json)?\s*/i, '').replace(/\s*```$/, '').trim();
+    
+    return JSON.parse(cleanJson);
+  } catch (error: any) {
+    console.error("Gemini Generation Error:", error);
+    throw new Error(error.message || "Failed to generate content with Gemini.");
+  }
+}
+
