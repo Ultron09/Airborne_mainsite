@@ -71,6 +71,35 @@ Ensure the JSON is valid and escaped properly. Do not wrap the JSON in markdown 
         });
 
         results.push({ id: post.id, title: post.title, status: "success" });
+        
+        // Trigger Webhook if configured
+        const webhookUrl = process.env.BLOG_WEBHOOK_URL;
+        if (webhookUrl) {
+          try {
+            // Using a background fetch so it doesn't block
+            fetch(webhookUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                event: "blog_published",
+                post: {
+                  id: post.id,
+                  title: post.title,
+                  slug: post.slug,
+                  summary: generatedData.summary,
+                  url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/blog/${post.slug}`,
+                }
+              })
+            }).then(() => {
+              console.log("Webhook triggered for post:", post.title);
+            }).catch((webhookErr) => {
+              console.error("Failed to trigger webhook:", webhookErr);
+            });
+          } catch (e) {
+            console.error("Webhook setup error:", e);
+          }
+        }
+
       } catch (err: any) {
         console.error(`Failed to generate post ${post.id}:`, err);
         // Mark as FAILED so it doesn't get stuck in an infinite retry loop
