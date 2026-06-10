@@ -27,13 +27,21 @@ export async function GET(request: Request) {
       throw new Error("GEMINI_API_KEY is not configured.");
     }
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
     const results = [];
 
     for (const post of pendingPosts) {
-      try {
-        const prompt = `You are an expert SEO content writer and HR tech specialist.
+      let attempts = 0;
+      const maxAttempts = 3;
+      let success = false;
+      let generatedData = null;
+      let lastError = null;
+
+      while (attempts < maxAttempts && !success) {
+        try {
+          attempts++;
+          const prompt = `You are an expert SEO content writer and HR tech specialist.
 Please generate a blog post based on the following parameters:
 - Title: ${post.title}
 - Content Pillar: ${post.contentPillar || "General HR"}
@@ -49,66 +57,91 @@ Return the response STRICTLY as a JSON object with the following structure:
   "seoTitle": "Optimized SEO Meta Title (under 60 characters)",
   "seoDescription": "Optimized SEO Meta Description (under 160 characters)",
   "keywords": "Comma-separated list of keywords based on the primary and secondary keywords"
-}
-Ensure the JSON is valid and escaped properly. Do not wrap the JSON in markdown blocks like \`\`\`json, just return the raw JSON object.`;
+}`;
 
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
-        const cleanJson = responseText.replace(/^```(json)?\s*/i, '').replace(/\s*```$/, '').trim();
-        const generatedData = JSON.parse(cleanJson);
+          const result = await model.generateContent({
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: {
+              responseMimeType: "application/json",
+            }
+          });
 
-        await prisma.blogPost.update({
-          where: { id: post.id },
-          data: {
-            content: generatedData.content,
-            summary: generatedData.summary,
-            seoTitle: generatedData.seoTitle,
-            seoDescription: generatedData.seoDescription,
-            keywords: generatedData.keywords,
-            generationStatus: "COMPLETED",
-            published: true, // Auto-publish upon successful generation
-          },
-        });
-
-        results.push({ id: post.id, title: post.title, status: "success" });
-        
-        // Trigger Webhook if configured
-        const webhookUrl = process.env.BLOG_WEBHOOK_URL;
-        if (webhookUrl) {
-          try {
-            // Using a background fetch so it doesn't block
-            fetch(webhookUrl, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                event: "blog_published",
-                post: {
-                  id: post.id,
-                  title: post.title,
-                  slug: post.slug,
-                  summary: generatedData.summary,
-                  url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/blog/${post.slug}`,
-                }
-              })
-            }).then(() => {
-              console.log("Webhook triggered for post:", post.title);
-            }).catch((webhookErr) => {
-              console.error("Failed to trigger webhook:", webhookErr);
-            });
-          } catch (e) {
-            console.error("Webhook setup error:", e);
+          const responseText = result.response.text();
+          generatedData = JSON.parse(responseText.trim());
+          success = true;
+        } catch (err: any) {
+          lastError = err;
+          console.warn(`Attempt ${attempts} failed for post ${post.id}:`, err.message || err);
+          if (attempts < maxAttempts) {
+            const delay = attempts * 5000;
+            console.log(`Retrying in ${delay / 1000}s...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
           }
         }
-
-      } catch (err: any) {
-        console.error(`Failed to generate post ${post.id}:`, err);
-        // Mark as FAILED so it doesn't get stuck in an infinite retry loop
-        await prisma.blogPost.update({
-          where: { id: post.id },
-          data: { generationStatus: "FAILED" },
-        });
-        results.push({ id: post.id, title: post.title, status: "failed", error: err.message });
       }
+
+      if (success && generatedData) {
+        try {
+          await prisma.blogPost.update({
+            where: { id: post.id },
+            data: {
+              content: generatedData.content,
+              summary: generatedData.summary,
+              seoTitle: generatedData.seoTitle,
+              seoDescription: generatedData.seoDescription,
+              keywords: generatedData.keywords,
+              generationStatus: "COMPLETED",
+              published: true, // Auto-publish upon successful generation
+            },
+          });
+
+          results.push({ id: post.id, title: post.title, status: "success" });
+
+          // Trigger Webhook if configured
+          const webhookUrl = process.env.BLOG_WEBHOOK_URL;
+          if (webhookUrl) {
+            try {
+              fetch(webhookUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  event: "blog_published",
+                  post: {
+                    id: post.id,
+                    title: post.title,
+                    slug: post.slug,
+                    summary: generatedData.summary,
+                    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/blog/${post.slug}`,
+                  }
+                })
+              }).then(() => {
+                console.log("Webhook triggered for post:", post.title);
+              }).catch((webhookErr) => {
+                console.error("Failed to trigger webhook:", webhookErr);
+              });
+            } catch (e) {
+              console.error("Webhook setup error:", e);
+            }
+          }
+        } catch (dbErr: any) {
+          console.error(`Database update failed for post ${post.id}:`, dbErr);
+          results.push({ id: post.id, title: post.title, status: "failed", error: `DB Error: ${dbErr.message}` });
+        }
+      } else {
+        console.error(`Failed to generate post ${post.id} after ${maxAttempts} attempts:`, lastError);
+        try {
+          await prisma.blogPost.update({
+            where: { id: post.id },
+            data: { generationStatus: "FAILED" },
+          });
+        } catch (dbErr) {
+          console.error("Failed to mark post status as FAILED in DB:", dbErr);
+        }
+        results.push({ id: post.id, title: post.title, status: "failed", error: lastError?.message || "Generation failed" });
+      }
+
+      // Add a small delay between generations to prevent hitting Gemini API rate limits/concurrency spikes
+      await new Promise((resolve) => setTimeout(resolve, 6000));
     }
 
     revalidatePath("/admin-portal-xyz");

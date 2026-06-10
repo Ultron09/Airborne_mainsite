@@ -230,7 +230,7 @@ export async function generateBlogWithGemini(data: {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Fast and capable
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" }); // Fast and capable
 
   const prompt = `You are an expert SEO content writer and HR tech specialist.
 Please generate a blog post based on the following parameters:
