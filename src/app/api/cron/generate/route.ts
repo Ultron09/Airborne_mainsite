@@ -149,8 +149,8 @@ Return the response STRICTLY as a JSON object with the following structure:
           } catch (notifyError) {
             console.error("Failed to send ntfy blog notification:", notifyError);
           }
-          // Trigger Webhook if configured
-          const webhookUrl = process.env.BLOG_WEBHOOK_URL;
+          // Trigger Zapier Webhook
+          const webhookUrl = process.env.ZAPIER_WEBHOOK_URL || process.env.BLOG_WEBHOOK_URL;
           if (webhookUrl) {
             try {
               fetch(webhookUrl, {
@@ -158,21 +158,20 @@ Return the response STRICTLY as a JSON object with the following structure:
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   event: "blog_published",
-                  post: {
-                    id: post.id,
-                    title: post.title,
-                    slug: post.slug,
-                    summary: generatedData.summary,
-                    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/blog/${post.slug}`,
-                  }
+                  id: post.id,
+                  title: post.title,
+                  slug: post.slug,
+                  summary: generatedData.summary,
+                  url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in"}/blog/${post.slug}`,
+                  imageUrl: `${process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in"}/api/og?title=${encodeURIComponent(post.title)}&pillar=${encodeURIComponent(post.contentPillar || 'HR Automation')}`
                 })
               }).then(() => {
-                console.log("Webhook triggered for post:", post.title);
+                console.log("Zapier Webhook triggered for post:", post.title);
               }).catch((webhookErr) => {
-                console.error("Failed to trigger webhook:", webhookErr);
+                console.error("Failed to trigger Zapier webhook:", webhookErr);
               });
             } catch (e) {
-              console.error("Webhook setup error:", e);
+              console.error("Zapier Webhook setup error:", e);
             }
           }
         } catch (dbErr: any) {

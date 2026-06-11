@@ -17,6 +17,7 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
 
   // Fetch unique locations of published blogs to display as quick-filter pills
   let locations: string[] = [];
+  let pillars: string[] = [];
   let posts: BlogPost[] = [];
 
   try {
@@ -27,6 +28,15 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
     
     locations = Array.from(
       new Set(publishedForGeo.map((p) => p.targetLocation).filter((l): l is string => !!l))
+    );
+
+    const publishedForPillars = await prisma.blogPost.findMany({
+      where: { published: true },
+      select: { contentPillar: true },
+    });
+    
+    pillars = Array.from(
+      new Set(publishedForPillars.map((p) => p.contentPillar).filter((p): p is string => !!p))
     );
 
     // Dynamic filtering query
@@ -93,37 +103,60 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
             </button>
           </form>
 
-          {/* Location Filters */}
-          {locations.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 pt-2">
-              <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mr-2">
-                Target Locations:
-              </span>
-              <Link
-                href={`/blog${q ? `?q=${encodeURIComponent(q)}` : ""}`}
-                className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
-                  !location
-                    ? "bg-primary/20 border-primary text-primary font-bold"
-                    : "bg-white/5 border-white/10 text-muted-foreground hover:bg-white/10"
-                }`}
-              >
-                All Regions
-              </Link>
-              {locations.map((loc) => (
-                <Link
-                  key={loc}
-                  href={`/blog?location=${encodeURIComponent(loc)}${
-                    q ? `&q=${encodeURIComponent(q)}` : ""
-                  }`}
-                  className={`text-xs px-3 py-1.5 rounded-full border flex items-center gap-1 transition-all ${
-                    location === loc
-                      ? "bg-primary/20 border-primary text-primary font-bold"
-                      : "bg-white/5 border-white/10 text-muted-foreground hover:bg-white/10"
-                  }`}
-                >
-                  <MapPin className="h-3 w-3" /> {loc}
-                </Link>
-              ))}
+          {/* Location & Topic Cluster Filters */}
+          {(locations.length > 0 || pillars.length > 0) && (
+            <div className="flex flex-col gap-4 pt-2">
+              {/* Topic Clusters */}
+              {pillars.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mr-2">
+                    Topic Clusters:
+                  </span>
+                  {pillars.map((pillar) => (
+                    <Link
+                      key={pillar}
+                      href={`/blog/category/${encodeURIComponent(pillar)}`}
+                      className="text-xs px-3 py-1.5 rounded-full border bg-primary/10 border-primary/30 text-primary hover:bg-primary/20 transition-all font-medium"
+                    >
+                      {pillar}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* Locations */}
+              {locations.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mr-2">
+                    Target Locations:
+                  </span>
+                  <Link
+                    href={`/blog${q ? `?q=${encodeURIComponent(q)}` : ""}`}
+                    className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+                      !location
+                        ? "bg-primary/20 border-primary text-primary font-bold"
+                        : "bg-white/5 border-white/10 text-muted-foreground hover:bg-white/10"
+                    }`}
+                  >
+                    All Regions
+                  </Link>
+                  {locations.map((loc) => (
+                    <Link
+                      key={loc}
+                      href={`/blog?location=${encodeURIComponent(loc)}${
+                        q ? `&q=${encodeURIComponent(q)}` : ""
+                      }`}
+                      className={`text-xs px-3 py-1.5 rounded-full border flex items-center gap-1 transition-all ${
+                        location === loc
+                          ? "bg-primary/20 border-primary text-primary font-bold"
+                          : "bg-white/5 border-white/10 text-muted-foreground hover:bg-white/10"
+                      }`}
+                    >
+                      <MapPin className="h-3 w-3" /> {loc}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

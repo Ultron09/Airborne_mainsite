@@ -95,7 +95,7 @@ export default async function Home() {
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden glass-panel border border-white/10 p-2 shadow-2xl bg-black/40 backdrop-blur-2xl" style={{ transformStyle: 'preserve-3d' }}>
                   <div className="absolute inset-[2px] rounded-2xl overflow-hidden glass-panel z-10 group-hover:shadow-[0_0_50px_rgba(0,214,161,0.3)] transition-shadow duration-500">
                     <ParallaxImage
-                      src="/JobPortal_3D.png"
+                      src="/JobPortal_3D.webp"
                       alt="Airborne HRS Platform Preview"
                       sizes="(max-w-768px) 100vw, 600px"
                       priority
@@ -243,7 +243,7 @@ export default async function Home() {
                 {/* Founder Image (Masked) */}
                 <div className="absolute inset-x-4 inset-y-4 rounded-full overflow-hidden border border-white/5 bg-gradient-to-b from-black/0 to-primary/20 z-10">
                   <ParallaxImage
-                    src="/founder_3D.png"
+                    src="/founder_3D.webp"
                     alt="Suryaansh Prithvijit Singh"
                     sizes="(max-w-768px) 100vw, 600px"
                     className="object-cover object-top opacity-90"

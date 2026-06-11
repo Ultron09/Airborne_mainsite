@@ -26,6 +26,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       };
     }
 
+    // Dynamic OG Image URL
+    const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&pillar=${encodeURIComponent(post.contentPillar || 'HR Automation')}`;
+
     const title = `${post.seoTitle || post.title} | Airborne HRS`;
     const description = post.seoDescription || post.summary;
     const keywords = post.keywords ? post.keywords.split(",").map((k) => k.trim()) : [];
@@ -43,11 +46,20 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         publishedTime: post.createdAt.toISOString(),
         modifiedTime: post.updatedAt.toISOString(),
         authors: ["Airborne HRS Team"],
+        images: [
+          {
+            url: ogImageUrl,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          }
+        ],
       },
       twitter: {
         card: "summary_large_image",
-        title,
-        description,
+        title: title,
+        description: description,
+        images: [ogImageUrl],
       },
       other: {},
     };
@@ -189,7 +201,7 @@ export default async function BlogPostDetail(props: Props) {
       "name": "Airborne HRS",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://airbornehrs.in/logo.jpeg",
+        "url": "https://airbornehrs.in/logo.webp",
       },
     },
     "mainEntityOfPage": {
