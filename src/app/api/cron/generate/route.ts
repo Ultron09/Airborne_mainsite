@@ -59,6 +59,7 @@ FORMATTING RULES:
 3. Use bolding strategically for emphasis and scannability, but don't overdo it.
 4. Incorporate engaging bullet points or numbered lists where appropriate.
 5. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
+6. INTERNAL LINKING: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
 
 Return the response STRICTLY as a JSON object with the following structure:
 {
@@ -106,6 +107,31 @@ Return the response STRICTLY as a JSON object with the following structure:
           });
 
           results.push({ id: post.id, title: post.title, status: "success" });
+
+          // IndexNow API Ping
+          try {
+            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in";
+            const postUrl = `${siteUrl}/blog/${post.slug}`;
+            const indexNowKey = process.env.INDEXNOW_KEY || "71701e4a179549cd9da1ce73b9cece41";
+            const host = siteUrl.replace(/^https?:\/\//, ""); // strip http:// or https://
+
+            await fetch("https://api.indexnow.org/indexnow", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "charset": "utf-8"
+              },
+              body: JSON.stringify({
+                host: host,
+                key: indexNowKey,
+                keyLocation: `${siteUrl}/${indexNowKey}.txt`,
+                urlList: [postUrl],
+              }),
+            });
+            console.log("IndexNow Ping Successful for:", postUrl);
+          } catch (indexNowErr) {
+            console.error("IndexNow Ping failed:", indexNowErr);
+          }
 
           // Send NTFY Notification
           try {

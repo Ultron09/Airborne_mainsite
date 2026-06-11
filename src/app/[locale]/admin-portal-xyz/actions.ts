@@ -249,6 +249,7 @@ FORMATTING RULES:
 3. Use bolding strategically for emphasis and scannability, but don't overdo it.
 4. Incorporate engaging bullet points or numbered lists where appropriate.
 5. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
+6. INTERNAL LINKING: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
 
 Return the response STRICTLY as a JSON object with the following structure:
 {
