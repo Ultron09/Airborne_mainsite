@@ -1,0 +1,15 @@
+name: Generate Blog Posts Cron
+
+on:
+  schedule:
+    - cron: '0,30 * * * *' # Runs every 30 minutes
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+jobs:
+  ping_generate_endpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit the Next.js Cron Endpoint
+        run: |
+          echo "Pinging AirborneHRS cron endpoint to trigger blog generation..."
+          curl -sSf https://airbornehrs.in/api/cron/generate
