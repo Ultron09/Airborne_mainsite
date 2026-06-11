@@ -53,13 +53,15 @@ Please generate a premium blog post based on the following parameters:
 - Secondary Keywords: ${post.secondaryKeywords || "human resources, software"}
 - Target Word Count: ${post.wordCount || "1000"} words
 
-FORMATTING RULES:
-1. Excellent visual hierarchy and pacing: Use short paragraphs (2-3 sentences max).
-2. Use proper Markdown spacing (ensure blank lines between paragraphs, headers, and lists).
-3. Use bolding strategically for emphasis and scannability, but don't overdo it.
-4. Incorporate engaging bullet points or numbered lists where appropriate.
-5. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
-6. INTERNAL LINKING: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
+FORMATTING & GEO (Generative Engine Optimization) RULES:
+1. Optimize for AI Search (GEO): Provide a clear, direct, and authoritative answer to the core topic in the first 2 paragraphs. AI search engines (Perplexity, ChatGPT) prioritize fluff-free, direct answers.
+2. Include Data & Statistics: Incorporate highly realistic industry statistics (e.g., "Data shows a 40% reduction in admin time...") to build authority and trust for AI parsers.
+3. Clear Headings: Use highly descriptive Markdown headings (H2, H3) that directly answer user intent.
+4. Excellent visual hierarchy: Use short paragraphs (2-3 sentences max) and bulleted/numbered lists where appropriate.
+5. Use proper Markdown spacing (ensure blank lines between paragraphs, headers, and lists).
+6. Use bolding strategically for emphasis and scannability.
+7. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
+8. INTERNAL LINKING: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
 
 Return the response STRICTLY as a JSON object with the following structure:
 {
