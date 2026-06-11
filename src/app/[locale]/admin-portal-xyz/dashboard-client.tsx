@@ -34,6 +34,10 @@ interface Post {
 interface DemoReq {
   id: string;
   email: string;
+  name: string | null;
+  company: string | null;
+  phone: string | null;
+  message: string | null;
   createdAt: Date;
 }
 
@@ -313,17 +317,27 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
               <table className="w-full border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-white/10 bg-white/5 text-xs text-muted-foreground font-semibold uppercase tracking-wider">
-                    <th className="p-4">Email</th>
+                    <th className="p-4">Lead Info</th>
+                    <th className="p-4">Company</th>
+                    <th className="p-4">Message</th>
                     <th className="p-4">Date Received</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {demoRequests
-                    .filter((r) => r.email.toLowerCase().includes(searchTerm.toLowerCase()))
+                    .filter((r) => r.email.toLowerCase().includes(searchTerm.toLowerCase()) || (r.name || "").toLowerCase().includes(searchTerm.toLowerCase()) || (r.company || "").toLowerCase().includes(searchTerm.toLowerCase()))
                     .map((req) => (
                     <tr key={req.id} className="hover:bg-white/5 transition-colors">
-                      <td className="p-4 font-bold text-white">
-                        <a href={`mailto:${req.email}`} className="hover:text-primary transition-colors">{req.email}</a>
+                      <td className="p-4 space-y-1">
+                        <div className="font-bold text-white">{req.name || "Unknown"}</div>
+                        <div className="text-xs text-muted-foreground"><a href={`mailto:${req.email}`} className="hover:text-primary transition-colors">{req.email}</a></div>
+                        {req.phone && <div className="text-xs text-muted-foreground font-mono">{req.phone}</div>}
+                      </td>
+                      <td className="p-4 font-semibold text-white">
+                        {req.company || <span className="text-muted-foreground italic text-xs">N/A</span>}
+                      </td>
+                      <td className="p-4 text-xs text-muted-foreground max-w-xs truncate">
+                        {req.message || "-"}
                       </td>
                       <td className="p-4 text-xs text-muted-foreground">
                         <div className="flex items-center gap-1.5">

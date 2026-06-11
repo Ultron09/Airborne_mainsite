@@ -43,5 +43,9 @@ model BlogPost {
 model DemoRequest {
   id        String   @id @default(uuid())
   email     String
+  name      String?
+  company   String?
+  phone     String?
+  message   String?
   createdAt DateTime @default(now())
 }
