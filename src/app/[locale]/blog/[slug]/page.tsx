@@ -283,11 +283,17 @@ export default async function BlogPostDetail(props: Props) {
               </div>
             </header>
 
-            {/* Markdown rendered HTML */}
-            <div
-              className="prose-custom"
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-            />
+            {/* Markdown rendered HTML inside a weightless glass panel */}
+            <div className="glass-panel p-8 sm:p-12 rounded-[2rem] border border-white/10 relative overflow-hidden shadow-2xl">
+              {/* Subtle ambient light behind text */}
+              <div className="absolute top-0 right-0 h-96 w-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 h-96 w-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+              
+              <div
+                className="prose-custom relative z-10"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
+            </div>
           </article>
 
           {/* Sidebar for SEO & GEO Diagnostics / Visuals */}
