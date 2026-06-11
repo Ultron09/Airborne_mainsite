@@ -49,6 +49,64 @@ export async function logoutAdmin(): Promise<void> {
   cookieStore.delete("airborne_session");
 }
 
+// Trigger Notifications (NTFY, Zapier, IndexNow)
+async function triggerPostNotifications(post: any) {
+  try {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in";
+    const postUrl = `${siteUrl}/blog/${post.slug}`;
+
+    // 1. IndexNow API Ping
+    const indexNowKey = process.env.INDEXNOW_KEY || "71701e4a179549cd9da1ce73b9cece41";
+    const host = siteUrl.replace(/^https?:\/\//, ""); // strip http:// or https://
+    fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "charset": "utf-8"
+      },
+      body: JSON.stringify({
+        host: host,
+        key: indexNowKey,
+        keyLocation: `${siteUrl}/${indexNowKey}.txt`,
+        urlList: [postUrl],
+      }),
+    }).catch(console.error);
+
+    // 2. Send NTFY Notification
+    const topic = process.env.NTFY_TOPIC || "airborne_blogs_live";
+    fetch(`https://ntfy.sh/${topic}`, {
+      method: "POST",
+      body: `New Blog Live: ${post.title}\n\nRead it here: ${postUrl}`,
+      headers: {
+        "Title": "Airborne Blog Live",
+        "Tags": "loudspeaker,rocket,airborne",
+        "Priority": "high",
+        "Click": postUrl
+      }
+    }).catch(console.error);
+
+    // 3. Trigger Zapier Webhook
+    const webhookUrl = process.env.ZAPIER_WEBHOOK_URL || process.env.BLOG_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event: "blog_published",
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          summary: post.summary,
+          url: postUrl,
+          imageUrl: `${siteUrl}/api/og?title=${encodeURIComponent(post.title)}&pillar=${encodeURIComponent(post.contentPillar || 'HR Automation')}`
+        })
+      }).catch(console.error);
+    }
+  } catch (error) {
+    console.error("Error triggering notifications:", error);
+  }
+}
+
 // Create new blog post
 export async function createBlogPost(data: {
   title: string;
@@ -98,6 +156,10 @@ export async function createBlogPost(data: {
   revalidatePath("/");
   revalidatePath("/blog");
   revalidatePath("/sitemap.xml");
+
+  if (data.published) {
+    await triggerPostNotifications(newPost);
+  }
 
   return newPost;
 }
@@ -208,6 +270,11 @@ export async function togglePublishPost(id: string) {
   revalidatePath("/blog");
   revalidatePath(`/blog/${post.slug}`);
   revalidatePath("/sitemap.xml");
+
+  if (!post.published) {
+    // It was draft, now published
+    await triggerPostNotifications(updated);
+  }
 
   return updated;
 }
