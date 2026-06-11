@@ -141,8 +141,9 @@ Return the response STRICTLY as a JSON object with the following structure:
               method: "POST",
               body: `New Blog Live: ${post.title}\n\nRead it here: ${siteUrl}/blog/${post.slug}`,
               headers: {
-                "Title": "New Blog Published! 🚀",
-                "Tags": "rocket,newspaper",
+                "Title": "Airborne Blog Live",
+                "Tags": "loudspeaker,rocket,airborne",
+                "Priority": "high",
                 "Click": `${siteUrl}/blog/${post.slug}`
               }
             });
