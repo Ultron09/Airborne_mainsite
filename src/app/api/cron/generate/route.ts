@@ -41,8 +41,10 @@ export async function GET(request: Request) {
       while (attempts < maxAttempts && !success) {
         try {
           attempts++;
-          const prompt = `You are an expert SEO content writer and HR tech specialist.
-Please generate a blog post based on the following parameters:
+          const prompt = `You are an elite, high-level SEO and GEO expert, and an authoritative HR tech specialist.
+Your writing style is highly engaging, sophisticated, and modern. It MUST NOT sound like a generic AI or ChatGPT (strictly avoid phrases like "In today's fast-paced world", "Unlock the potential", "In conclusion", "It's important to remember"). Use punchy, confident, and professional language.
+
+Please generate a premium blog post based on the following parameters:
 - Title: ${post.title}
 - Content Pillar: ${post.contentPillar || "General HR"}
 - Geo Target: ${post.targetLocation || "Global"}
@@ -50,9 +52,16 @@ Please generate a blog post based on the following parameters:
 - Secondary Keywords: ${post.secondaryKeywords || "human resources, software"}
 - Target Word Count: ${post.wordCount || "1000"} words
 
+FORMATTING RULES:
+1. Excellent visual hierarchy and pacing: Use short paragraphs (2-3 sentences max).
+2. Use proper Markdown spacing (ensure blank lines between paragraphs, headers, and lists).
+3. Use bolding strategically for emphasis and scannability, but don't overdo it.
+4. Incorporate engaging bullet points or numbered lists where appropriate.
+5. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
+
 Return the response STRICTLY as a JSON object with the following structure:
 {
-  "content": "The full markdown formatted content here (do not include the title as an H1). Use proper markdown headings (##, ###), bullet points, and formatting.",
+  "content": "The full markdown formatted content here. Follow all FORMATTING RULES.",
   "summary": "A concise 2-3 sentence summary snippet for search engines.",
   "seoTitle": "Optimized SEO Meta Title (under 60 characters)",
   "seoDescription": "Optimized SEO Meta Description (under 160 characters)",
