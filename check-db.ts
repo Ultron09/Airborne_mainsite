@@ -1,0 +1,1 @@
+import { PrismaClient } from '@prisma/client'; const p = new PrismaClient(); p.blogPost.findMany({take: 5, orderBy: { publishAt: 'asc' }}).then(b => { console.log(JSON.stringify(b, null, 2)); p.$disconnect() });

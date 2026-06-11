@@ -1,0 +1,139 @@
+
+import pandas as pd
+
+posts = [
+    # ── JUNE 11 ──────────────────────────────────────────────────────────────
+    ["Best HRMS Software for Indian Companies in 2026: Complete Comparison", "HRMS", "Pan-India", "best HRMS software India 2026",
+     "top HRMS India, HRMS comparison India 2026, HRMS platforms India, leading HRMS software India", 1800, "2026-06-11 07:00"],
+    ["How HR Automation Is Saving Indian Companies 40% on Administrative Costs", "HR Automation", "Pan-India", "HR automation cost saving India",
+     "HR automation ROI India 2026, reduce HR admin costs India, automate HR tasks India, HR process automation savings", 1500, "2026-06-11 11:30"],
+    ["Top HR Services Companies in India: What Sets the Best Apart in 2026", "HR Services", "Pan-India", "top HR services companies India 2026",
+     "best HR companies India, leading HR firms India, HR outsourcing companies India, HR services comparison India", 1600, "2026-06-11 17:00"],
+    ["HRMS vs HRIS vs HCM: Which System Does Your Indian Business Actually Need?", "HRMS", "Pan-India", "HRMS vs HRIS vs HCM India",
+     "HR system comparison India, HRIS India, HCM software India, difference HRMS HRIS HCM India, choose HR system India", 1400, "2026-06-11 20:00"],
+    # ── JUNE 12 ──────────────────────────────────────────────────────────────
+    ["HR Automation for Indian Manufacturing Companies: A Practical 2026 Guide", "HR Automation", "Pan-India", "HR automation manufacturing India",
+     "manufacturing HR software India, factory workforce automation India, blue collar HR automation India, HR system manufacturing India", 1500, "2026-06-12 07:00"],
+    ["What Makes a Top HR Company in India Stand Out in 2026?", "HR Services", "Pan-India", "top HR company India 2026",
+     "best HR companies India 2026, leading HR service providers India, HR firm rankings India, HR companies to watch India 2026", 1400, "2026-06-12 11:30"],
+    ["How HRMS Reduces Compliance Risk for Indian Businesses", "HRMS", "Pan-India", "HRMS compliance risk reduction India",
+     "HR compliance software India, reduce compliance risk HRMS, statutory compliance HRMS India, PF ESI TDS HRMS automation India", 1500, "2026-06-12 17:00"],
+    ["HR Services Outsourcing vs In-House: What Indian SMBs Need to Know", "HR Services", "Pan-India SMB", "HR outsourcing vs in-house India SMB",
+     "HR BPO India, outsource HR India SMB, managed HR services India, HR services small business India 2026", 1300, "2026-06-12 20:00"],
+    # ── JUNE 13 ──────────────────────────────────────────────────────────────
+    ["Cloud-Based HRMS: Why Indian Companies Are Making the Switch in 2026", "HRMS", "Pan-India", "cloud HRMS India 2026",
+     "cloud HR software India, SaaS HRMS India, move to cloud HRMS India, cloud HR platform India benefits", 1500, "2026-06-13 07:00"],
+    ["HR Automation Checklist: 10 Processes Every Indian Company Should Automate First", "HR Automation", "Pan-India", "HR automation checklist India",
+     "HR processes to automate India, automate payroll India, automate onboarding India, HR task automation priority India", 1400, "2026-06-13 11:30"],
+    ["Best HR Services for Startups in India: A Founder's Comparison Guide 2026", "HR Services", "Pan-India", "best HR services startups India 2026",
+     "HR companies for startups India, startup HR partner India, HR service provider startup India, outsourced HR startup India", 1600, "2026-06-13 17:00"],
+    ["How Top HR Companies in India Are Using AI to Transform Talent Acquisition", "AI Recruitment", "Pan-India", "top HR companies AI talent acquisition India",
+     "AI hiring top HR firms India, best HR companies AI recruitment India, AI talent acquisition India 2026, HR company AI tools India", 1600, "2026-06-13 20:00"],
+    # ── JUNE 14 ──────────────────────────────────────────────────────────────
+    ["HRMS Implementation Roadmap for Indian Mid-Size Companies", "HRMS", "Pan-India", "HRMS implementation roadmap India",
+     "how to implement HRMS India, HRMS rollout plan India, HRMS deployment mid-size company India, HRMS setup guide India", 1800, "2026-06-14 07:00"],
+    ["HR Automation Tools That Work for India's Blue-Collar and Frontline Workforce", "HR Automation", "Pan-India", "HR automation blue collar workforce India",
+     "frontline workforce HR tools India, field staff HR automation India, blue collar HRMS India, hourly worker HR software India", 1500, "2026-06-14 11:30"],
+    ["Comparing HR Services Providers in India: Key Metrics That Actually Matter", "HR Services", "Pan-India", "compare HR services providers India",
+     "HR provider evaluation India, choosing HR services India, HR services metrics India, HR company comparison criteria India 2026", 1400, "2026-06-14 17:00"],
+    ["Why India's Top HR Companies Are Investing Heavily in AI and Automation in 2026", "HR Automation", "Pan-India", "top HR companies India AI investment 2026",
+     "HR automation trends India, AI in HR companies India, HR digital transformation India 2026, HR tech adoption India leading firms", 1600, "2026-06-14 20:00"],
+    # ── JUNE 15 ──────────────────────────────────────────────────────────────
+    ["HRMS Integration Guide: Connecting HR Software with Payroll, Finance, and ERP", "HRMS", "Pan-India", "HRMS integration guide India",
+     "HRMS payroll integration India, connect HRMS ERP India, HR software integration India, HRMS API India, HRMS finance sync India", 1700, "2026-06-15 07:00"],
+    ["How HR Automation Is Transforming Retail Workforce Management in India", "HR Automation", "Retail India", "HR automation retail workforce India",
+     "retail HR software India, workforce management retail India, automate retail HR India, shift scheduling automation India retail", 1500, "2026-06-15 11:30"],
+    ["What Separates India's Top HR Companies from the Rest: An Insider Look", "HR Services", "Pan-India", "top HR companies India what makes them different",
+     "best HR firms India differentiators, leading HR companies India 2026, HR company excellence India, why choose top HR firm India", 1400, "2026-06-15 17:00"],
+    ["HR Services Market in India 2026: Size, Trends, and Key Players to Watch", "HR Services", "Pan-India", "HR services market India 2026",
+     "HR industry India 2026, HR market size India, HR outsourcing market India 2026, HR companies growth India, HR sector India trends", 1800, "2026-06-15 20:00"],
+    # ── JUNE 16 ──────────────────────────────────────────────────────────────
+    ["HRMS Security and Data Privacy: What Every Indian Company Must Know in 2026", "HRMS", "Pan-India", "HRMS data security privacy India 2026",
+     "HR data protection India, HRMS security features India, employee data privacy HRMS India, secure HR software India DPDPA", 1500, "2026-06-16 07:00"],
+    ["Full-Cycle HR Automation: From Hire to Retire in Indian Organisations", "HR Automation", "Pan-India", "full cycle HR automation India hire to retire",
+     "end to end HR automation India, hire to retire process India, complete HR workflow automation India, lifecycle HR automation India", 1800, "2026-06-16 11:30"],
+    ["How Smart Indian CEOs Are Choosing AI-First HR Companies in 2026", "HR Services", "Pan-India", "AI first HR companies India CEOs 2026",
+     "CEO guide choose HR company India, AI HR platform India CEO, top HR vendors India 2026, HR company selection India leadership", 1400, "2026-06-16 17:00"],
+    ["HRMS for 50 to 500 Employees: Choosing the Right Scale for Indian Growth-Stage Companies", "HRMS", "Pan-India", "HRMS 50 500 employees India growth stage",
+     "mid size HRMS India, HRMS for growing company India, scalable HRMS India, HRMS 200 employees India, growth stage HR software India", 1600, "2026-06-16 20:00"],
+    # ── JUNE 17 ──────────────────────────────────────────────────────────────
+    ["HRMS ROI Calculator: How Much Can Your Indian Business Save This Year?", "HRMS", "Pan-India", "HRMS ROI calculator India",
+     "calculate HRMS savings India, HRMS cost benefit India, how much save HRMS India, HR software ROI India 2026", 1500, "2026-06-17 07:00"],
+    ["HR Automation for IT and SaaS Companies in India: Best Tools and Practices 2026", "HR Automation", "Pan-India", "HR automation IT SaaS companies India 2026",
+     "IT company HR software India, SaaS startup HR automation India, tech company HRMS India, HR automation software developers India", 1500, "2026-06-17 11:30"],
+    ["Choosing the Right HR Services Partner for Your Indian Startup: A Step-by-Step Guide", "HR Services", "Pan-India", "choose HR services partner India startup",
+     "how to choose HR company India, HR partner startup India, HR vendor evaluation India, HR outsourcing partner India startup 2026", 1600, "2026-06-17 17:00"],
+    ["Top HR Companies in India for Recruitment: Who's Leading the Pack in 2026?", "HR Services", "Pan-India", "top HR recruitment companies India 2026",
+     "best recruitment HR firms India, leading HR recruitment agencies India 2026, top talent acquisition companies India, HR firm rankings India 2026", 1800, "2026-06-17 20:00"],
+    # ── JUNE 18 ──────────────────────────────────────────────────────────────
+    ["Mobile-First HRMS: Why Indian Employees Demand App-Based HR in 2026", "HRMS", "Pan-India", "mobile HRMS app India 2026",
+     "HR app India employees, mobile HR software India, HRMS mobile app India, best HR mobile app India 2026, app-based HR management India", 1400, "2026-06-18 07:00"],
+    ["HR Automation in Banking and Financial Services in India: A 2026 Overview", "HR Automation", "BFSI India", "HR automation banking financial services India",
+     "BFSI HR software India, bank HR automation India, financial services HRMS India, NBFC HR automation India 2026", 1500, "2026-06-18 11:30"],
+    ["Managed HR Services vs HR Software: Which Model Fits Indian SMBs Best?", "HR Services", "Pan-India SMB", "managed HR services vs HR software India SMB",
+     "HR managed services India, outsource HR or use software India, HR PEO India, SMB HR model comparison India 2026", 1400, "2026-06-18 17:00"],
+    ["How India's Top HR Companies Are Handling the Hybrid Work Revolution", "HR Services", "Pan-India", "top HR companies hybrid work India",
+     "hybrid work HR solutions India, HR company hybrid workforce India, remote hybrid HR tools India, hybrid work policy HR India 2026", 1500, "2026-06-18 20:00"],
+    # ── JUNE 19 ──────────────────────────────────────────────────────────────
+    ["HRMS Customisation: How Indian Companies Tailor Their HR Software for Local Needs", "HRMS", "Pan-India", "HRMS customisation India local needs",
+     "customize HRMS India, configurable HR software India, HRMS workflows India custom, tailored HRMS for Indian companies", 1400, "2026-06-19 07:00"],
+    ["How HR Automation Is Helping Indian E-Commerce Giants Scale Their Teams in 2026", "HR Automation", "Pan-India", "HR automation e-commerce India 2026",
+     "e-commerce HR software India, online retail HR automation India, scale HR team e-commerce India, D2C company HR automation India", 1500, "2026-06-19 11:30"],
+    ["HR Services Pricing in India 2026: What Should You Expect to Pay?", "HR Services", "Pan-India", "HR services pricing India 2026",
+     "HR outsourcing cost India 2026, HR company fees India, managed HR services pricing India, how much HR services cost India", 1400, "2026-06-19 17:00"],
+    ["The KPIs That India's Top HR Companies Use to Prove Their Value to Clients", "HR Services", "Pan-India", "KPIs top HR companies India prove value",
+     "HR company performance metrics India, HR services KPIs India, measure HR outsourcing success India, HR SLA metrics India 2026", 1600, "2026-06-19 20:00"],
+    # ── JUNE 20 ──────────────────────────────────────────────────────────────
+    ["Multi-Location HRMS: Managing HR Across Multiple Indian City Offices", "HRMS", "Pan-India", "multi location HRMS India multiple offices",
+     "HRMS multiple branches India, HR software multi office India, centralised HRMS India, HR management pan-India offices, distributed team HRMS India", 1600, "2026-06-20 07:00"],
+    ["HR Automation for Healthcare Companies in India: Key Use Cases in 2026", "HR Automation", "Healthcare India", "HR automation healthcare India 2026",
+     "hospital HR software India, healthcare HRMS India, clinic HR automation India, medical staff HR management India, doctor nurse HR platform India", 1500, "2026-06-20 11:30"],
+    ["How to Evaluate an HR Services Provider Before You Sign the Contract in India", "HR Services", "Pan-India", "evaluate HR services provider India before contract",
+     "HR vendor due diligence India, questions to ask HR company India, HR services contract India, vetting HR providers India 2026", 1500, "2026-06-20 17:00"],
+    ["Top HR Companies in India for Payroll Management: Rankings and Reviews 2026", "HR Services", "Pan-India", "top HR companies payroll management India 2026",
+     "best payroll HR companies India, payroll management services India 2026, HR payroll outsourcing India, top payroll providers India", 1800, "2026-06-20 20:00"],
+    # ── JUNE 21 ──────────────────────────────────────────────────────────────
+    ["HRMS Reporting and Analytics: Features Indian HR Managers Actually Use Daily", "HRMS", "Pan-India", "HRMS reporting analytics features India",
+     "HR reporting software India, HRMS dashboard India, HR analytics features HRMS, workforce reports HR software India 2026", 1400, "2026-06-21 07:00"],
+    ["HR Automation for Education Institutions in India: What Works in 2026", "HR Automation", "Education India", "HR automation education institutions India 2026",
+     "school college HR software India, university HR automation India, education staff management India, HR system school India 2026", 1500, "2026-06-21 11:30"],
+    ["HR Services SLAs: What Indian Businesses Should Always Insist On in 2026", "HR Services", "Pan-India", "HR services SLA India 2026",
+     "HR outsourcing SLA India, service level agreement HR India, HR company commitments India, SLA HR managed services India", 1400, "2026-06-21 17:00"],
+    ["How Top HR Companies in India Are Winning the War for SMB Clients in 2026", "HR Services", "Pan-India SMB", "top HR companies SMB clients India 2026",
+     "HR firms targeting SMBs India, best HR company for small business India, HR services SMB India 2026, SMB HR outsourcing leaders India", 1600, "2026-06-21 20:00"],
+    # ── JUNE 22 ──────────────────────────────────────────────────────────────
+    ["HRMS Onboarding Module: Making Day One Seamless for Indian Companies", "HRMS", "Pan-India", "HRMS onboarding module India",
+     "digital onboarding HRMS India, HR software onboarding India, automated onboarding workflow India, new employee HRMS India day one", 1400, "2026-06-22 07:00"],
+    ["HR Automation and Employee Wellness: How Indian Companies Are Connecting the Dots", "HR Automation", "Pan-India", "HR automation employee wellness India",
+     "HR wellness tools India, automate wellness programs HR India, employee health HR software India, wellbeing HRMS India 2026", 1500, "2026-06-22 11:30"],
+    ["Global HR Services for Indian Companies Expanding Overseas in 2026", "HR Services", "India Global", "global HR services Indian companies expanding overseas",
+     "Indian company global HR, expand overseas HR India, cross border HR services India, global HRMS for Indian firms, international HR India 2026", 1600, "2026-06-22 17:00"],
+    ["Top HR Companies in India Disrupting the Traditional Consultancy Model in 2026", "HR Services", "Pan-India", "top HR companies India disrupting consultancy 2026",
+     "AI HR company India vs consultancy, modern HR firms India 2026, HR tech companies India disruption, new age HR companies India", 1700, "2026-06-22 20:00"],
+    # ── JUNE 23 ──────────────────────────────────────────────────────────────
+    ["HRMS vs Manual HR Management: A Detailed Cost-Benefit Analysis for India", "HRMS", "Pan-India", "HRMS vs manual HR management India cost benefit",
+     "cost of manual HR India, HRMS vs spreadsheet India, HR software vs manual process India, why switch to HRMS India", 1600, "2026-06-23 07:00"],
+    ["HR Automation and Grievance Management: The Indian Workplace Perspective 2026", "HR Automation", "Pan-India", "HR automation grievance management India",
+     "automate grievance HR India, employee complaint management software India, HR grievance tool India 2026, digital grievance HR India", 1400, "2026-06-23 11:30"],
+    ["HR Services for Fast-Growing D2C and Consumer Brands in India", "HR Services", "Pan-India", "HR services D2C consumer brands India",
+     "D2C brand HR outsourcing India, consumer startup HR India, fast growing brand HR services India, HR company D2C India 2026", 1500, "2026-06-23 17:00"],
+    ["Why Choosing the Right HR Company in India Can Make or Break Your Culture", "HR Services", "Pan-India", "right HR company India company culture",
+     "HR company culture impact India, HR partner company values India, culture fit HR services India, HR vendor and employer brand India", 1600, "2026-06-23 20:00"],
+    # ── JUNE 24 ──────────────────────────────────────────────────────────────
+    ["Scalable HRMS: How Indian Unicorns Manage HR for 500-Plus Employee Teams", "HRMS", "Pan-India", "scalable HRMS Indian unicorns 500 employees",
+     "enterprise HRMS India, HRMS for unicorn startups India, large team HR software India, HR platform scale India 500 employees", 1800, "2026-06-24 07:00"],
+    ["HR Automation Trends in India: What's Coming in Q3 and Q4 of 2026", "HR Automation", "Pan-India", "HR automation trends India Q3 Q4 2026",
+     "upcoming HR automation India, future of HR automation India, HR tech trends second half 2026, HR automation roadmap India 2026", 1600, "2026-06-24 11:30"],
+    ["End-to-End HR Services: The Complete Managed HR Solution Indian Companies Need", "HR Services", "Pan-India", "end to end HR services India complete solution",
+     "full service HR company India, complete HR outsourcing India, total HR management services India, integrated HR services India 2026", 1700, "2026-06-24 17:00"],
+    ["Top HR Companies in India 2026: The Definitive Category-Wise Ranking", "HR Services", "Pan-India", "top HR companies India 2026 definitive ranking",
+     "best HR companies India category ranking 2026, HR firms India top list, leading HR service providers India ranked, HR company awards India 2026", 2200, "2026-06-24 20:00"],
+]
+
+columns = ["Title", "Content Pillar", "Geo Target", "Primary Keyword", "Secondary Keywords", "Word Count", "Publish Date"]
+df_new = pd.DataFrame(posts, columns=columns)
+output_path = "AirborneHRS_Blog_Calendar_14Day_Extra.csv"
+df_new.to_csv(output_path, index=False)
+print(f"Saved {len(df_new)} rows to {output_path}")
+print("\nSample:")
+print(df_new.head(4).to_string())
