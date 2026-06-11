@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { revalidatePath } from "next/cache";
 
 export const dynamic = 'force-dynamic'; // Prevent caching
+export const maxDuration = 60; // Max allowed for Vercel Hobby tier
 
 export async function GET(request: Request) {
   try {

@@ -1,0 +1,24 @@
+name: Generate Scheduled Blogs
+
+on:
+  schedule:
+    # Runs every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping_generation_api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Vercel Generate API
+        env:
+          # Ensure you add SITE_URL to your GitHub Repository Secrets or Variables
+          # e.g., SITE_URL = https://your-production-domain.com
+          SITE_URL: ${{ secrets.SITE_URL || vars.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "Error: SITE_URL is not set. Please set it in GitHub Secrets or Variables."
+            exit 1
+          fi
+          echo "Pinging $SITE_URL/api/cron/generate"
+          curl -v "$SITE_URL/api/cron/generate"
