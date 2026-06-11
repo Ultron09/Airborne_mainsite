@@ -80,7 +80,13 @@ Return the response STRICTLY as a JSON object with the following structure:
           });
 
           const responseText = result.response.text();
-          generatedData = JSON.parse(responseText.trim());
+          let cleanedText = responseText.trim();
+          if (cleanedText.startsWith("```json")) {
+            cleanedText = cleanedText.replace(/^```json\s*/i, "").replace(/\s*```$/, "");
+          } else if (cleanedText.startsWith("```")) {
+            cleanedText = cleanedText.replace(/^```\s*/, "").replace(/\s*```$/, "");
+          }
+          generatedData = JSON.parse(cleanedText);
           success = true;
         } catch (err: any) {
           lastError = err;
@@ -138,7 +144,7 @@ Return the response STRICTLY as a JSON object with the following structure:
           // Send NTFY Notification
           try {
             const topic = process.env.NTFY_TOPIC || "airborne_blogs_live";
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in";
             await fetch(`https://ntfy.sh/${topic}`, {
               method: "POST",
               body: `New Blog Live: ${post.title}\n\nRead it here: ${siteUrl}/blog/${post.slug}`,
@@ -152,11 +158,10 @@ Return the response STRICTLY as a JSON object with the following structure:
           } catch (notifyError) {
             console.error("Failed to send ntfy blog notification:", notifyError);
           }
-          // Trigger Zapier Webhook
           const webhookUrl = process.env.ZAPIER_WEBHOOK_URL || process.env.BLOG_WEBHOOK_URL;
           if (webhookUrl) {
             try {
-              fetch(webhookUrl, {
+              await fetch(webhookUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -168,11 +173,8 @@ Return the response STRICTLY as a JSON object with the following structure:
                   url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in"}/blog/${post.slug}`,
                   imageUrl: `${process.env.NEXT_PUBLIC_SITE_URL || "https://airbornehrs.in"}/api/og?title=${encodeURIComponent(post.title)}&pillar=${encodeURIComponent(post.contentPillar || 'HR Automation')}`
                 })
-              }).then(() => {
-                console.log("Zapier Webhook triggered for post:", post.title);
-              }).catch((webhookErr) => {
-                console.error("Failed to trigger Zapier webhook:", webhookErr);
               });
+              console.log("Zapier Webhook triggered for post:", post.title);
             } catch (e) {
               console.error("Zapier Webhook setup error:", e);
             }
