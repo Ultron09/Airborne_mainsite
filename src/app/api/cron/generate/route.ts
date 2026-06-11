@@ -16,7 +16,7 @@ export async function GET(request: Request) {
           lte: new Date(),
         },
       },
-      take: 5, // Batch processing to prevent serverless timeouts
+      take: 1, // Only process 1 post per invocation to prevent Vercel 60s timeout
     });
 
     if (pendingPosts.length === 0) {
