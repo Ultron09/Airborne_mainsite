@@ -106,6 +106,22 @@ Return the response STRICTLY as a JSON object with the following structure:
 
           results.push({ id: post.id, title: post.title, status: "success" });
 
+          // Send NTFY Notification
+          try {
+            const topic = process.env.NTFY_TOPIC || "airborne_blogs_live";
+            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+            await fetch(`https://ntfy.sh/${topic}`, {
+              method: "POST",
+              body: `New Blog Live: ${post.title}\n\nRead it here: ${siteUrl}/blog/${post.slug}`,
+              headers: {
+                "Title": "New Blog Published! 🚀",
+                "Tags": "rocket,newspaper",
+                "Click": `${siteUrl}/blog/${post.slug}`
+              }
+            });
+          } catch (notifyError) {
+            console.error("Failed to send ntfy blog notification:", notifyError);
+          }
           // Trigger Webhook if configured
           const webhookUrl = process.env.BLOG_WEBHOOK_URL;
           if (webhookUrl) {
