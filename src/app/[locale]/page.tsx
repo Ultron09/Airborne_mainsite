@@ -133,7 +133,7 @@ export default async function Home() {
       </section>
 
       {/* Marquee Ticker */}
-      <VelocityMarquee text="AGI WORKFORCE INTELLIGENCE • AUTOMATED ACQUISITION • NEURAL MATCHING • " />
+      <VelocityMarquee text="HRMS • HR AUTOMATION • AGI WORKFORCE INTELLIGENCE • HR SERVICES • " />
 
       {/* Asymmetric Bento Grid (Core Solutions) */}
       <section id="features" className="py-32 relative">
@@ -141,9 +141,9 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           
           <ScrollReveal className="mb-20">
-            <h2 className="text-sm font-bold text-primary tracking-[0.2em] uppercase mb-4 text-center">Global Ecosystem</h2>
+            <h2 className="text-sm font-bold text-primary tracking-[0.2em] uppercase mb-4 text-center">Next-Gen HRMS Platform</h2>
             <h3 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tight text-white text-center max-w-4xl mx-auto leading-tight">
-              An intelligent fabric connecting <br/><span className="text-white/40">the world's top talent.</span>
+              The HR Management System built for <br/><span className="text-white/40">intelligent automation & services.</span>
             </h3>
           </ScrollReveal>
 
@@ -227,7 +227,7 @@ export default async function Home() {
               <ScrollReveal>
                 <div className="glass-panel p-8 rounded-3xl border-l-4 border-l-primary mt-12 backdrop-blur-xl">
                   <p className="text-xl text-white font-light leading-relaxed">
-                    "We are not building automation spreadsheets. We are building the next generation of artificial consciousness to run collaborative, goal-driven business nodes."
+                    "We are not just building another HRMS. We are building the next generation of artificial consciousness to deliver autonomous HR services and goal-driven workforce automation."
                   </p>
                   <div className="mt-6">
                     <h4 className="text-primary font-bold text-lg tracking-tight">Suryaansh Prithvijit Singh</h4>

@@ -26,13 +26,13 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.airbornehrs.in"),
-  title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
-  description: "Leverage state-of-the-art AI technology to transform your hiring, talent acquisition, and workforce management. Optimize search, automate screenings, and align people with potential.",
-  keywords: ["HR AI", "Workforce Intelligence", "AI recruitment", "Advanced talent acquisition", "HR Tech", "Airborne HRS", "GEO optimized recruiting", "Artificial Consciousness", "AGI recruiting", "Suryaansh Prithvijit Singh"],
+  title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
+  description: "The ultimate HR Management System (HRMS). Leverage state-of-the-art AI technology to transform your HR services, automate hiring, and streamline workforce management.",
+  keywords: ["HRMS", "HR service", "HR automation", "HR Management System", "HR AI", "Workforce Intelligence", "Airborne HRS", "GEO optimized recruiting"],
   authors: [{ name: "Airborne HRS Team" }],
   openGraph: {
-    title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
-    description: "State-of-the-art AI technology transforming talent acquisition and workforce management.",
+    title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
+    description: "The ultimate HR Management System (HRMS). Leverage AI technology to transform your HR services and automate hiring.",
     url: "https://airbornehrs.in",
     siteName: "Airborne HRS",
     locale: "en_US",
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Airborne HRS | Advanced HR AI Workforce Intelligence",
-    description: "Transform your hiring and HR operations with AI.",
+    title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
+    description: "Transform your hiring and HR services with Airborne's HR Management System.",
   },
 };
 
@@ -84,6 +84,21 @@ export default async function RootLayout({
     "url": "https://airbornehrs.in"
   };
 
+  const jsonLdSoftwareApp = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Airborne HR Management System (HRMS)",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "url": "https://airbornehrs.in",
+    "description": "Advanced HR Automation and HR Management System for enterprise talent acquisition and workforce intelligence.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
     <html
       lang={resolvedParams.locale}
@@ -102,6 +117,10 @@ export default async function RootLayout({
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSoftwareApp) }}
           />
           
           <Navigation locale={resolvedParams.locale} />
