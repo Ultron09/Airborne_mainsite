@@ -261,7 +261,7 @@ export default async function BlogPostDetail(props: Props) {
                   <Calendar className="h-4 w-4" />
                   <span>
                     Published on{" "}
-                    {new Date(post.createdAt).toLocaleDateString("en-US", {
+                    {new Date(post.publishAt || post.createdAt).toLocaleDateString("en-US", {
                       dateStyle: "long",
                     })}
                   </span>

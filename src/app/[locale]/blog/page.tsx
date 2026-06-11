@@ -180,7 +180,7 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
                   <div className="flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5" />
                     <span>
-                      {new Date(post.createdAt).toLocaleDateString("en-US", {
+                      {new Date(post.publishAt || post.createdAt).toLocaleDateString("en-US", {
                         dateStyle: "medium",
                       })}
                     </span>
