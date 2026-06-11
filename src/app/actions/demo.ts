@@ -14,6 +14,21 @@ export async function submitDemoRequest(email: string) {
       }
     });
 
+    // Send NTFY Notification for new inquiry
+    try {
+      const topic = process.env.NTFY_TOPIC || "airborne_blogs_live";
+      await fetch(`https://ntfy.sh/${topic}`, {
+        method: "POST",
+        body: `New Lead Captured: ${email}\n\nCheck the database to contact them.`,
+        headers: {
+          "Title": "New Airborne Inquiry",
+          "Tags": "incoming_envelope,briefcase",
+          "Priority": "high"
+        }
+      });
+    } catch (notifyErr) {
+      console.error("Failed to trigger NTFY for demo request:", notifyErr);
+    }
 
     return { success: true };
   } catch (error) {
