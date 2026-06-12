@@ -56,12 +56,12 @@ function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
   return (
     <div className="parallax overflow-hidden flex whitespace-nowrap m-0 leading-none">
       <motion.div className="scroller flex text-6xl md:text-8xl lg:text-9xl font-heading font-extrabold uppercase tracking-tighter" style={{ x }}>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
-        <span className="block mr-12 opacity-30 text-transparent" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
+        <span className="block mr-12 text-transparent opacity-100" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.7)" }}>{children} </span>
       </motion.div>
     </div>
   );
