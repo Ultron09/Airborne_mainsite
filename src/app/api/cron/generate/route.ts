@@ -110,7 +110,8 @@ Return the response STRICTLY as a JSON object with the following structure:
               seoDescription: generatedData.seoDescription,
               keywords: generatedData.keywords,
               generationStatus: "COMPLETED",
-              published: true, // Auto-publish upon successful generation
+              published: true,
+              publishAt: new Date(),
             },
           });
 
