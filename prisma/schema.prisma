@@ -38,6 +38,8 @@ model BlogPost {
   latitude       Float?
   longitude      Float?
   radiusKm       Float?   @default(50)
+  
+  analytics      BlogAnalytics[]
 }
 
 model DemoRequest {
@@ -48,4 +50,23 @@ model DemoRequest {
   phone     String?
   message   String?
   createdAt DateTime @default(now())
+}
+
+model BlogAnalytics {
+  id             String   @id @default(uuid())
+  blogPostId     String
+  blogPost       BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  
+  // Viewer Information
+  ipHash         String?  // Anonymized IP hash or uniquely identifiable string for unique views
+  userAgent      String?
+  country        String?
+  city           String?
+  region         String?
+  
+  // Engagement Data
+  scrollDepth    Float    @default(0) // Percentage 0-100
+  timeSpentSec   Int      @default(0) // Seconds spent actively reading
+  
+  viewedAt       DateTime @default(now())
 }

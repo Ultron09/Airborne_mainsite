@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import { Calendar, MapPin, Compass, ArrowLeft, ShieldCheck, Sparkles } from "lucide-react";
+import BlogTracker from "@/components/BlogTracker";
 
 export const revalidate = 0; // Fresh content on load
 
@@ -233,6 +234,7 @@ export default async function BlogPostDetail(props: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
+      <BlogTracker blogPostId={post.id} />
 
       <div className="mx-auto max-w-7xl">
         {/* Back Link */}

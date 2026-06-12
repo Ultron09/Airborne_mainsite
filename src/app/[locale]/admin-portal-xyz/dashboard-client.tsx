@@ -5,6 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { togglePublishPost, deleteBlogPost, logoutAdmin } from "./actions";
 import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
   Plus,
   Trash2,
   Edit,
@@ -41,8 +50,20 @@ interface DemoReq {
   createdAt: Date;
 }
 
-export default function DashboardClient({ posts, demoRequests }: { posts: Post[], demoRequests: DemoReq[] }) {
-  const [activeTab, setActiveTab] = useState<"insights" | "leads">("insights");
+interface Analytics {
+  id: string;
+  blogPostId: string;
+  ipHash: string | null;
+  country: string | null;
+  region: string | null;
+  city: string | null;
+  scrollDepth: number;
+  timeSpentSec: number;
+  viewedAt: Date;
+}
+
+export default function DashboardClient({ posts, demoRequests, analytics = [] }: { posts: Post[], demoRequests: DemoReq[], analytics?: Analytics[] }) {
+  const [activeTab, setActiveTab] = useState<"insights" | "leads" | "analytics">("insights");
   const [searchTerm, setSearchTerm] = useState("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const router = useRouter();
@@ -54,6 +75,21 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
   const uniqueLocations = Array.from(
     new Set(posts.map((p) => p.targetLocation).filter(Boolean))
   ).length;
+
+  const totalViews = analytics.length;
+  const avgScroll = analytics.length > 0 ? Math.round(analytics.reduce((acc, curr) => acc + curr.scrollDepth, 0) / analytics.length) : 0;
+  
+  // Prepare chart data (Views per day)
+  const viewsByDate = analytics.reduce((acc: any, curr) => {
+    const date = new Date(curr.viewedAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric' });
+    acc[date] = (acc[date] || 0) + 1;
+    return acc;
+  }, {});
+  
+  const chartData = Object.keys(viewsByDate).map(date => ({
+    date,
+    views: viewsByDate[date]
+  })).reverse(); // Reverse to get chronological order assuming desc sort from server
 
   // Filter posts
   const filteredPosts = posts.filter((post) => {
@@ -167,6 +203,13 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
           </div>
           <span className="text-3xl font-bold text-white mt-4">{uniqueLocations}</span>
         </div>
+        <div className="p-5 rounded-2xl glass-panel border border-white/5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-muted-foreground text-xs">
+            <span>Total Views</span>
+            <Eye className="h-4 w-4 text-accent" />
+          </div>
+          <span className="text-3xl font-bold text-white mt-4">{totalViews}</span>
+        </div>
       </div>
 
       {/* Filters and Tabs */}
@@ -192,7 +235,17 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
                   : "text-muted-foreground hover:text-white"
               }`}
             >
-              Demo Leads ({demoRequests.length})
+              Leads ({demoRequests.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("analytics")}
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
+                activeTab === "analytics"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-white"
+              }`}
+            >
+              Analytics
             </button>
           </div>
           
@@ -310,7 +363,7 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
               </table>
             </div>
           </div>
-        ) ) : (
+        ) : activeTab === "leads" ? (
           /* LEADS TAB */
           <div className="overflow-hidden border border-white/10 rounded-2xl bg-card">
             <div className="overflow-x-auto">
@@ -361,6 +414,66 @@ export default function DashboardClient({ posts, demoRequests }: { posts: Post[]
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        ) : (
+          /* ANALYTICS TAB */
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Chart */}
+              <div className="lg:col-span-2 p-6 rounded-2xl border border-white/10 bg-white/5">
+                <h3 className="text-lg font-semibold text-white mb-6">Views Over Time</h3>
+                <div className="h-[300px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                      <XAxis dataKey="date" stroke="#ffffff50" fontSize={12} tickLine={false} axisLine={false} />
+                      <YAxis stroke="#ffffff50" fontSize={12} tickLine={false} axisLine={false} />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#09090b', borderColor: '#ffffff10', borderRadius: '8px' }}
+                        itemStyle={{ color: '#fff' }}
+                      />
+                      <Line type="monotone" dataKey="views" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, fill: "#3b82f6" }} activeDot={{ r: 6 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Top Regions & Metrics */}
+              <div className="space-y-6">
+                <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
+                  <h3 className="text-lg font-semibold text-white mb-4">Engagement</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-sm text-muted-foreground mb-1">Avg Scroll Depth</div>
+                      <div className="text-2xl font-bold text-white flex items-baseline gap-2">
+                        {avgScroll}%
+                        <div className="w-full bg-white/10 rounded-full h-2 ml-4">
+                          <div className="bg-primary h-2 rounded-full" style={{ width: `${avgScroll}%` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
+                  <h3 className="text-lg font-semibold text-white mb-4">Recent Visitors</h3>
+                  <div className="space-y-3">
+                    {analytics.slice(0, 5).map((a, i) => (
+                      <div key={i} className="flex justify-between items-center text-sm">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-white">{a.city || a.country || "Unknown Location"}</span>
+                        </div>
+                        <span className="text-muted-foreground">{Math.round(a.timeSpentSec / 60)}m read</span>
+                      </div>
+                    ))}
+                    {analytics.length === 0 && (
+                      <div className="text-sm text-muted-foreground">No tracking data yet.</div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
