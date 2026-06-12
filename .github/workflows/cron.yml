@@ -12,4 +12,4 @@ jobs:
       - name: Hit the Next.js Cron Endpoint
         run: |
           echo "Pinging AirborneHRS cron endpoint to trigger blog generation..."
-          curl -sSf https://airbornehrs.in/api/cron/generate
+          curl -sSfL https://www.airbornehrs.in/api/cron/generate
