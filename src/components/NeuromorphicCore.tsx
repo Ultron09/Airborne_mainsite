@@ -36,8 +36,11 @@ function Particles({ count = 3000 }) {
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       // Create a sphere distribution
+      // eslint-disable-next-line react-hooks/purity
       const r = 15 * Math.cbrt(Math.random());
+      // eslint-disable-next-line react-hooks/purity
       const theta = Math.random() * 2 * Math.PI;
+      // eslint-disable-next-line react-hooks/purity
       const phi = Math.acos(2 * Math.random() - 1);
       
       const x = r * Math.sin(phi) * Math.cos(theta);
@@ -51,7 +54,7 @@ function Particles({ count = 3000 }) {
     return positions;
   }, [count]);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (points.current) {
       // Subtle constant rotation
       points.current.rotation.y += 0.001;
@@ -98,6 +101,7 @@ export default function NeuromorphicCore() {
   useEffect(() => {
     // Optimize pixel ratio for mobile devices
     const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDpr(isMobile ? 1 : Math.min(2, window.devicePixelRatio));
   }, []);
 

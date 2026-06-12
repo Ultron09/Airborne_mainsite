@@ -70,7 +70,7 @@ const InnerCore = () => {
   );
 };
 
-const NodeMarker = ({ position, color, label }: { position: [number, number, number], color: string, label: string }) => {
+const NodeMarker = ({ position, color, _label }: { position: [number, number, number], color: string, _label: string }) => {
   return (
     <Float speed={2} floatIntensity={1} rotationIntensity={1}>
       <mesh position={position}>

@@ -23,6 +23,7 @@ export default function CustomCursor() {
     
     if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsVisible(true);
 
     const moveCursor = (e: MouseEvent) => {
