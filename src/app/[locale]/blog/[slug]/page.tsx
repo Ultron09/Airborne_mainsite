@@ -43,7 +43,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         description,
         type: "article",
         url: `https://airbornehrs.in/blog/${post.slug}`,
-        publishedTime: post.createdAt.toISOString(),
+        publishedTime: (post.publishAt || post.createdAt).toISOString(),
         modifiedTime: post.updatedAt.toISOString(),
         authors: ["Airborne HRS Team"],
         images: [
@@ -189,7 +189,7 @@ export default async function BlogPostDetail(props: Props) {
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.summary,
-    "datePublished": post.createdAt.toISOString(),
+    "datePublished": (post.publishAt || post.createdAt).toISOString(),
     "dateModified": post.updatedAt.toISOString(),
     "author": {
       "@type": "Organization",

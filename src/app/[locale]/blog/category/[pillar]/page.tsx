@@ -93,7 +93,7 @@ export default async function CategoryPage({
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                      }) : new Date(post.createdAt).toLocaleDateString('en-US', {
+                      }) : new Date(post.publishAt || post.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'

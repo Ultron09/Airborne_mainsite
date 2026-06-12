@@ -60,7 +60,7 @@ export default async function BlogPage(props: { searchParams: Promise<SearchPara
             : {},
         ],
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { publishAt: "desc" },
     });
   } catch (error) {
     console.error("Prisma error fetching blogs:", error);

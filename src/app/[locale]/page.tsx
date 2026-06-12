@@ -29,7 +29,7 @@ export default async function Home() {
   try {
     latestPosts = await prisma.blogPost.findMany({
       where: { published: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: { publishAt: "desc" },
       take: 3,
     });
   } catch (error) {
@@ -300,7 +300,7 @@ export default async function Home() {
                       </p>
                     </div>
                     <div className="pt-8 border-t border-white/10 mt-8 flex items-center justify-between text-sm text-muted-foreground font-medium">
-                      <span>{new Date(post.createdAt).toLocaleDateString("en-US", { dateStyle: "medium" })}</span>
+                      <span>{new Date(post.publishAt || post.createdAt).toLocaleDateString("en-US", { dateStyle: "medium" })}</span>
                       <Link 
                         href={`/blog/${post.slug}`}
                         className="inline-flex items-center text-primary font-bold group-hover:text-accent transition-colors"
