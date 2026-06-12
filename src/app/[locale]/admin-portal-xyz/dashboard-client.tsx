@@ -26,7 +26,8 @@ import {
   FileText,
   Search,
   CheckCircle2,
-  XCircle
+  XCircle,
+  Download
 } from "lucide-react";
 
 interface Post {
@@ -90,6 +91,40 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
     date,
     views: viewsByDate[date]
   })).reverse(); // Reverse to get chronological order assuming desc sort from server
+
+  // Blogwise Performance
+  const blogPerformance = posts.map(post => {
+    const postAnalytics = analytics.filter(a => a.blogPostId === post.id);
+    const views = postAnalytics.length;
+    const avgScroll = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.scrollDepth, 0) / views) : 0;
+    const avgTime = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.timeSpentSec, 0) / views) : 0;
+    return {
+      title: post.title,
+      slug: post.slug,
+      views,
+      avgScroll,
+      avgTime
+    };
+  }).sort((a, b) => b.views - a.views);
+
+  function exportAnalyticsCSV() {
+    const headers = ["Article Title", "Slug", "Total Views", "Avg Scroll Depth (%)", "Avg Time Spent (sec)"];
+    const rows = blogPerformance.map(p => [
+      `"${p.title.replace(/"/g, '""')}"`,
+      p.slug,
+      p.views,
+      p.avgScroll,
+      p.avgTime
+    ]);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `blog_analytics_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   // Filter posts
   const filteredPosts = posts.filter((post) => {
@@ -473,6 +508,63 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Performance by Article Table */}
+            <div className="overflow-hidden border border-white/10 rounded-2xl bg-card">
+              <div className="p-6 border-b border-white/10 bg-white/5 flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Performance by Article</h3>
+                  <p className="text-xs text-muted-foreground mt-1">See which topics resonate best to plan your content schedule.</p>
+                </div>
+                <button
+                  onClick={exportAnalyticsCSV}
+                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white px-4 py-2 text-sm font-bold transition-all"
+                >
+                  <Download className="h-4 w-4" /> Export CSV
+                </button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-white/5 text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                      <th className="p-4">Article Title</th>
+                      <th className="p-4">Total Views</th>
+                      <th className="p-4">Avg Scroll Depth</th>
+                      <th className="p-4">Avg Read Time</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {blogPerformance.map((post, i) => (
+                      <tr key={i} className="hover:bg-white/5 transition-colors">
+                        <td className="p-4 space-y-1">
+                          <div className="font-bold text-white max-w-sm truncate">{post.title}</div>
+                          <div className="text-xs text-muted-foreground font-mono">/{post.slug}</div>
+                        </td>
+                        <td className="p-4 font-semibold text-white">{post.views}</td>
+                        <td className="p-4">
+                          <div className="flex items-center gap-2">
+                            <span className="text-white font-medium">{post.avgScroll}%</span>
+                            <div className="w-16 bg-white/10 rounded-full h-1.5 hidden sm:block">
+                              <div className="bg-primary h-1.5 rounded-full" style={{ width: `${post.avgScroll}%` }}></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4 text-muted-foreground">
+                          {Math.floor(post.avgTime / 60)}m {post.avgTime % 60}s
+                        </td>
+                      </tr>
+                    ))}
+                    {blogPerformance.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="p-8 text-center text-muted-foreground">
+                          No articles found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
