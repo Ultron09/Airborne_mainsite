@@ -363,7 +363,7 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
               </table>
             </div>
           </div>
-        ) : activeTab === "leads" ? (
+        ) ) : activeTab === "leads" ? (
           /* LEADS TAB */
           <div className="overflow-hidden border border-white/10 rounded-2xl bg-card">
             <div className="overflow-x-auto">
