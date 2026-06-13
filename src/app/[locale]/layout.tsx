@@ -4,6 +4,7 @@ import "../globals.css";
 import Link from "next/link";
 import Script from "next/script";
 import MetricoolScript from "@/components/MetricoolScript";
+import CookieBanner from "@/components/CookieBanner";
 import Background3D from "@/components/Background3D";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
@@ -172,12 +173,13 @@ export default async function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
             <p className="text-xs text-muted-foreground font-medium">&copy; {new Date().getFullYear()} Airborne HRS. All rights reserved.</p>
             <div className="flex gap-6 text-xs text-muted-foreground font-medium">
-              <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link>
             </div>
           </div>
         </footer>
         <MetricoolScript />
+        <CookieBanner />
         </SmoothScroll>
         </NextIntlClientProvider>
       </body>

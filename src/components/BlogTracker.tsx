@@ -29,6 +29,12 @@ export default function BlogTracker({ blogPostId }: { blogPostId: string }) {
 
     // Send data when user leaves the page
     const handleUnload = () => {
+      // Compliance Check: Only track if cookie consent was explicitly accepted
+      const consent = localStorage.getItem("airborne_cookie_consent");
+      if (consent !== "accepted") {
+        return;
+      }
+
       const timeSpentSec = Math.floor((Date.now() - startTime.current) / 1000);
       
       const payload = JSON.stringify({
