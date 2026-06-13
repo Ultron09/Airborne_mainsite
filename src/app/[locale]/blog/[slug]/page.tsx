@@ -2,8 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import prisma from "@/lib/prisma";
-import { Calendar, MapPin, Compass, ArrowLeft, ShieldCheck, Sparkles } from "lucide-react";
+import { Calendar, MapPin, Compass, ArrowLeft, ShieldCheck, Sparkles, BookOpen } from "lucide-react";
 import BlogTracker from "@/components/BlogTracker";
+import TableOfContents from "@/components/TableOfContents";
 
 export const revalidate = 0; // Fresh content on load
 
@@ -104,10 +105,31 @@ function renderMarkdown(md: string): string {
   // Inline Code
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
 
-  // Headings
-  html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
-  html = html.replace(/^## (.*$)/gim, "<h2>$1</h2>");
-  html = html.replace(/^# (.*$)/gim, "<h1>$1</h1>");
+  // Headings with ID generation for Table of Contents
+  const idCount: Record<string, number> = {};
+  
+  const generateId = (text: string) => {
+    // Remove inline html tags from text before creating ID
+    const plainText = text.replace(/<[^>]*>/g, '');
+    let baseId = plainText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    if (!baseId) return 'heading';
+    if (idCount[baseId]) {
+      idCount[baseId]++;
+      return `${baseId}-${idCount[baseId]}`;
+    }
+    idCount[baseId] = 1;
+    return baseId;
+  };
+
+  html = html.replace(/^### (.*$)/gim, (_, content) => {
+    return `<h3 id="${generateId(content)}">${content}</h3>`;
+  });
+  html = html.replace(/^## (.*$)/gim, (_, content) => {
+    return `<h2 id="${generateId(content)}">${content}</h2>`;
+  });
+  html = html.replace(/^# (.*$)/gim, (_, content) => {
+    return `<h1 id="${generateId(content)}">${content}</h1>`;
+  });
 
   // Blockquotes
   html = html.replace(/^&gt; (.*$)/gim, "<blockquote>$1</blockquote>");
@@ -168,7 +190,7 @@ function renderMarkdown(md: string): string {
   return processed.filter(Boolean).join("\n");
 }
 
-export default async function BlogPostDetail(props: Props) {
+export default async function BlogPostPage(props: Props) {
   const params = await props.params;
   let post = null;
 
@@ -226,6 +248,29 @@ export default async function BlogPostDetail(props: Props) {
   };
 
   const htmlContent = renderMarkdown(post.content);
+
+  // Fetch related articles
+  let relatedPosts = await prisma.blogPost.findMany({
+    where: { 
+      published: true,
+      id: { not: post.id },
+      contentPillar: post.contentPillar || undefined
+    },
+    take: 3,
+    orderBy: { publishAt: 'desc' }
+  });
+
+  if (relatedPosts.length < 3) {
+    const morePosts = await prisma.blogPost.findMany({
+      where: {
+        published: true,
+        id: { notIn: [post.id, ...relatedPosts.map(p => p.id)] }
+      },
+      take: 3 - relatedPosts.length,
+      orderBy: { publishAt: 'desc' }
+    });
+    relatedPosts = [...relatedPosts, ...morePosts];
+  }
 
   return (
     <div className="relative min-h-screen bg-background py-16 px-6 lg:px-8">
@@ -300,6 +345,9 @@ export default async function BlogPostDetail(props: Props) {
 
           {/* Sidebar for SEO & GEO Diagnostics / Visuals */}
           <aside className="lg:col-span-4 space-y-8">
+            {/* Table of Contents */}
+            <TableOfContents content={post.content} />
+            
             {/* GEO Node Coordinates Box */}
             {post.targetLocation && (
               <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden space-y-4">
@@ -376,6 +424,49 @@ export default async function BlogPostDetail(props: Props) {
             </div>
           </aside>
         </div>
+
+        {/* Related Articles */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-24 border-t border-white/10 pt-16">
+            <h2 className="text-2xl font-bold text-white mb-8">Related Insights</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedPosts.map((relatedPost) => (
+                <Link
+                  key={relatedPost.id}
+                  href={`/blog/${relatedPost.slug}`}
+                  className="group relative block glass-panel p-6 rounded-[2rem] border border-white/10 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-4">
+                      {relatedPost.contentPillar && (
+                        <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-muted-foreground">
+                          {relatedPost.contentPillar}
+                        </span>
+                      )}
+                      <span className="text-xs text-muted-foreground font-mono">
+                        {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(relatedPost.publishAt || relatedPost.createdAt)}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-white mb-3 leading-tight group-hover:text-primary transition-colors">
+                      {relatedPost.title}
+                    </h3>
+                    
+                    <p className="text-sm text-muted-foreground line-clamp-3 mb-6 flex-grow">
+                      {relatedPost.summary}
+                    </p>
+
+                    <div className="flex items-center text-xs font-semibold text-primary mt-auto">
+                      Read Article <ArrowLeft className="ml-2 h-3 w-3 rotate-180 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
