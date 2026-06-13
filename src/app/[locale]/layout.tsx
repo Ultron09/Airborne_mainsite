@@ -11,6 +11,7 @@ import Navigation from "@/components/Navigation";
 import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import CookieConsent from "@/components/CookieConsent";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -109,6 +110,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
         <SmoothScroll>
           <CustomCursor />
+          <CookieConsent />
           <Background3D />
           <script
             type="application/ld+json"
@@ -170,8 +172,8 @@ export default async function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
             <p className="text-xs text-muted-foreground font-medium">&copy; {new Date().getFullYear()} Airborne HRS. All rights reserved.</p>
             <div className="flex gap-6 text-xs text-muted-foreground font-medium">
-              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+              <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
             </div>
           </div>
         </footer>

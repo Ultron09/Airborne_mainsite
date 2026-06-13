@@ -348,53 +348,6 @@ export default async function BlogPostPage(props: Props) {
             {/* Table of Contents */}
             <TableOfContents content={post.content} />
             
-            {/* GEO Node Coordinates Box */}
-            {post.targetLocation && (
-              <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden space-y-4">
-                <div className="absolute top-0 right-0 h-24 w-24 bg-primary/5 rounded-full blur-2xl" />
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Compass className="h-5 w-5 text-primary animate-spin" style={{ animationDuration: '6s' }} /> 
-                  GEO Target Node
-                </h3>
-                
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  This page has been GEO-optimized to boost search indexes for local talent acquisition queries in the specified target area.
-                </p>
-
-                <div className="space-y-2 font-mono text-xs pt-2">
-                  <div className="flex justify-between py-1.5 border-b border-white/5">
-                    <span className="text-muted-foreground">Location:</span>
-                    <span className="text-white font-semibold">{post.targetLocation}</span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-white/5">
-                    <span className="text-muted-foreground">Region Code:</span>
-                    <span className="text-white font-semibold">{post.targetRegion || "N/A"}</span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-white/5">
-                    <span className="text-muted-foreground">Latitude:</span>
-                    <span className="text-primary font-semibold">{post.latitude?.toFixed(4) || "N/A"}</span>
-                  </div>
-                  <div className="flex justify-between py-1.5 border-b border-white/5">
-                    <span className="text-muted-foreground">Longitude:</span>
-                    <span className="text-primary font-semibold">{post.longitude?.toFixed(4) || "N/A"}</span>
-                  </div>
-                  <div className="flex justify-between py-1.5">
-                    <span className="text-muted-foreground">Target Radius:</span>
-                    <span className="text-white font-semibold">{post.radiusKm || 50} km</span>
-                  </div>
-                </div>
-
-                {/* Simulated Radar Visualizer */}
-                <div className="h-32 bg-black/40 border border-white/5 rounded-xl flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute h-24 w-24 rounded-full border border-primary/20 animate-ping opacity-60" />
-                  <div className="absolute h-16 w-16 rounded-full border border-primary/40 animate-pulse" />
-                  <div className="absolute h-8 w-8 rounded-full border border-primary/60" />
-                  <div className="absolute h-1.5 w-1.5 rounded-full bg-primary" />
-                  <div className="absolute top-2 left-2 text-[10px] text-primary/70 font-mono">SCANNING FOR LOCAL TALENT...</div>
-                  <div className="absolute bottom-2 right-2 text-[10px] text-muted-foreground font-mono">NODE_OK</div>
-                </div>
-              </div>
-            )}
 
             {/* Platform Call to Action */}
             <div className="glass-panel glass-panel-interactive p-6 rounded-2xl space-y-4">
@@ -415,13 +368,7 @@ export default async function BlogPostPage(props: Props) {
               </div>
             </div>
 
-            {/* Meta Verification */}
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex gap-3 text-xs text-muted-foreground">
-              <ShieldCheck className="h-5 w-5 text-primary flex-shrink-0" />
-              <p>
-                GEO tags and BlogPosting schema markup validation tags are generated and attached to this article for next-gen indexing algorithms.
-              </p>
-            </div>
+
           </aside>
         </div>
 
