@@ -34,7 +34,8 @@ export default function BlogTracker({ blogPostId }: { blogPostId: string }) {
       const payload = JSON.stringify({
         blogPostId,
         scrollDepth: Math.min(Math.round(maxScroll.current), 100),
-        timeSpentSec
+        timeSpentSec,
+        referrer: document.referrer
       });
 
       // sendBeacon is preferred for unload events as it doesn't block the unmount

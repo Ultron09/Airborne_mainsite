@@ -5,7 +5,7 @@ import crypto from "crypto";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { blogPostId, scrollDepth, timeSpentSec } = body;
+    const { blogPostId, scrollDepth, timeSpentSec, referrer } = body;
 
     if (!blogPostId) {
       return NextResponse.json({ error: "Missing blogPostId" }, { status: 400 });
@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
         country,
         city,
         region,
+        referrer,
         scrollDepth: Number(scrollDepth) || 0,
         timeSpentSec: Number(timeSpentSec) || 0,
       }

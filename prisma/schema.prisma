@@ -63,6 +63,7 @@ model BlogAnalytics {
   country        String?
   city           String?
   region         String?
+  referrer       String?  // Source URL (e.g. google.com, linkedin.com)
   
   // Engagement Data
   scrollDepth    Float    @default(0) // Percentage 0-100

@@ -58,6 +58,7 @@ interface Analytics {
   country: string | null;
   region: string | null;
   city: string | null;
+  referrer: string | null;
   scrollDepth: number;
   timeSpentSec: number;
   viewedAt: Date;
@@ -100,23 +101,46 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
     const views = postAnalytics.length;
     const avgScroll = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.scrollDepth, 0) / views) : 0;
     const avgTime = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.timeSpentSec, 0) / views) : 0;
+    
+    let topSource = "Direct";
+    const sources = postAnalytics.map(a => a.referrer).filter(Boolean) as string[];
+    if (sources.length > 0) {
+      const counts: Record<string, number> = {};
+      let maxCount = 0;
+      sources.forEach(s => {
+        try {
+          let domain = new URL(s).hostname;
+          domain = domain.replace(/^www\./, '');
+          counts[domain] = (counts[domain] || 0) + 1;
+          if (counts[domain] > maxCount) {
+            maxCount = counts[domain];
+            topSource = domain;
+          }
+        } catch {
+          // ignore invalid urls
+        }
+      });
+    }
+
     return {
       title: post.title,
       slug: post.slug,
       views,
       avgScroll,
-      avgTime
+      avgTime,
+      topSource
     };
   }).sort((a, b) => b.views - a.views);
 
   function exportAnalyticsCSV() {
-    const headers = ["Article Title", "Slug", "Total Views", "Avg Scroll Depth (%)", "Avg Time Spent (sec)"];
+    const headers = ["Article Title", "Slug", "Total Views", "Avg Scroll Depth (%)", "Avg Time Spent (sec)", "Top Source"];
     const rows = blogPerformance.map(p => [
       `"${p.title.replace(/"/g, '""')}"`,
       p.slug,
       p.views,
       p.avgScroll,
-      p.avgTime
+      p.avgTime,
+      p.topSource
     ]);
     const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -533,6 +557,7 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
                     <tr className="border-b border-white/10 bg-white/5 text-xs text-muted-foreground font-semibold uppercase tracking-wider">
                       <th className="p-4">Article Title</th>
                       <th className="p-4">Total Views</th>
+                      <th className="p-4">Top Source</th>
                       <th className="p-4">Avg Scroll Depth</th>
                       <th className="p-4">Avg Read Time</th>
                     </tr>
@@ -545,6 +570,7 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
                           <div className="text-xs text-muted-foreground font-mono">/{post.slug}</div>
                         </td>
                         <td className="p-4 font-semibold text-white">{post.views}</td>
+                        <td className="p-4 text-xs font-mono text-muted-foreground">{post.topSource}</td>
                         <td className="p-4">
                           <div className="flex items-center gap-2">
                             <span className="text-white font-medium">{post.avgScroll}%</span>
@@ -560,7 +586,7 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
                     ))}
                     {blogPerformance.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="p-8 text-center text-muted-foreground">
+                        <td colSpan={5} className="p-8 text-center text-muted-foreground">
                           No articles found.
                         </td>
                       </tr>
