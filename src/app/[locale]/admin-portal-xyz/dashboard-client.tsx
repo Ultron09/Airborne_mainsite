@@ -93,8 +93,10 @@ export default function DashboardClient({ posts, demoRequests, analytics = [] }:
   })).reverse(); // Reverse to get chronological order assuming desc sort from server
 
   // Blogwise Performance
-  const blogPerformance = posts.map(post => {
-    const postAnalytics = analytics.filter(a => a.blogPostId === post.id);
+  const blogPerformance = posts
+    .filter(post => post.published)
+    .map(post => {
+      const postAnalytics = analytics.filter(a => a.blogPostId === post.id);
     const views = postAnalytics.length;
     const avgScroll = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.scrollDepth, 0) / views) : 0;
     const avgTime = views > 0 ? Math.round(postAnalytics.reduce((acc, curr) => acc + curr.timeSpentSec, 0) / views) : 0;
