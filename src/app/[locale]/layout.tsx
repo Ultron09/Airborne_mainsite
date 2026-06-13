@@ -12,7 +12,7 @@ import Navigation from "@/components/Navigation";
 import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
-import CookieConsent from "@/components/CookieConsent";
+import TermsPopup from "@/components/TermsPopup";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -111,7 +111,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
         <SmoothScroll>
           <CustomCursor />
-          <CookieConsent />
+          <TermsPopup />
           <Background3D />
           <script
             type="application/ld+json"
