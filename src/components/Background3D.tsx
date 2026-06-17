@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars, Sparkles, Float, Sphere, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from 'three';
@@ -34,6 +34,22 @@ const AnimatedGeometry = () => {
 }
 
 export default function Background3D() {
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // default true to avoid hydration mismatch and avoid early load
+
+  useEffect(() => {
+    const checkMobile = () => window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(checkMobile());
+    
+    if (!checkMobile()) {
+      // Delay initialization to improve main thread performance
+      const timer = setTimeout(() => setMounted(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  if (!mounted || isMobile) return null;
+
   return (
     <div className="fixed inset-0 -z-20 h-full w-full pointer-events-none mix-blend-screen opacity-80">
       <Canvas camera={{ position: [0, 0, 8] }}>

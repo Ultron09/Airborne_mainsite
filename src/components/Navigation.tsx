@@ -65,6 +65,9 @@ export default function Navigation({ locale }: { locale: string }) {
           <span className="hidden lg:inline-flex text-sm font-bold text-primary hover:text-accent transition-colors py-2 px-3">
             {tNav('jobPortal')}
           </span>
+          <span className="sr-only lg:hidden">
+            {tNav('jobPortal')}
+          </span>
         </MagneticButton>
         <MagneticButton href={`/${locale}/#contact`}>
           <span className="hidden sm:inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-[0_0_20px_rgba(0,214,161,0.4)] hover:bg-primary/90 transition-all hover:scale-105">

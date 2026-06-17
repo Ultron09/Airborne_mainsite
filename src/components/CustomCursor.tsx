@@ -18,10 +18,13 @@ export default function CustomCursor() {
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Only run on non-touch devices
+    if (typeof window !== 'undefined' && ("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+      return;
+    }
+
     // Hide default cursor completely for that immersive feel
     document.documentElement.classList.add('hide-cursor');
-    
-    if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return;
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsVisible(true);

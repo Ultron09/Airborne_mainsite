@@ -97,7 +97,7 @@ export default async function Home() {
                     <ParallaxImage
                       src="/JobPortal_3D.webp"
                       alt="Airborne HRS Platform Preview"
-                      sizes="(max-w-768px) 100vw, 600px"
+                      sizes="(max-w-768px) 60vw, 500px"
                       priority
                       className="object-cover object-center scale-105 opacity-90"
                     />
@@ -230,7 +230,7 @@ export default async function Home() {
                     "We are not just building another HRMS. We are building the next generation of artificial consciousness to deliver autonomous HR services and goal-driven workforce automation."
                   </p>
                   <div className="mt-6">
-                    <h4 className="text-primary font-bold text-lg tracking-tight">Suryaansh Prithvijit Singh</h4>
+                    <div className="text-primary font-bold text-lg tracking-tight">Suryaansh Prithvijit Singh</div>
                     <p className="text-muted-foreground text-sm font-medium mt-1">Founder & CEO, Airborne HRS</p>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default async function Home() {
                   <ParallaxImage
                     src="/founder_3D.webp"
                     alt="Suryaansh Prithvijit Singh"
-                    sizes="(max-w-768px) 100vw, 600px"
+                    sizes="(max-w-768px) 70vw, 400px"
                     className="object-cover object-top opacity-90"
                     offset={30}
                   />
@@ -328,7 +328,7 @@ export default async function Home() {
           </ScrollReveal>
           <ScrollReveal>
             <SpotlightCard className="max-w-md mx-auto p-10 glass-panel shadow-[0_0_50px_rgba(0,214,161,0.1)] text-left">
-              <h4 className="text-white font-heading font-bold text-2xl mb-8 text-center">Initialize Demo</h4>
+              <h3 className="text-white font-heading font-bold text-2xl mb-8 text-center">Initialize Demo</h3>
               <DemoForm />
             </SpotlightCard>
           </ScrollReveal>

@@ -1,0 +1,12 @@
+# Airborne HRS
+
+Welcome to the Airborne HRS platform. Airborne HRS provides a Next-Gen HRMS platform with intelligent automation & services.
+
+## Important Links
+
+- [Home](https://airbornehrs.in/)
+- [Job Portal](https://jobs.airbornehrs.in/jobs)
+- [For Employers](https://jobs.airbornehrs.in/for-employers)
+- [For Candidates](https://jobs.airbornehrs.in/for-candidates)
+- [For Universities](https://jobs.airbornehrs.in/for-universities)
+- [Blog](https://airbornehrs.in/blog)
