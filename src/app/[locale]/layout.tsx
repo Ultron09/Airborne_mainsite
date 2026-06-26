@@ -59,6 +59,20 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     description,
     keywords,
     authors: [{ name: "Airborne HRS Team" }],
+    alternates: {
+      canonical: locale === "en" ? "/en" : `/${locale}`,
+      languages: {
+        en: "/en",
+        hi: "/hi",
+        ar: "/ar",
+        es: "/es",
+        fr: "/fr",
+        nl: "/nl",
+        ja: "/ja",
+        zh: "/zh",
+        "x-default": "/en",
+      },
+    },
     openGraph: {
       title,
       description,
@@ -166,7 +180,7 @@ export default async function RootLayout({
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <img
-                  src="/logo.svg"
+                  src="/logo.webp"
                   alt="Airborne HRS Logo"
                   className="h-8 w-8 rounded-xl object-contain shadow-[0_0_15px_rgba(0,214,161,0.3)]"
                 />

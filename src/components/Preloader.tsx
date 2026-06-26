@@ -51,7 +51,7 @@ export default function Preloader() {
             className="mb-8"
           >
             <img
-              src="/logo.svg"
+              src="/logo.webp"
               alt="Airborne HRS Logo"
               className="h-16 w-16 rounded-2xl object-contain shadow-[0_0_40px_rgba(0,214,161,0.5)]"
             />

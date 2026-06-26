@@ -32,7 +32,7 @@ export default function Navigation({ locale }: { locale: string }) {
       <div className="flex items-center gap-8">
         <Link href={`/${locale}`} className="flex items-center gap-2 group">
           <img
-            src="/logo.svg"
+            src="/logo.webp"
             alt="Airborne HRS Logo"
             className="h-8 w-8 rounded-xl object-contain shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110"
           />

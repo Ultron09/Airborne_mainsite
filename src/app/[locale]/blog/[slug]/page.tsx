@@ -34,12 +34,27 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const title = `${post.seoTitle || post.title} | Airborne HRS`;
     const description = post.seoDescription || post.summary;
     const keywords = post.keywords ? post.keywords.split(",").map((k) => k.trim()) : [];
+    const locale = (params as any).locale || "en";
 
     // Construct the metadata object with GEO meta tags via the 'other' property
     const metadata: Metadata = {
       title,
       description,
       keywords,
+      alternates: {
+        canonical: `/${locale}/blog/${post.slug}`,
+        languages: {
+          en: `/en/blog/${post.slug}`,
+          hi: `/hi/blog/${post.slug}`,
+          ar: `/ar/blog/${post.slug}`,
+          es: `/es/blog/${post.slug}`,
+          fr: `/fr/blog/${post.slug}`,
+          nl: `/nl/blog/${post.slug}`,
+          ja: `/ja/blog/${post.slug}`,
+          zh: `/zh/blog/${post.slug}`,
+          "x-default": `/en/blog/${post.slug}`,
+        },
+      },
       openGraph: {
         title,
         description,
