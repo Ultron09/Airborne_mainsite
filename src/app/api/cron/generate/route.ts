@@ -65,9 +65,9 @@ export async function GET(request: Request) {
         const linksMarkdownList = recentPosts
           .map((p) => `- "${p.title}": Use path "/blog/${p.slug}"`)
           .join("\n");
-        internalLinksGuideline = `2. Contextual Blog Interlinking: Organically and contextually link to 1 or 2 of the following published posts using their exact relative paths. Incorporate these links naturally into the text using relevant anchor text (e.g. "read our comparison guide on the [best HRMS software in India](/blog/best-hrms-software-india-2026)"). Do not force links if they do not fit, but find logical reference points:\n${linksMarkdownList}`;
+        internalLinksGuideline = `2. Contextual Blog Interlinking (SEO Anchor Optimization): Organically and contextually link to 1 or 2 of the following published posts using their exact relative paths. Crucially, use keyword-rich, descriptive anchor texts related to the target post topic (e.g. "[automated attendance software](/blog/slug)" or "[HRMS comparison guide](/blog/slug)" or "[recruitment automation guide](/blog/slug)"). Do NOT use generic text like "read this post" or "learn more here":\n${linksMarkdownList}`;
       } else {
-        internalLinksGuideline = `2. General Blog Interlinking: If relevant, include a natural link to the main blog section ("/blog").`;
+        internalLinksGuideline = `2. General Blog Interlinking: If relevant, include a natural link to the main blog section ("/blog") using keyword-rich anchor text like "[HR insights and guides](/blog)".`;
       }
 
       while (attempts < maxAttempts && !success) {
@@ -104,8 +104,8 @@ FORMATTING & GEO (Generative Engine Optimization) RULES:
 6. Use bolding strategically for emphasis and scannability.
 7. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
 
-LINKING RULES:
-1. Job Portal Link: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
+LINKING RULES (SEO Anchor Text Optimization):
+1. Job Portal Link: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text. The anchor text for this link MUST use descriptive, high-value keywords like "HRMS", "AI HR", "HR Tech", "HR Software", "AI Recruitment Portal", or "Employee Management Platform" (for example, "[AI-powered HRMS](https://jobs.airbornehrs.in/jobs)" or "[advanced HR Tech platform](https://jobs.airbornehrs.in/jobs)"). Do NOT use generic text like "click here" or "link".
 ${internalLinksGuideline}
 
 Return the response STRICTLY as a JSON object with the following structure:
