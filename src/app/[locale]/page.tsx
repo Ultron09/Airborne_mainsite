@@ -11,7 +11,8 @@ import {
   Briefcase,
   Layers,
   Cpu,
-  Network
+  Network,
+  ShieldCheck
 } from "lucide-react";
 import DemoForm from "@/components/DemoForm";
 import { FadeIn, FloatingElement, MagneticButton, ScrollReveal, IsometricTilt } from "@/components/MotionWrappers";
@@ -25,6 +26,7 @@ export const revalidate = 0;
 
 export default async function Home() {
   const t = await getTranslations('Hero');
+  const tComp = await getTranslations('Compliance');
   let latestPosts: BlogPost[] = [];
   try {
     latestPosts = await prisma.blogPost.findMany({
@@ -253,6 +255,114 @@ export default async function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
               </div>
             </ScrollReveal>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Global Compliance & Coverage Section */}
+      <section className="py-32 relative border-t border-white/5 bg-black/20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(0,214,161,0.05),transparent_50%)] pointer-events-none" />
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          
+          <ScrollReveal className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-xs font-bold text-primary shadow-[0_0_20px_rgba(0,214,161,0.15)] mb-4">
+              <ShieldCheck className="h-4 w-4" /> {tComp('badge')}
+            </div>
+            <h2 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tight text-white leading-tight max-w-4xl mx-auto">
+              {tComp('title')}
+            </h2>
+            <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto mt-6 leading-relaxed">
+              {tComp('subtitle')}
+            </p>
+          </ScrollReveal>
+
+          {/* Grid of Global Regions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* India Compliance */}
+            <SpotlightCard className="glass-panel p-8 flex flex-col justify-between group overflow-hidden relative">
+              <div className="absolute -right-16 -top-16 w-48 h-48 bg-primary/10 blur-3xl rounded-full group-hover:bg-primary/20 transition-all pointer-events-none" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🇮🇳</span>
+                  <h3 className="text-xl font-heading font-bold text-white group-hover:text-primary transition-colors">
+                    {tComp('indiaTitle')}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {tComp('indiaDesc')}
+                </p>
+              </div>
+              <div className="mt-8 flex gap-2 flex-wrap">
+                <span className="text-[10px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">HRMS India</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">PF & ESI</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">DPDPA 2023</span>
+              </div>
+            </SpotlightCard>
+
+            {/* Australia Compliance */}
+            <SpotlightCard className="glass-panel p-8 flex flex-col justify-between group overflow-hidden relative">
+              <div className="absolute -right-16 -top-16 w-48 h-48 bg-accent/10 blur-3xl rounded-full group-hover:bg-accent/20 transition-all pointer-events-none" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🇦🇺</span>
+                  <h3 className="text-xl font-heading font-bold text-white group-hover:text-accent transition-colors">
+                    {tComp('australiaTitle')}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {tComp('australiaDesc')}
+                </p>
+              </div>
+              <div className="mt-8 flex gap-2 flex-wrap">
+                <span className="text-[10px] font-mono text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded">HRMS Australia</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">STP Phase 2</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">Superannuation</span>
+              </div>
+            </SpotlightCard>
+
+            {/* Gulf Compliance */}
+            <SpotlightCard className="glass-panel p-8 flex flex-col justify-between group overflow-hidden relative">
+              <div className="absolute -right-16 -top-16 w-48 h-48 bg-primary/10 blur-3xl rounded-full group-hover:bg-primary/20 transition-all pointer-events-none" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🇦🇪 🇶🇦</span>
+                  <h3 className="text-xl font-heading font-bold text-white group-hover:text-primary transition-colors">
+                    {tComp('gulfTitle')}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {tComp('gulfDesc')}
+                </p>
+              </div>
+              <div className="mt-8 flex gap-2 flex-wrap">
+                <span className="text-[10px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">HRMS UAE</span>
+                <span className="text-[10px] font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">HRMS Qatar</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">WPS Integration</span>
+              </div>
+            </SpotlightCard>
+
+            {/* Global Cross-Border */}
+            <SpotlightCard className="glass-panel p-8 flex flex-col justify-between group overflow-hidden relative">
+              <div className="absolute -right-16 -top-16 w-48 h-48 bg-accent/10 blur-3xl rounded-full group-hover:bg-accent/20 transition-all pointer-events-none" />
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🌐</span>
+                  <h3 className="text-xl font-heading font-bold text-white group-hover:text-accent transition-colors">
+                    {tComp('globalTitle')}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {tComp('globalDesc')}
+                </p>
+              </div>
+              <div className="mt-8 flex gap-2 flex-wrap">
+                <span className="text-[10px] font-mono text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded">AI HR Software</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">Multi-currency</span>
+                <span className="text-[10px] font-mono text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded">GDPR Compliant</span>
+              </div>
+            </SpotlightCard>
 
           </div>
         </div>

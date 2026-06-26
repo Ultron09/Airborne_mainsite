@@ -26,26 +26,54 @@ const dmSans = DM_Sans({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://www.airbornehrs.in"),
-  title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
-  description: "The ultimate AI-powered HR Management System (HRMS) & HR automation system. Automate payroll, attendance, recruitment, and onboarding for businesses in India, UAE, Qatar, and Australia.",
-  keywords: ["HRMS India", "HRMS UAE", "HRMS Qatar", "HR software startups", "employee management software", "attendance software", "payroll software", "AI HR software", "recruitment automation", "Airborne HRS"],
-  authors: [{ name: "Airborne HRS Team" }],
-  openGraph: {
-    title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
-    description: "The ultimate AI-powered HR Management System (HRMS) & HR automation system. Automate payroll, attendance, recruitment, and onboarding in India, UAE, Qatar, and Australia.",
-    url: "https://airbornehrs.in",
-    siteName: "Airborne HRS",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
-    description: "Automate payroll, attendance, recruitment, and onboarding with Airborne's AI-Powered HR Management System.",
-  },
-};
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await props.params;
+  const locale = params.locale;
+
+  let title = "Airborne HRS | AI-Powered HRMS for Startups & SMEs";
+  let description = "The ultimate AI-powered HR Management System (HRMS) & HR automation system. Automate payroll, attendance, recruitment, and onboarding for businesses in India, UAE, Qatar, and Australia.";
+  let keywords = ["HRMS India", "HRMS UAE", "HRMS Qatar", "HR software startups", "employee management software", "attendance software", "payroll software", "AI HR software", "recruitment automation", "Airborne HRS"];
+
+  if (locale === "hi") {
+    title = "Airborne HRS | भारत के लिए AI-संचालित HRMS और पेरोल सॉफ्टवेयर";
+    description = "भारत में स्टार्टअप्स और SMEs के लिए अंतिम AI-संचालित HR Management System (HRMS)। पेरोल, उपस्थिति, और भर्ती को स्वचालित करें।";
+    keywords = ["HRMS India", "HRMS भारत", "पेरोल सॉफ्टवेयर", "AI HR", "HRMS", "कर्मचारी प्रबंधन", "Airborne HRS"];
+  } else if (locale === "ar") {
+    title = "منصة Airborne HRS | نظام إدارة الموارد البشرية (HRMS) بالذكاء الاصطناعي";
+    description = "نظام إدارة الموارد البشرية (HRMS) وأتمتة الموارد البشرية الأفضل للشركات في الإمارات وقطر والخليج. أتمتة الرواتب والحضور والتوظيف.";
+    keywords = ["HRMS UAE", "HRMS Qatar", "نظام HRMS الخليج", "أتمتة الموارد البشرية", "الذكاء الاصطناعي", "Airborne HRS"];
+  } else if (locale === "es") {
+    title = "Airborne HRS | Software HRMS y Nómina de Personal con IA";
+    description = "El mejor sistema de gestión de recursos humanos (HRMS) con IA. Automatice nómina, asistencia y reclutamiento.";
+    keywords = ["HRMS", "software de nómina", "asistencia de personal", "recursos humanos con IA", "Airborne HRS"];
+  } else {
+    // English default targets India, Australia, UAE, Qatar and general AI HR / HRMS software keywords
+    title = "Airborne HRS | AI-Powered HRMS (HR Software) for Startups & SMEs";
+    description = "The ultimate AI-powered HR Management System (HRMS) & HR automation software. Automate payroll, attendance, recruitment, and onboarding in India, Australia, UAE, Qatar, and globally.";
+    keywords = ["HRMS India", "HRMS Australia", "HRMS UAE", "HRMS Qatar", "AI HR", "HRMS software", "employee management software", "attendance software", "payroll software", "Airborne HRS"];
+  }
+
+  return {
+    metadataBase: new URL("https://www.airbornehrs.in"),
+    title,
+    description,
+    keywords,
+    authors: [{ name: "Airborne HRS Team" }],
+    openGraph: {
+      title,
+      description,
+      url: "https://airbornehrs.in",
+      siteName: "Airborne HRS",
+      locale: locale === "ar" ? "ar_AE" : locale === "hi" ? "hi_IN" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

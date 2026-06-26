@@ -21,5 +21,18 @@
     "metric1": "Hiring Velocity",
     "metric2": "Match Rates",
     "metric3": "Global Nodes"
+  },
+  "Compliance": {
+    "badge": "Global Compliance",
+    "title": "Built for Global Standards, Localized for Compliance",
+    "subtitle": "Airborne HRS adapts automatically to regional regulations, payroll compliance, and data laws across key operational markets.",
+    "indiaTitle": "India Payroll & Compliance",
+    "indiaDesc": "Full integration with Provident Fund (PF), Employee State Insurance (ESI), TDS tax calculations, and 2023 DPDPA data privacy compliance.",
+    "australiaTitle": "Australia Single Touch Payroll",
+    "australiaDesc": "Optimized for Single Touch Payroll (STP Phase 2), automated Superannuation contributions, and Fair Work Act award compliance.",
+    "gulfTitle": "UAE & Qatar WPS Compliance",
+    "gulfDesc": "Native Wage Protection System (WPS) integrations, Ministry of Labour reporting, and automated end-of-service gratuity calculations.",
+    "globalTitle": "Cross-Border Operations",
+    "globalDesc": "Multi-currency payroll engine, automated localization templates, and secure GDPR-compliant global team onboarding."
   }
 }
