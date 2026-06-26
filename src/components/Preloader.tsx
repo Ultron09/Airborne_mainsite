@@ -50,9 +50,11 @@ export default function Preloader() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_40px_rgba(0,214,161,0.5)] text-3xl">
-              A
-            </div>
+            <img
+              src="/logo.svg"
+              alt="Airborne HRS Logo"
+              className="h-16 w-16 rounded-2xl object-contain shadow-[0_0_40px_rgba(0,214,161,0.5)]"
+            />
           </motion.div>
 
           <div className="font-heading text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 tracking-tighter">
