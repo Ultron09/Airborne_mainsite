@@ -28,13 +28,13 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.airbornehrs.in"),
-  title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
-  description: "The ultimate HR Management System (HRMS). Leverage state-of-the-art AI technology to transform your HR services, automate hiring, and streamline workforce management.",
-  keywords: ["HRMS", "HR service", "HR automation", "HR Management System", "HR AI", "Workforce Intelligence", "Airborne HRS", "GEO optimized recruiting"],
+  title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
+  description: "The ultimate AI-powered HR Management System (HRMS) & HR automation system. Automate payroll, attendance, recruitment, and onboarding for businesses in India, UAE, Qatar, and Australia.",
+  keywords: ["HRMS India", "HRMS UAE", "HRMS Qatar", "HR software startups", "employee management software", "attendance software", "payroll software", "AI HR software", "recruitment automation", "Airborne HRS"],
   authors: [{ name: "Airborne HRS Team" }],
   openGraph: {
-    title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
-    description: "The ultimate HR Management System (HRMS). Leverage AI technology to transform your HR services and automate hiring.",
+    title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
+    description: "The ultimate AI-powered HR Management System (HRMS) & HR automation system. Automate payroll, attendance, recruitment, and onboarding in India, UAE, Qatar, and Australia.",
     url: "https://airbornehrs.in",
     siteName: "Airborne HRS",
     locale: "en_US",
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Airborne HRS | Next-Gen HRMS & HR Automation System",
-    description: "Transform your hiring and HR services with Airborne's HR Management System.",
+    title: "Airborne HRS | AI-Powered HRMS for Startups & SMEs",
+    description: "Automate payroll, attendance, recruitment, and onboarding with Airborne's AI-Powered HR Management System.",
   },
 };
 

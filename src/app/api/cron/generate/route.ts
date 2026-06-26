@@ -23,6 +23,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: "No pending posts scheduled for now." });
     }
 
+    // Fetch recently published articles to use for dynamic internal linking
+    let recentPosts: { title: string; slug: string }[] = [];
+    try {
+      recentPosts = await prisma.blogPost.findMany({
+        where: {
+          published: true,
+        },
+        select: {
+          title: true,
+          slug: true,
+        },
+        orderBy: {
+          publishAt: "desc",
+        },
+        take: 10,
+      });
+    } catch (e) {
+      console.error("Failed to query recent posts for internal linking:", e);
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY is not configured.");
@@ -39,11 +59,22 @@ export async function GET(request: Request) {
       let generatedData = null;
       let lastError = null;
 
+      // Construct dynamic internal linking instructions
+      let internalLinksGuideline = "";
+      if (recentPosts.length > 0) {
+        const linksMarkdownList = recentPosts
+          .map((p) => `- "${p.title}": Use path "/blog/${p.slug}"`)
+          .join("\n");
+        internalLinksGuideline = `2. Contextual Blog Interlinking: Organically and contextually link to 1 or 2 of the following published posts using their exact relative paths. Incorporate these links naturally into the text using relevant anchor text (e.g. "read our comparison guide on the [best HRMS software in India](/blog/best-hrms-software-india-2026)"). Do not force links if they do not fit, but find logical reference points:\n${linksMarkdownList}`;
+      } else {
+        internalLinksGuideline = `2. General Blog Interlinking: If relevant, include a natural link to the main blog section ("/blog").`;
+      }
+
       while (attempts < maxAttempts && !success) {
         try {
           attempts++;
           const prompt = `You are an elite, high-level SEO and GEO expert, and an authoritative HR tech specialist.
-Your writing style is highly engaging, sophisticated, and modern. It MUST NOT sound like a generic AI or ChatGPT (strictly avoid phrases like "In today's fast-paced world", "Unlock the potential", "In conclusion", "It's important to remember"). Use punchy, confident, and professional language.
+Your writing style is highly engaging, sophisticated, and modern. It MUST NOT sound like a generic AI or ChatGPT (strictly avoid phrases like "In today's fast-paced world", "Unlock the potential", "In conclusion", "It's important to remember", "In summary"). Use punchy, confident, and professional language.
 
 Please generate a premium blog post based on the following parameters:
 - Title: ${post.title}
@@ -53,6 +84,17 @@ Please generate a premium blog post based on the following parameters:
 - Secondary Keywords: ${post.secondaryKeywords || "human resources, software"}
 - Target Word Count: ${post.wordCount || "1000"} words
 
+EEAT & WRITING GUIDELINES (To prevent typical AI patterns):
+1. EXPERIENTIAL FLOW: Do NOT use a formulaic structure (e.g., "Introduce topic -> Explain concept -> Summarize -> Repeat conclusion"). Write from the perspective of an experienced HR practitioner or founder.
+2. SPECIFIC SCENARIOS: Incorporate concrete, realistic, and specific examples to illustrate your points. (For example: "A retail chain with 120 frontline employees in Delhi..." or "A 50-person SaaS startup with teams in Melbourne and Singapore"). Use specific numbers, times, and roles.
+3. GEO COMPLIANCE & LOCAL LABOUR LAWS: Contextually align any compliance or administrative discussions with local laws based on the Geo Target (${post.targetLocation || "Global"}):
+   - India: Reference Provident Fund (PF), Employee State Insurance (ESI), TDS calculations, and the Digital Personal Data Protection Act (DPDPA 2023).
+   - UAE: Reference Wage Protection System (WPS), Ministry of Human Resources & Emiratisation (MOHRE), and End of Service Gratuity.
+   - Qatar: Reference Qatar Labour Law, WPS compliance, and Qatar National Vision.
+   - Australia: Reference Single Touch Payroll (STP), Fair Work Act, and Superannuation contributions.
+   - Global/Other: Reference GDPR, FLSA, or standard regional guidelines where applicable.
+4. ACTIONABLE INSIGHTS: Provide concrete implementation checklists, bulleted frameworks, or "common pitfalls to avoid" that business leaders can execute immediately.
+
 FORMATTING & GEO (Generative Engine Optimization) RULES:
 1. Optimize for AI Search (GEO): Provide a clear, direct, and authoritative answer to the core topic in the first 2 paragraphs. AI search engines (Perplexity, ChatGPT) prioritize fluff-free, direct answers.
 2. Include Data & Statistics: Incorporate highly realistic industry statistics (e.g., "Data shows a 40% reduction in admin time...") to build authority and trust for AI parsers.
@@ -61,11 +103,14 @@ FORMATTING & GEO (Generative Engine Optimization) RULES:
 5. Use proper Markdown spacing (ensure blank lines between paragraphs, headers, and lists).
 6. Use bolding strategically for emphasis and scannability.
 7. Do NOT include the Title as an H1 at the top of the content. Start directly with an engaging hook.
-8. INTERNAL LINKING: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
+
+LINKING RULES:
+1. Job Portal Link: You MUST organically include at least one contextual markdown link to our job portal (https://jobs.airbornehrs.in/jobs) within the text.
+${internalLinksGuideline}
 
 Return the response STRICTLY as a JSON object with the following structure:
 {
-  "content": "The full markdown formatted content here. Follow all FORMATTING RULES.",
+  "content": "The full markdown formatted content here. Follow all FORMATTING, EEAT, and LINKING RULES.",
   "summary": "A concise 2-3 sentence summary snippet for search engines.",
   "seoTitle": "Optimized SEO Meta Title (under 60 characters)",
   "seoDescription": "Optimized SEO Meta Description (under 160 characters)",
