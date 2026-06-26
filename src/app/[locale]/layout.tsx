@@ -137,9 +137,11 @@ export default async function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.3)]">
-                  A
-                </div>
+                <img
+                  src="/logo.svg"
+                  alt="Airborne HRS Logo"
+                  className="h-8 w-8 rounded-xl object-contain shadow-[0_0_15px_rgba(0,214,161,0.3)]"
+                />
                 <span className="font-heading font-bold tracking-tight text-white text-xl">Airborne<span className="text-primary">HRS</span></span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">

@@ -31,9 +31,11 @@ export default function Navigation({ locale }: { locale: string }) {
       {/* Logo */}
       <div className="flex items-center gap-8">
         <Link href={`/${locale}`} className="flex items-center gap-2 group">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110">
-            A
-          </div>
+          <img
+            src="/logo.svg"
+            alt="Airborne HRS Logo"
+            className="h-8 w-8 rounded-xl object-contain shadow-[0_0_15px_rgba(0,214,161,0.5)] transition-transform group-hover:scale-110"
+          />
           <span className="text-xl font-heading font-bold tracking-tight text-white group-hover:text-primary transition-colors drop-shadow-md hidden sm:block">
             Airborne<span className="text-primary font-medium">HRS</span>
           </span>
